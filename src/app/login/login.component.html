@@ -1,6 +1,7 @@
 <div class="login-page">
+  <app-alert #alert></app-alert>
 
-  <form class="col-md-4 col-sm-8 col-xs-11 login-panel center-block">
+  <form class="col-md-4 col-sm-6 col-xs-11 login-panel center-block">
 
     <fieldset>
       <legend class="text-center"><h3>Edu Admin</h3></legend>
@@ -22,8 +23,6 @@
       <input id="password" name="password" type="password" class="form-control" placeholder="请输入密码" [(ngModel)]="user.password">
     </p>
 
-    <button class="btn btn-primary btn-block" [disabled]="!(user.username && user.password)" (click)="login()">登录</button>
+    <button class="btn btn-primary btn-block" [disabled]="!(user.username.length >= 5 && user.password.length >= 5)" (click)="login()">登录</button>
   </form>
 </div>
-<app-footer></app-footer>
-

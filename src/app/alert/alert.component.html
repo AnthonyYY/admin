@@ -1,0 +1,7 @@
+<div [hidden]="!visible" id="alert" class="alert alert-{{ type }} center-block" [class.alert-dismissable]="dismissable" role="alert">
+  <button type="button" class="close" (click)="closeAlert()" aria-label="Close">
+    <span>&times;</span>
+  </button>
+  <h4>{{ title }}</h4>
+  <p>{{ content }}</p>
+</div>
