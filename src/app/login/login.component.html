@@ -1,0 +1,29 @@
+<div class="login-page">
+
+  <form class="col-md-4 col-sm-8 col-xs-11 login-panel center-block">
+
+    <fieldset>
+      <legend class="text-center"><h3>Edu Admin</h3></legend>
+    </fieldset>
+
+    <p class="input-group">
+      <span class="input-group-addon">
+        <i class="fa fa-user"></i>
+      </span>
+      <label for="username"></label>
+      <input id="username" name="username" class="form-control" placeholder="请输入用户名" [(ngModel)]="user.username">
+    </p>
+
+    <p class="input-group">
+      <span class="input-group-addon">
+        <i class="fa fa-lock"></i>
+      </span>
+      <label for="password"></label>
+      <input id="password" name="password" type="password" class="form-control" placeholder="请输入密码" [(ngModel)]="user.password">
+    </p>
+
+    <button class="btn btn-primary btn-block" [disabled]="!(user.username && user.password)" (click)="login()">登录</button>
+  </form>
+</div>
+<app-footer></app-footer>
+
