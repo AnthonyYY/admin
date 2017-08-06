@@ -22,7 +22,6 @@ import { SchoolComponent } from './school/school.component';
 import {HttpModule} from '@angular/http';
 import {HttpService} from './service/http.service';
 import { AlertComponent } from './alert/alert.component';
-import {AlertService} from './alert/alert.service';
 
 @NgModule({
   declarations: [

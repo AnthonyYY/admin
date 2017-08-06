@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
     private http: Http
   ) { }
   ngOnInit() {
-    this.user = new User('admin', 'admin1');
+    this.user = new User('admin', 'admin');
   }
 
   login(): void {

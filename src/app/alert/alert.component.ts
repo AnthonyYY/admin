@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-alert',
@@ -23,7 +24,7 @@ export class AlertComponent implements OnInit {
   }
 
   alert(type: string, title: string, content: string, dismissable?: boolean, duration?: number): void {
-      this.visible = true;
+      $('#alert').show();
       this.type = type;
       this.title = title;
       this.content = content;
@@ -34,13 +35,12 @@ export class AlertComponent implements OnInit {
         this.duration = duration;
       }
       this.t = setTimeout( () => {
-        this.visible = false;
-        alert(1);
+        $('#alert').fadeOut();
       }, this.duration );
   }
 
   closeAlert(): void {
-    this.visible = false;
+    $('#alert').fadeOut();
     clearTimeout(this.t);
   }
 }
