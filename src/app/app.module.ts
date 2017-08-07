@@ -22,6 +22,7 @@ import { SchoolComponent } from './school/school.component';
 import {HttpModule} from '@angular/http';
 import {HttpService} from './service/http.service';
 import { AlertComponent } from './alert/alert.component';
+import {UserService} from './common/user.service';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import { AlertComponent } from './alert/alert.component';
     HttpModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [HttpService],
+  providers: [HttpService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

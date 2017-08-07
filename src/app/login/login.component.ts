@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { User } from '../models/user';
+import { Usr } from '../models/usr';
 import {Router} from '@angular/router';
 import {Http} from '@angular/http';
 import {AppSettings} from '../app-settings';
@@ -12,7 +12,7 @@ import {AlertComponent} from '../alert/alert.component';
   styleUrls: ['./login.component.less']
 })
 export class LoginComponent implements OnInit {
-  user: User;
+  user: Usr;
   @ViewChild(AlertComponent)
   alertCmp: AlertComponent;
   constructor(
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
     private http: Http
   ) { }
   ngOnInit() {
-    this.user = new User('admin', 'admin');
+    this.user = new Usr('admin', 'admin');
   }
 
   login(): void {

@@ -24,7 +24,12 @@ export class AlertComponent implements OnInit {
   }
 
   alert(type: string, title: string, content: string, dismissable?: boolean, duration?: number): void {
-      $('#alert').show();
+      const alertDom = $('#alert');
+      if ( this.t ) {
+        clearTimeout(this.t);
+        alertDom.hide();
+      }
+      alertDom.show();
       this.type = type;
       this.title = title;
       this.content = content;

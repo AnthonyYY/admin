@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Http} from '@angular/http';
+import {Http, RequestOptionsArgs} from '@angular/http';
 import {AppSettings} from '../app-settings';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/switchMap';
@@ -13,8 +13,23 @@ export class HttpService {
     private router: Router
   ) { }
 
-  put(url: string, body: any): Promise<any> {
-    return this.http.put( AppSettings.API_ENDPOINT + url, body)
+  get(url: string, options?: RequestOptionsArgs): Promise<any> {
+    options = options || { withCredentials: true };
+    return this.http.get( AppSettings.API_ENDPOINT + url, options)
+      .toPromise()
+      .then( res => {
+        if ( res.status === 200 ) {
+          return {success: true, data: res.json().data};
+        }else {
+          return {success: false, data: null};
+        }
+      } )
+      .catch();
+  }
+
+  put(url: string, options: any): Promise<any> {
+    options = options || { withCredentials: true };
+    return this.http.put( AppSettings.API_ENDPOINT + url, options)
       .toPromise()
       .then( res => {
         if ( res.status === 200) {
@@ -24,7 +39,6 @@ export class HttpService {
         }
       } )
       .catch( err => {
-        alert(err.json().data);
         if (err.status === 401 ) {
           this.router.navigate(['login']);
         }

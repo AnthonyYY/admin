@@ -12,7 +12,15 @@
         <i class="fa fa-user"></i>
       </span>
       <label for="username"></label>
-      <input id="username" name="username" class="form-control" placeholder="请输入用户名" [(ngModel)]="user.username">
+      <input
+        id="username"
+        name="username"
+        class="form-control"
+        placeholder="请输入用户名"
+        [(ngModel)]="user.username"
+        title="用户名不能少于5个字符"
+        data-placement="right"
+        data-toggle="tooltip">
     </p>
 
     <p class="input-group">
@@ -20,7 +28,16 @@
         <i class="fa fa-lock"></i>
       </span>
       <label for="password"></label>
-      <input id="password" name="password" type="password" class="form-control" placeholder="请输入密码" [(ngModel)]="user.password">
+      <input
+        id="password"
+        name="password"
+        type="password"
+        class="form-control"
+        placeholder="请输入密码"
+        [(ngModel)]="user.password"
+        title="密码不能少于5个字符"
+        data-placement="right"
+        data-toggle="tooltip">
     </p>
 
     <button class="btn btn-primary btn-block" [disabled]="!(user.username.length >= 5 && user.password.length >= 5)" (click)="login()">登录</button>

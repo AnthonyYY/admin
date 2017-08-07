@@ -11,5 +11,4 @@ export class SyllabusComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }
