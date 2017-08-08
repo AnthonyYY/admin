@@ -23,20 +23,21 @@ export class LoginComponent implements OnInit {
   ) { }
   ngOnInit() {
     this.user = new Usr('admin', 'admin');
-    this.userService.getCurUserInfo().then( data => {
+    /*this.userService.getCurUserInfo().then( data => {
       console.log(data);
-    } );
+    } );*/
   }
 
   login(): void {
     const that = this;
-    this.http.put( AppSettings.API_ENDPOINT + `auth/login?username=${this.user.username}&password=${this.user.password}`, {})
+    this.router.navigate(['dashboard']);
+/*    this.http.put( AppSettings.API_ENDPOINT + `auth/login?username=${this.user.username}&password=${this.user.password}`, {})
       .toPromise()
       .then( (data) => {
         this.router.navigate(['dashboard']);
       } )
       .catch( err => {
         that.alertCmp.alert('info', '登录失败', err.json().data);
-      } );
+      } );*/
   }
 }

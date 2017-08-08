@@ -18,9 +18,9 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     if ( !this.userService.user ) {
-      this.userService.getCurUserInfo().then( (data) => {
+      /*this.userService.getCurUserInfo().then( (data) => {
         console.log(data);
-      } );
+      } );*/
     }
   }
 

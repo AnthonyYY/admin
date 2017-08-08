@@ -1,3 +1,87 @@
-<p>
-  syllabus works!
-</p>
+<section class="content-header">
+  <h1>课程信息</h1>
+  <ol class="breadcrumb">
+    <li><a><i class="fa fa-dashboard"></i>基础信息管理</a></li>
+    <li class="active"><a><i class="fa fa-book"></i>课程信息</a></li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box box-primary">
+        <div class="box-header">
+          <h3 class="box-title">课程信息列表</h3>
+          <div class="box-tools">
+            <div class="input-group input-group-sm pull-right" style="width: 240px;">
+              <input class="form-control" placeholder="搜索课程信息">
+              <div class="input-group-btn">
+                <button class="btn btn-default"><i class="fa fa-search"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box-body" style="border-top: 1px solid #dddddd;">
+          <div class="dataTables_wrapper form-inline dt-bootstrap">
+            <div class="row">
+              <div class="col-sm-12">
+                <table id="example2" class="table table-bordered table-hover dataTable">
+                  <thead>
+                    <tr role="row">
+                      <th class="sorting_desc" tabindex="0" rowspan="1" colspan="1">课程名称</th>
+                      <th class="sorting" tabindex="0" rowspan="1" colspan="1">课程价格</th>
+                      <th class="sorting" tabindex="0" rowspan="1" colspan="1">课程类型</th>
+                      <th class="sorting" tabindex="0" rowspan="1" colspan="1">报名学生人数</th>
+                      <th class="sorting" tabindex="0" rowspan="1" colspan="1">课次学生人数</th>
+                      <th class="sorting" tabindex="0" rowspan="1" colspan="1">退课人数</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr role="row" *ngFor="let syllabus of syllabuses; let i = index;" class="{{i%2 == 1 ? 'odd' : 'even'}}">
+                      <td>{{syllabus.name}}</td>
+                      <td>{{syllabus.price}}</td>
+                      <td>{{syllabusTypes[syllabus.type]}}</td>
+                      <td>{{syllabus.selectedNum}}</td>
+                      <td>{{syllabus.studentNum}}</td>
+                      <td>{{syllabus.backNum}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-5">
+                <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Showing 11 to 20 of 57
+                  entries
+                </div>
+              </div>
+              <div class="col-sm-7">
+                <div class="dataTables_paginate paging_simple_numbers pull-right" id="example2_paginate">
+                  <ul class="pagination">
+                    <li class="paginate_button previous" id="example2_previous"><a href="#" aria-controls="example2"
+                                                                                   data-dt-idx="0"
+                                                                                   tabindex="0">Previous</a></li>
+                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0">1</a>
+                    </li>
+                    <li class="paginate_button active"><a href="#" aria-controls="example2" data-dt-idx="2"
+                                                          tabindex="0">2</a></li>
+                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0">3</a>
+                    </li>
+                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0">4</a>
+                    </li>
+                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0">5</a>
+                    </li>
+                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0">6</a>
+                    </li>
+                    <li class="paginate_button next" id="example2_next"><a href="#" aria-controls="example2"
+                                                                           data-dt-idx="7" tabindex="0">Next</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.box-body -->
+      </div>
+    </div>
+  </div>
+</section>

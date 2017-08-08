@@ -28,6 +28,7 @@
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
         "../node_modules/admin-lte/bootstrap/js/bootstrap.js",
+        "../node_modules/admin-lte/plugins/datatables/jquery.dataTables.js",
         "../node_modules/admin-lte/dist/js/app.js"
       ],
       "environmentSource": "environments/environment.ts",

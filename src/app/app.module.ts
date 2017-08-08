@@ -23,6 +23,7 @@ import {HttpModule} from '@angular/http';
 import {HttpService} from './service/http.service';
 import { AlertComponent } from './alert/alert.component';
 import {UserService} from './common/user.service';
+import {SyllabusService} from "./syllabus/syllabus.service";
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import {UserService} from './common/user.service';
     HttpModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [HttpService, UserService],
+  providers: [HttpService, UserService, SyllabusService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
