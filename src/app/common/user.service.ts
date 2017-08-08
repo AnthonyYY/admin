@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {User} from '../models/user';
 import {HttpService} from '../service/http.service';
+import {RequestOptionsArgs} from '@angular/http';
 
 @Injectable()
 export class UserService {
@@ -8,8 +9,8 @@ export class UserService {
   constructor(
     private http: HttpService
   ) { }
-  getCurUserInfo() {
-    return this.http.get('auth/user/info').then( data => {
+  getCurUserInfo(options?: RequestOptionsArgs) {
+    return this.http.get('auth/user/info', options).then( data => {
       console.log(data);
       return data;
     } );

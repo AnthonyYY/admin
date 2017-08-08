@@ -5,6 +5,7 @@ import {Http} from '@angular/http';
 import {AppSettings} from '../app-settings';
 import 'rxjs/add/operator/toPromise';
 import {AlertComponent} from '../alert/alert.component';
+import {UserService} from "../common/user.service";
 
 @Component({
   selector: 'app-login',
@@ -17,10 +18,14 @@ export class LoginComponent implements OnInit {
   alertCmp: AlertComponent;
   constructor(
     private router: Router,
-    private http: Http
+    private http: Http,
+    private userService: UserService
   ) { }
   ngOnInit() {
     this.user = new Usr('admin', 'admin');
+    this.userService.getCurUserInfo().then( data => {
+      console.log(data);
+    } );
   }
 
   login(): void {
