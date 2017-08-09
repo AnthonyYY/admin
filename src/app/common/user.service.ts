@@ -5,21 +5,34 @@ import {RequestOptionsArgs} from '@angular/http';
 
 @Injectable()
 export class UserService {
-  public user: User;
-  userAccessToken: string;
+  public user: User | null;
   constructor(
     private http: HttpService
   ) { }
-  saveAccessToken(token): void {
+  static saveAccessToken(token): void {
     sessionStorage.setItem('AccessToken', token);
   }
-  getAccessToken(): string {
+  static getAccessToken(): string {
     return sessionStorage.getItem('AccessToken');
+  }
+  static removeAccessToken(): void {
+    sessionStorage.removeItem('AccessToken');
   }
   getCurUserInfo(options?: RequestOptionsArgs) {
     return this.http.get('auth/user/info', options).then( data => {
-      console.log(data);
-      return data;
+      if(data.success){
+        this.user = data.data;
+        return data.data;
+      }else{
+        throw data.data;
+      }
+    } ).catch( err => {
+      console.log(err);
+      return null;
     } );
+  }
+  emptyUsrInfo(){
+    this.user = null;
+    UserService.removeAccessToken();
   }
 }

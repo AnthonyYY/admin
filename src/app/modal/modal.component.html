@@ -1,0 +1,19 @@
+<div class="modal fade {{modalType}}" [class.in]="animated" [style.display]="show?'block':'none'">
+  <div class="modal-dialog modal-{{modalSize}}">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" [hidden]="!closeBtn">
+          <span (click)="hideModal()">×</span></button>
+        <h4 class="modal-title">{{ '提示' || title }}</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ content }}</p>
+        <ng-content></ng-content>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" (click)="hideModal()" [hidden]="!closeBtn">{{ modalConfirmText }}</button>
+        <button type="button" class="btn btn-primary" (click)="confirm();hideModal()">{{ modalCancelText }}</button>
+      </div>
+    </div>
+  </div>
+</div>

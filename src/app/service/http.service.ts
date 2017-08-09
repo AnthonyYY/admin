@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Http, RequestOptionsArgs, RequestOptions} from '@angular/http';
+import {Http, RequestOptionsArgs, RequestOptions,Headers } from '@angular/http';
 import {AppSettings} from '../app-settings';
 import {Router} from '@angular/router';
 import {UserService} from '../common/user.service';
@@ -10,17 +10,25 @@ import 'rxjs/add/operator/switchMap';
 export class HttpService {
 
   constructor(
-    private user: UserService,
     private http: Http,
     private router: Router
   ) { }
 
-  get(url: string, options?: RequestOptionsArgs): Promise<any> {
-    options = options || {};
+  static _createSpecOptions(options: RequestOptionsArgs){
     const headers = new Headers();
-    headers.append('Access-Token', this.user.getAccessToken());
-    // const requestOptions = new RequestOptions({headers: headers});
-    requestOptions.merge(options);
+    headers.append('Access-Token', UserService.getAccessToken());
+    const requestOptions = new RequestOptions({headers: headers});
+    return requestOptions.merge(options || {});
+  }
+
+  private _handle401(status){
+    if(status === 401){
+      this.router.navigate(['login']);
+    }
+  }
+
+  get(url: string, options?: RequestOptionsArgs): Promise<any> {
+    options = HttpService._createSpecOptions(options);
     return this.http.get( AppSettings.API_ENDPOINT + url, options)
       .toPromise()
       .then( res => {
@@ -30,23 +38,25 @@ export class HttpService {
           return {success: false, data: null};
         }
       } )
-      .catch();
+      .catch( err => {
+        this._handle401(err.status);
+        return {success: false,data: null};
+      } );
   }
 
   put(url: string, options: any): Promise<any> {
+    options = HttpService._createSpecOptions(options);
     return this.http.put( AppSettings.API_ENDPOINT + url, options)
       .toPromise()
       .then( res => {
         if ( res.status === 200) {
           return {success: true, data: res.json().data};
         } else {
-          return {success: false, data: null};
+          throw res;
         }
       } )
       .catch( err => {
-        if (err.status === 401 ) {
-          this.router.navigate(['login']);
-        }
+        this._handle401(err.status);
         return {success: false, data: null};
       } );
   }

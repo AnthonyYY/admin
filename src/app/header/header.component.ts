@@ -17,18 +17,23 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if(!UserService.getAccessToken()){
+      this.router.navigate(["login"]);
+    }
     if ( !this.userService.user ) {
-      /*this.userService.getCurUserInfo().then( (data) => {
-        console.log(data);
-      } );*/
+      // this.userService.getCurUserInfo().then( (data) => {
+      //   console.log(data);
+      // } );
     }
   }
 
   signOut() {
     this.http.get('auth/logout').then( data => {
-      console.log(data);
+      if(data.success){
+        this.userService.emptyUsrInfo();
+        this.router.navigate(['/login']);
+      }
     } );
-    this.router.navigate(['/login']);
   }
 
 }

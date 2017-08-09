@@ -1,45 +1,50 @@
 <div class="login-page">
   <app-alert #alert></app-alert>
 
-  <form class="col-md-4 col-sm-6 col-xs-11 login-panel center-block">
+  <div class="login-box">
 
-    <fieldset>
-      <legend class="text-center"><h3>Edu Admin</h3></legend>
-    </fieldset>
+    <div class="login-logo">
+      <strong>Edu</strong> Admin
+    </div>
 
-    <p class="input-group">
-      <span class="input-group-addon">
-        <i class="fa fa-user"></i>
-      </span>
-      <label for="username"></label>
-      <input
-        id="username"
-        name="username"
-        class="form-control"
-        placeholder="请输入用户名"
-        [(ngModel)]="user.username"
-        title="用户名不能少于5个字符"
-        data-placement="right"
-        data-toggle="tooltip">
-    </p>
+    <div class="login-box-body box box-info">
+      <div class="login-box-msg">管理系统登录页</div>
+      <form>
+        <p class="input-group">
+        <span class="input-group-addon">
+          <i class="fa fa-user"></i>
+        </span>
+          <label for="username"></label>
+          <input
+            id="username"
+            name="username"
+            class="form-control"
+            placeholder="请输入用户名"
+            [(ngModel)]="user.username"
+            title="用户名不能少于5个字符"
+            data-placement="right"
+            data-toggle="tooltip">
+        </p>
 
-    <p class="input-group">
-      <span class="input-group-addon">
-        <i class="fa fa-lock"></i>
-      </span>
-      <label for="password"></label>
-      <input
-        id="password"
-        name="password"
-        type="password"
-        class="form-control"
-        placeholder="请输入密码"
-        [(ngModel)]="user.password"
-        title="密码不能少于5个字符"
-        data-placement="right"
-        data-toggle="tooltip">
-    </p>
+        <p class="input-group">
+        <span class="input-group-addon">
+          <i class="fa fa-lock"></i>
+        </span>
+          <label for="password"></label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            class="form-control"
+            placeholder="请输入密码"
+            [(ngModel)]="user.password"
+            title="密码不能少于5个字符"
+            data-placement="right"
+            data-toggle="tooltip">
+        </p>
 
-    <button class="btn btn-primary btn-block" [disabled]="!(user.username.length >= 5 && user.password.length >= 5)" (click)="login()">登录</button>
-  </form>
+        <button class="btn btn-primary btn-block" [disabled]="!(user.username.length >= 5 && user.password.length >= 5)" (click)="login()">登录</button>
+      </form>
+    </div>
+  </div>
 </div>

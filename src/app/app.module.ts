@@ -23,7 +23,8 @@ import {HttpModule} from '@angular/http';
 import {HttpService} from './service/http.service';
 import { AlertComponent } from './alert/alert.component';
 import {UserService} from './common/user.service';
-import {SyllabusService} from "./syllabus/syllabus.service";
+import {SyllabusService} from './syllabus/syllabus.service';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {SyllabusService} from "./syllabus/syllabus.service";
     UserComponent,
     RoleComponent,
     SchoolComponent,
-    AlertComponent
+    AlertComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
