@@ -1,5 +1,5 @@
-<div class="modal fade {{modalType}}" [class.in]="animated" [style.display]="show?'block':'none'">
-  <div class="modal-dialog modal-{{modalSize}}">
+<div class="modal fade" [class.in]="animated" [style.display]="show?'block':'none'">
+  <div class="modal-dialog modal-{{modalSize}} modal-{{modalType}}">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" [hidden]="!closeBtn">
@@ -11,8 +11,8 @@
         <ng-content></ng-content>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default pull-left" (click)="hideModal()" [hidden]="!closeBtn">{{ modalConfirmText }}</button>
-        <button type="button" class="btn btn-primary" (click)="confirm();hideModal()">{{ modalCancelText }}</button>
+        <button type="button" class="btn {{modalType == 'default'?'btn-default':'btn-outline'}} pull-left" (click)="hideModal()" [hidden]="!closeBtn">{{ modalConfirmText }}</button>
+        <button type="button" class="btn {{modalType == 'default'?'btn-primary':'btn-outline'}}" (click)="confirm();hideModal()">{{ modalCancelText }}</button>
       </div>
     </div>
   </div>

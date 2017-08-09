@@ -35,6 +35,7 @@ export class ModalComponent implements OnInit {
   confirm(){}
 
   showModal (modalArgs?: ModalArgs){
+    modalArgs && Object.assign(this,modalArgs);
     this.show = true;
     setTimeout( () => this.animated = true,100);
   }

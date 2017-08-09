@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {UserService} from '../common/user.service';
 import {HttpService} from '../service/http.service';
+import {User} from "../models/user";
 
 @Component({
   selector: 'app-header',
@@ -10,6 +11,8 @@ import {HttpService} from '../service/http.service';
 })
 export class HeaderComponent implements OnInit {
 
+  user: User;
+
   constructor(
     private router: Router,
     private userService: UserService,
@@ -17,13 +20,14 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.user = new User();
     if(!UserService.getAccessToken()){
       this.router.navigate(["login"]);
     }
     if ( !this.userService.user ) {
-      // this.userService.getCurUserInfo().then( (data) => {
-      //   console.log(data);
-      // } );
+      this.userService.getCurUserInfo().then( (user) => {
+        this.user = user;
+      } );
     }
   }
 
@@ -35,5 +39,4 @@ export class HeaderComponent implements OnInit {
       }
     } );
   }
-
 }
