@@ -1,20 +1,26 @@
 import { Injectable } from '@angular/core';
-import {Http, RequestOptionsArgs} from '@angular/http';
+import {Http, RequestOptionsArgs, RequestOptions} from '@angular/http';
 import {AppSettings} from '../app-settings';
+import {Router} from '@angular/router';
+import {UserService} from '../common/user.service';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/switchMap';
-import {Router} from '@angular/router';
 
 @Injectable()
 export class HttpService {
 
   constructor(
+    private user: UserService,
     private http: Http,
     private router: Router
   ) { }
 
   get(url: string, options?: RequestOptionsArgs): Promise<any> {
-    options = options || { withCredentials: true };
+    options = options || {};
+    const headers = new Headers();
+    headers.append('Access-Token', this.user.getAccessToken());
+    // const requestOptions = new RequestOptions({headers: headers});
+    requestOptions.merge(options);
     return this.http.get( AppSettings.API_ENDPOINT + url, options)
       .toPromise()
       .then( res => {
@@ -28,7 +34,6 @@ export class HttpService {
   }
 
   put(url: string, options: any): Promise<any> {
-    options = options || { withCredentials: true };
     return this.http.put( AppSettings.API_ENDPOINT + url, options)
       .toPromise()
       .then( res => {
