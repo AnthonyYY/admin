@@ -21,8 +21,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.user = new User();
-    if(!UserService.getAccessToken()){
-      this.router.navigate(["login"]);
+    if (!UserService.getAccessToken()) {
+      this.router.navigate(['login']);
     }
     if ( !this.userService.user ) {
       this.userService.getCurUserInfo().then( (user) => {
@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
 
   signOut() {
     this.http.get('auth/logout').then( data => {
-      if(data.success){
+      if ( data.success ) {
         this.userService.emptyUsrInfo();
         this.router.navigate(['/login']);
       }

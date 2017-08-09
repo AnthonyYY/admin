@@ -10,12 +10,14 @@ import {Syllabus} from '../models/syllabus';
 export class SyllabusComponent implements OnInit {
 
   syllabusTypes: object;
+  curSyllabus: Syllabus;
   syllabuses: Array<Syllabus>;
   constructor(
     private syllabusService: SyllabusService
   ) { }
 
   ngOnInit() {
+    this.curSyllabus = new Syllabus();
     this.syllabuses = [];
     this.syllabusTypes = {
       ONETOONE: '一对一课程',
@@ -23,9 +25,17 @@ export class SyllabusComponent implements OnInit {
       NORMALGROUP: '常规班'
     };
     this.syllabusService.fetchSyllabusList()
-      .then( data => {
-        this.syllabuses = data.data;
-        console.log(this.syllabuses);
+      .then( syllabuses => {
+        this.syllabuses = syllabuses;
       } );
+  }
+
+  removeSyllabus(id: string, $event): void {
+    $event.stopPropagation();
+    this.syllabusService.removeSyllabus(id).then(
+      (data) => {
+        console.log(data);
+      }
+    );
   }
 }

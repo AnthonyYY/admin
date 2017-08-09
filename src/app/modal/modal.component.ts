@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import * as $ from 'jquery';
-import {ModalArgs} from "./modal-args";
+import {ModalArgs} from './modal-args';
+import {ModalService} from './modal.service';
 
 @Component({
   selector: 'app-modal',
@@ -19,7 +19,10 @@ export class ModalComponent implements OnInit {
   public modalSize: 'lg' | 'md' | 'sm' | '';
   public modalConfirmText: string;
   public modalCancelText: string;
-  constructor() {}
+  public modalEventsSubscriber;
+  constructor(
+    private modalService: ModalService
+  ) {}
 
   ngOnInit() {
     this.show = false;
@@ -30,17 +33,20 @@ export class ModalComponent implements OnInit {
     this.modalConfirmText = '确定';
     this.modalCancelText = '取消';
     this.modalSize = 'md';
+    this.modalEventsSubscriber = this.modalService.modalEventSubject.subscribe({
+      next: (modalConfig: ModalArgs) => { this.showModal( modalConfig ); }
+    });
   }
 
-  confirm(){}
+  confirm(): void {}
 
-  showModal (modalArgs?: ModalArgs){
-    modalArgs && Object.assign(this,modalArgs);
+  showModal (modalArgs?: ModalArgs) {
+    if (modalArgs) { Object.assign(this, modalArgs); }
     this.show = true;
-    setTimeout( () => this.animated = true,100);
+    setTimeout( () => this.animated = true, 100);
   }
 
-  hideModal(){
+  hideModal(): void {
     this.ngOnInit();
   }
 }

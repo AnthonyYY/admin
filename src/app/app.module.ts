@@ -25,6 +25,7 @@ import { AlertComponent } from './alert/alert.component';
 import {UserService} from './common/user.service';
 import {SyllabusService} from './syllabus/syllabus.service';
 import { ModalComponent } from './modal/modal.component';
+import {ModalService} from './modal/modal.service';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,7 @@ import { ModalComponent } from './modal/modal.component';
     HttpModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [HttpService, UserService, SyllabusService],
+  providers: [HttpService, UserService, SyllabusService, ModalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

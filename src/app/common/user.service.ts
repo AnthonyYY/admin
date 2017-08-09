@@ -20,10 +20,10 @@ export class UserService {
   }
   getCurUserInfo(options?: RequestOptionsArgs) {
     return this.http.get('auth/user/info', options).then( data => {
-      if(data.success){
+      if ( data.success ) {
         this.user = data.data;
         return data.data;
-      }else{
+      } else {
         throw data.data;
       }
     } ).catch( err => {
@@ -31,7 +31,7 @@ export class UserService {
       return null;
     } );
   }
-  emptyUsrInfo(){
+  emptyUsrInfo(): void {
     this.user = null;
     UserService.removeAccessToken();
   }

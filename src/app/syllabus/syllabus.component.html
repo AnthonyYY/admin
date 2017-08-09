@@ -33,6 +33,7 @@
                       <th class="sorting" tabindex="0" rowspan="1" colspan="1">报名学生人数</th>
                       <th class="sorting" tabindex="0" rowspan="1" colspan="1">课次学生人数</th>
                       <th class="sorting" tabindex="0" rowspan="1" colspan="1">退课人数</th>
+                      <th class="sorting text-center" tabindex="0" rowspan="1" colspan="1">删除操作</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -46,7 +47,14 @@
                       <td>{{syllabus.selectedNum}}</td>
                       <td>{{syllabus.studentNum}}</td>
                       <td>{{syllabus.backNum}}</td>
+                      <td class="text-center">
+                        <button class="btn btn-danger btn-xs" (click)="removeSyllabus(syllabus.id,$event)">
+                          <i class="fa fa-trash"></i>
+                          删除
+                        </button>
+                      </td>
                     </tr>
+                    <tr *ngIf="syllabuses.length >= 1">没有相关课程信息</tr>
                   </tbody>
                 </table>
               </div>
@@ -88,6 +96,4 @@
   </div>
 </section>
 
-<app-modal #modal>
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aut blanditiis consequatur consequuntur ea, enim esse est expedita hic illum magnam magni nihil nostrum quaerat quod similique, sint sunt vel.
-</app-modal>
+<app-modal #modal></app-modal>

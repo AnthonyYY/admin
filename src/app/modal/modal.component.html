@@ -8,11 +8,11 @@
       </div>
       <div class="modal-body">
         <p>{{ content }}</p>
-        <ng-content></ng-content>
+        <ng-content *ngIf="!content"></ng-content>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn {{modalType == 'default'?'btn-default':'btn-outline'}} pull-left" (click)="hideModal()" [hidden]="!closeBtn">{{ modalConfirmText }}</button>
-        <button type="button" class="btn {{modalType == 'default'?'btn-primary':'btn-outline'}}" (click)="confirm();hideModal()">{{ modalCancelText }}</button>
+        <button type="button" class="btn {{modalType == 'default'?'btn-default':'btn-outline'}}" (click)="hideModal()" [style.display]="cancelBtn?'inline-block':'none'">{{ modalCancelText }}</button>
+        <button type="button" class="btn {{modalType == 'default'?'btn-primary':'btn-outline'}} pull-right" (click)="confirm();hideModal()">{{ modalConfirmText }}</button>
       </div>
     </div>
   </div>
