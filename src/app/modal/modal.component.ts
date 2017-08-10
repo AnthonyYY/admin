@@ -25,17 +25,21 @@ export class ModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.init();
+    this.modalEventsSubscriber = this.modalService.modalEventSubject.subscribe({
+      next: (modalConfig: ModalArgs) => { this.showModal( modalConfig ); }
+    });
+  }
+
+  init(){
     this.show = false;
-    this.animated = false;
+    this.animated = true;
     this.cancelBtn = true;
     this.closeBtn = true;
     this.modalType = 'default';
     this.modalConfirmText = '确定';
     this.modalCancelText = '取消';
-    this.modalSize = 'md';
-    this.modalEventsSubscriber = this.modalService.modalEventSubject.subscribe({
-      next: (modalConfig: ModalArgs) => { this.showModal( modalConfig ); }
-    });
+    this.modalSize = 'sm';
   }
 
   confirm(): void {}

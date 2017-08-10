@@ -3,11 +3,12 @@ export class Syllabus {
   name: string;
   price: number;
   schoolId: string;
+  studentNum: number;
+  studyHour: number;
   id?: string;
   backNum?: number;
   deleted?: boolean;
   selectedNum?: number;
-  studentNum?: number;
   updateTime?: number;
   createTime?: number;
 }

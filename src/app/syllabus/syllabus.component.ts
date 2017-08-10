@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterContentInit, AfterViewChecked, Component, OnInit} from '@angular/core';
 import {SyllabusService} from './syllabus.service';
 import {Syllabus} from '../models/syllabus';
 
@@ -7,7 +7,7 @@ import {Syllabus} from '../models/syllabus';
   templateUrl: './syllabus.component.html',
   styleUrls: ['./syllabus.component.less']
 })
-export class SyllabusComponent implements OnInit {
+export class SyllabusComponent implements OnInit ,AfterViewChecked{
 
   syllabusTypes: object;
   curSyllabus: Syllabus;
@@ -15,6 +15,11 @@ export class SyllabusComponent implements OnInit {
   constructor(
     private syllabusService: SyllabusService
   ) { }
+
+  ngAfterViewChecked(){
+    $('.select2').select2();
+    // console.log(1);
+  }
 
   ngOnInit() {
     this.curSyllabus = new Syllabus();

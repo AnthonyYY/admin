@@ -26,6 +26,8 @@ import {UserService} from './common/user.service';
 import {SyllabusService} from './syllabus/syllabus.service';
 import { ModalComponent } from './modal/modal.component';
 import {ModalService} from './modal/modal.service';
+import { ConfirmComponent } from './confirm/confirm.component';
+import {ConfirmService} from './confirm/confirm.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import {ModalService} from './modal/modal.service';
     RoleComponent,
     SchoolComponent,
     AlertComponent,
-    ModalComponent
+    ModalComponent,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +56,7 @@ import {ModalService} from './modal/modal.service';
     HttpModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [HttpService, UserService, SyllabusService, ModalService],
+  providers: [HttpService, UserService, SyllabusService, ModalService, ConfirmService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

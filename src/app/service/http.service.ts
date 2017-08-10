@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 import {UserService} from '../common/user.service';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/switchMap';
-import {ModalService} from '../modal/modal.service';
+import {ConfirmService} from '../confirm/confirm.service';
 
 @Injectable()
 export class HttpService {
@@ -13,7 +13,7 @@ export class HttpService {
   constructor(
     private http: Http,
     private router: Router,
-    private modalService: ModalService
+    private confirmService: ConfirmService
   ) {}
 
   static _createSpecOptions(options: RequestOptionsArgs) {
@@ -25,7 +25,7 @@ export class HttpService {
 
   private _handle401(status): void {
     if ( status === 401 ) {
-      this.modalService.modalEventSubject.next({
+      this.confirmService.confirmEventSubject.next({
         confirm: () => {
           this.router.navigate(['login']);
         },

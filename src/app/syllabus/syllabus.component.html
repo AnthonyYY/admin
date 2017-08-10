@@ -12,6 +12,10 @@
         <div class="box-header">
           <i class="fa fa-table"></i><h3 class="box-title">课程列表</h3>
           <div class="box-tools">
+            <div class="btn-group btn-group-sm pull-right syllabus-add-btn" (click)="modal.showModal({title: '添加新课程',modalSize: 'sm'})">
+              <button class="btn btn-primary"><i class="fa fa-plus"></i>添加新课程</button>
+            </div>
+
             <div class="input-group input-group-sm pull-right" style="width: 240px;">
               <input class="form-control" placeholder="搜索课程信息">
               <div class="input-group-btn">
@@ -54,7 +58,9 @@
                         </button>
                       </td>
                     </tr>
-                    <tr *ngIf="syllabuses.length >= 1">没有相关课程信息</tr>
+                    <tr *ngIf="syllabuses.length == 0">
+                      <td class="text-center" colspan="7">没有相关课程信息</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -96,4 +102,54 @@
   </div>
 </section>
 
-<app-modal #modal></app-modal>
+<app-modal #modal>
+  <form class="form-horizontal" name="courseForm">
+    <div class="box-body">
+      <div class="form-group">
+        <label for="courseType" class="col-xs-3 control-label">课程类型</label>
+        <div class="col-xs-9">
+          <select name="courseType" id="courseType" class="form-control select2 select2-hidden-accessible">
+            <option value="ONETOONE">一对一课程</option>
+            <option value="BOUTIQUEGROUP">精品小组</option>
+            <option value="NORMALGROUP">常规班</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="courseName" class="col-xs-3 control-label">课程名称</label>
+        <div class="col-xs-9">
+          <input type="text" id="courseName" name="courseName" class="form-control" placeholder="请输入课程名称" [(ngModel)]="curSyllabus.name">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="coursePrice" class="col-xs-3 control-label">课程价格</label>
+        <div class="col-xs-9">
+          <div class="input-group">
+            <input type="number" id="coursePrice" name="coursePrice" min="0" class="form-control" placeholder="请输入课程价格" [(ngModel)]="curSyllabus.price">
+            <span class="input-group-addon">元</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="courseDuration" class="col-xs-3 control-label">教学课时</label>
+        <div class="col-xs-9">
+          <div class="input-group">
+            <input type="number" id="courseDuration" name="coursePrice" min="0" class="form-control" placeholder="请输入课程时长" [(ngModel)]="curSyllabus.studyHour">
+            <span class="input-group-addon">时</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="courseAcceptStuCount" class="col-xs-3 control-label">招收人数</label>
+        <div class="col-xs-9">
+          <input type="number" id="courseAcceptStuCount" name="courseAcceptStuCount" class="form-control" placeholder="请输入招收人数" [(ngModel)]="curSyllabus.studentNum">
+        </div>
+      </div>
+
+    </div>
+  </form>
+</app-modal>
