@@ -3,7 +3,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" [hidden]="!closeBtn">
-          <span (click)="hideModal()">×</span></button>
+          <span (click)="hideModal()">×</span>
+        </button>
         <h4 class="modal-title">{{ title || '提示' }}</h4>
       </div>
       <div class="modal-body">
@@ -12,11 +13,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn {{modalType == 'default'?'btn-default':'btn-outline'}}" (click)="hideModal()" [style.display]="cancelBtn?'inline-block':'none'">{{ modalCancelText }}</button>
-        <button type="button" class="btn {{modalType == 'default'?'btn-primary':'btn-outline'}} pull-right" (click)="confirm();hideModal()">{{ modalConfirmText }}</button>
+        <button type="button" class="btn {{modalType == 'default'?'btn-primary':'btn-outline'}} pull-right" [disabled]="disabledAcceptBtn" (click)="confirm();hideModal()">{{ modalConfirmText }}</button>
       </div>
     </div>
   </div>
 </div>
-<script>
-
-</script>

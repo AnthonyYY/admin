@@ -7,20 +7,33 @@
 </section>
 <section class="content">
   <div class="row">
+
     <div class="col-xs-12">
+
+      <app-collapse-box [collapse]="false" [icon]="'filter'" [boxTitle]="'课程过滤'">
+        <div class="row">
+          <div class="col-xs-12 input-group-sm">
+            <label class="pull-left">
+              时间过滤:
+            </label>
+            <app-date-ranger-picker
+              [startTime]="'2017-01-01'"
+              (dateRangeSetEvent)="handleTimeRangeChange($event)"
+              class="pull-left"></app-date-ranger-picker>
+          </div>
+        </div>
+      </app-collapse-box>
+
       <div class="box box-primary">
         <div class="box-header">
           <i class="fa fa-table"></i><h3 class="box-title">课程列表</h3>
           <div class="box-tools">
-            <div class="btn-group btn-group-sm pull-right syllabus-add-btn" (click)="modal.showModal({title: '添加新课程',modalSize: 'sm'})">
+            <div class="btn-group btn-group-sm pull-right syllabus-add-btn" (click)="resetCurSyllabus();modal.showModal({
+                title: '添加新课程',
+                modalSize: 'sm',
+                confirm: saveSyllabus
+            })">
               <button class="btn btn-primary"><i class="fa fa-plus"></i>添加新课程</button>
-            </div>
-
-            <div class="input-group input-group-sm pull-right" style="width: 240px;">
-              <input class="form-control" placeholder="搜索课程信息">
-              <div class="input-group-btn">
-                <button class="btn btn-default"><i class="fa fa-search"></i></button>
-              </div>
             </div>
           </div>
         </div>
@@ -31,26 +44,31 @@
                 <table id="example2" class="table table-bordered table-hover dataTable">
                   <thead>
                     <tr role="row">
-                      <th class="sorting_desc" tabindex="0" rowspan="1" colspan="1">课程名称</th>
-                      <th class="sorting" tabindex="0" rowspan="1" colspan="1">课程价格</th>
-                      <th class="sorting" tabindex="0" rowspan="1" colspan="1">课程类型</th>
-                      <th class="sorting" tabindex="0" rowspan="1" colspan="1">报名学生人数</th>
-                      <th class="sorting" tabindex="0" rowspan="1" colspan="1">课次学生人数</th>
-                      <th class="sorting" tabindex="0" rowspan="1" colspan="1">退课人数</th>
-                      <th class="sorting text-center" tabindex="0" rowspan="1" colspan="1">删除操作</th>
+                      <th>课程名称</th>
+                      <th>课程价格</th>
+                      <th>课程类型</th>
+                      <th>教学课时</th>
+                      <th>报名人数</th>
+                      <th>招生人数</th>
+                      <th>退课人数</th>
+                      <th class="text-center">删除操作</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr
                       role="row"
-                      (click)="modal.showModal()"
-                      *ngFor="let syllabus of syllabuses; let i = index;" class="{{i%2 == 1 ? 'odd' : 'even'}}">
+                      *ngFor="let syllabus of syllabuses; let i = index;" class="{{i%2 == 1 ? 'odd' : 'even'}}"
+                      (click)="setCurSyllabus(syllabus);modal.showModal({
+                        title: '编辑课程:' + syllabus.name,
+                        confirm: saveSyllabus
+                      })">
                       <td>{{syllabus.name}}</td>
                       <td>{{syllabus.price}}</td>
-                      <td>{{syllabusTypes[syllabus.type]}}</td>
-                      <td>{{syllabus.selectedNum}}</td>
-                      <td>{{syllabus.studentNum}}</td>
-                      <td>{{syllabus.backNum}}</td>
+                      <td>{{syllabusTypesMap[syllabus.type]}}</td>
+                      <td>{{syllabus.studyHour || 0}}</td>
+                      <td>{{syllabus.selectedNum || 0}}</td>
+                      <td>{{syllabus.studentNum || 0}}</td>
+                      <td>{{syllabus.backNum || 0}}</td>
                       <td class="text-center">
                         <button class="btn btn-danger btn-xs" (click)="removeSyllabus(syllabus.id,$event)">
                           <i class="fa fa-trash"></i>
@@ -74,23 +92,14 @@
               <div class="col-sm-7">
                 <div class="dataTables_paginate paging_simple_numbers pull-right" id="example2_paginate">
                   <ul class="pagination">
-                    <li class="paginate_button previous" id="example2_previous"><a href="#" aria-controls="example2"
-                                                                                   data-dt-idx="0"
-                                                                                   tabindex="0">Previous</a></li>
-                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0">1</a>
-                    </li>
-                    <li class="paginate_button active"><a href="#" aria-controls="example2" data-dt-idx="2"
-                                                          tabindex="0">2</a></li>
-                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0">3</a>
-                    </li>
-                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0">4</a>
-                    </li>
-                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0">5</a>
-                    </li>
-                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0">6</a>
-                    </li>
-                    <li class="paginate_button next" id="example2_next"><a href="#" aria-controls="example2"
-                                                                           data-dt-idx="7" tabindex="0">Next</a></li>
+                    <li class="paginate_button previous" id="example2_previous"><a href="#" aria-controls="example2" data-dt-idx="0">Previous</a></li>
+                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="1">1</a></li>
+                    <li class="paginate_button active"><a href="#" aria-controls="example2" data-dt-idx="2">2</a></li>
+                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="3">3</a></li>
+                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="4">4</a></li>
+                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="5">5</a></li>
+                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="6">6</a></li>
+                    <li class="paginate_button next" id="example2_next"><a href="#" aria-controls="example2" data-dt-idx="7">Next</a></li>
                   </ul>
                 </div>
               </div>
@@ -102,17 +111,13 @@
   </div>
 </section>
 
-<app-modal #modal>
+<app-modal #modal [disabledAcceptBtn]="!(curSyllabus.name && curSyllabus.price && curSyllabus.studyHour)">
   <form class="form-horizontal" name="courseForm">
     <div class="box-body">
       <div class="form-group">
-        <label for="courseType" class="col-xs-3 control-label">课程类型</label>
+        <label class="col-xs-3 control-label">课程类型</label>
         <div class="col-xs-9">
-          <select name="courseType" id="courseType" class="form-control select2 select2-hidden-accessible">
-            <option value="ONETOONE">一对一课程</option>
-            <option value="BOUTIQUEGROUP">精品小组</option>
-            <option value="NORMALGROUP">常规班</option>
-          </select>
+          <select2 id="courseType" [value]="curSyllabus.type" [cssImport]="false" [width]="'100%'" [data]="syllabusTypes" (valueChanged)="switchSyllabusType($event)"></select2>
         </div>
       </div>
 
@@ -137,7 +142,7 @@
         <label for="courseDuration" class="col-xs-3 control-label">教学课时</label>
         <div class="col-xs-9">
           <div class="input-group">
-            <input type="number" id="courseDuration" name="coursePrice" min="0" class="form-control" placeholder="请输入课程时长" [(ngModel)]="curSyllabus.studyHour">
+            <input type="number" id="courseDuration" name="courseDuration" min="0" class="form-control" placeholder="教学课时" [(ngModel)]="curSyllabus.studyHour">
             <span class="input-group-addon">时</span>
           </div>
         </div>
@@ -149,7 +154,6 @@
           <input type="number" id="courseAcceptStuCount" name="courseAcceptStuCount" class="form-control" placeholder="请输入招收人数" [(ngModel)]="curSyllabus.studentNum">
         </div>
       </div>
-
     </div>
   </form>
 </app-modal>

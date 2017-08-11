@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { Select2Module } from 'ng2-select2';
 
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
@@ -28,6 +29,9 @@ import { ModalComponent } from './modal/modal.component';
 import {ModalService} from './modal/modal.service';
 import { ConfirmComponent } from './confirm/confirm.component';
 import {ConfirmService} from './confirm/confirm.service';
+import {AlertService} from './alert/alert.service';
+import { CollapseBoxComponent } from './collapse-box/collapse-box.component';
+import { DateRangerPickerComponent } from './date-ranger-picker/date-ranger-picker.component';
 
 @NgModule({
   declarations: [
@@ -48,15 +52,25 @@ import {ConfirmService} from './confirm/confirm.service';
     SchoolComponent,
     AlertComponent,
     ModalComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    CollapseBoxComponent,
+    DateRangerPickerComponent
   ],
   imports: [
+    Select2Module,
     BrowserModule,
     FormsModule,
     HttpModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [HttpService, UserService, SyllabusService, ModalService, ConfirmService],
+  providers: [
+    HttpService,
+    UserService,
+    SyllabusService,
+    ModalService,
+    ConfirmService,
+    AlertService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

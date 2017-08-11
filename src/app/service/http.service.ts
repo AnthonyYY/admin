@@ -37,33 +37,29 @@ export class HttpService {
     }
   }
 
+  static _successHandle(res) {
+    if ( res.status === 200 ) {
+      return {success: true, data: res.json().data};
+    }else {
+      return {success: false, data: null};
+    }
+  }
+
   get(url: string, options?: RequestOptionsArgs): Promise<any> {
     options = HttpService._createSpecOptions(options);
     return this.http.get( AppSettings.API_ENDPOINT + url, options)
       .toPromise()
-      .then( res => {
-        if ( res.status === 200 ) {
-          return {success: true, data: res.json().data};
-        }else {
-          return {success: false, data: null};
-        }
-      } )
+      .then( HttpService._successHandle )
       .catch( err => {
         this._handle401(err.status);
         return {success: false, data: null};
       } );
   }
-  put(url: string, options: any): Promise<any> {
+  put(url: string, body, options?: any): Promise<any> {
     options = HttpService._createSpecOptions(options);
-    return this.http.put( AppSettings.API_ENDPOINT + url, options)
+    return this.http.put( AppSettings.API_ENDPOINT + url, body ,options)
       .toPromise()
-      .then( res => {
-        if ( res.status === 200) {
-          return {success: true, data: res.json().data};
-        } else {
-          throw res;
-        }
-      } )
+      .then( HttpService._successHandle )
       .catch( err => {
         this._handle401(err.status);
         return {success: false, data: null};
@@ -73,13 +69,17 @@ export class HttpService {
     options = HttpService._createSpecOptions(options);
     return this.http.delete( AppSettings.API_ENDPOINT + url, options)
       .toPromise()
-      .then( res => {
-        if ( res.status === 200) {
-          return {success: true, data: res.json().data};
-        } else {
-          throw res;
-        }
-      } )
+      .then( HttpService._successHandle )
+      .catch( err => {
+        this._handle401(err.status);
+        return {success: false, data: null};
+      } );
+  }
+  post(url: string, body, options?: any): Promise<any> {
+    options = HttpService._createSpecOptions(options);
+    return this.http.post( AppSettings.API_ENDPOINT + url, body, options)
+      .toPromise()
+      .then( HttpService._successHandle )
       .catch( err => {
         this._handle401(err.status);
         return {success: false, data: null};

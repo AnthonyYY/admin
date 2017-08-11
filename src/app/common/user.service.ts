@@ -5,7 +5,7 @@ import {RequestOptionsArgs} from '@angular/http';
 
 @Injectable()
 export class UserService {
-  public user: User | null;
+  public user: User | null = new User();
   constructor(
     private http: HttpService
   ) { }
@@ -32,7 +32,7 @@ export class UserService {
     } );
   }
   emptyUsrInfo(): void {
-    this.user = null;
+    this.user = new User();
     UserService.removeAccessToken();
   }
 }

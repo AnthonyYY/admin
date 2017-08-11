@@ -1,12 +1,12 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import { Usr } from '../models/usr';
 import {Router} from '@angular/router';
 import {Http} from '@angular/http';
 import {AppSettings} from '../app-settings';
-import {AlertComponent} from '../alert/alert.component';
 import {UserService} from '../common/user.service';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/switchMap';
+import {AlertService} from '../alert/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -15,18 +15,16 @@ import 'rxjs/add/operator/switchMap';
 })
 export class LoginComponent implements OnInit {
   user: Usr;
-  @ViewChild(AlertComponent)
-  alertCmp: AlertComponent;
   constructor(
+    private alertService: AlertService,
     private router: Router,
     private http: Http,
     private userService: UserService
   ) { }
   ngOnInit() {
     this.user = new Usr('admin', 'admin');
-    if ( UserService.getAccessToken() ) {
-      this.userService.getCurUserInfo()
-      .then( success => success && this.router.navigate(["dashboard"]));
+    if(UserService.getAccessToken()){
+      this.userService.getCurUserInfo().then( success => success && this.router.navigate(["dashboard"]));
     }
   }
 
@@ -44,7 +42,10 @@ export class LoginComponent implements OnInit {
         }
       } )
       .catch( err => {
-        that.alertCmp.alert('warning', '登录失败', err.json().data);
+        that.alertService.alert({
+          type:'warning',
+          title: '登录失败',
+          content: err.json().data});
       } );
   }
 }

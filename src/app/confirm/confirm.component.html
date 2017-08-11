@@ -2,12 +2,16 @@
   <div class="modal-dialog modal-{{modalSize}} modal-{{modalType}}">
     <div class="modal-content">
       <div class="modal-header">
+        <button type="button" class="close" [hidden]="!closeBtn">
+          <span (click)="hideModal()">×</span>
+        </button>
         <h4 class="modal-title">{{ '提示' || title }}</h4>
       </div>
       <div class="modal-body">
         <p>{{ content }}</p>
       </div>
       <div class="modal-footer">
+        <button *ngIf="cancelBtn" type="button" class="btn {{modalType == 'default'?'btn-default':'btn-outline'}}" (click)="hideModal()">{{ modalCancelText }}</button>
         <button type="button" class="btn {{modalType == 'default'?'btn-primary':'btn-outline'}} pull-right" (click)="confirm();hideModal()">{{ modalConfirmText }}</button>
       </div>
     </div>

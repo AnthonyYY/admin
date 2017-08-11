@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import * as $ from 'jquery';
+import {AlertService} from './alert.service';
+import {AlertArgs} from './alert-args';
 
 @Component({
   selector: 'app-alert',
@@ -14,31 +15,27 @@ export class AlertComponent implements OnInit {
   content: string;
   duration: number;
   private t: any;
-  constructor() {
-    this.alert = this.alert.bind(this);
-  }
+  alertEventSubscriber;
+  constructor(
+    private alertService: AlertService
+  ) {}
   ngOnInit() {
     this.visible = false;
     this.dismissable = false;
-    this.duration = 3000;
+    this.duration = 2000;
+    this.alertEventSubscriber = this.alertService.alertEventSubject.subscribe( (config:AlertArgs) => {
+      this.alert(config);
+    } )
   }
 
-  alert(type: string, title: string, content: string, dismissable?: boolean, duration?: number): void {
+  alert(alertConfig: AlertArgs): void {
       const alertDom = $('#alert');
       if ( this.t ) {
         clearTimeout(this.t);
         alertDom.hide();
       }
       alertDom.show();
-      this.type = type;
-      this.title = title;
-      this.content = content;
-      if (dismissable) {
-        this.dismissable = dismissable;
-      }
-      if (duration) {
-        this.duration = duration;
-      }
+      Object.assign(this,alertConfig);
       this.t = setTimeout( () => {
         $('#alert').fadeOut();
       }, this.duration );

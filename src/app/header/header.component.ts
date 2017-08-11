@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.user = new User();
     if (!UserService.getAccessToken()) {
-      this.router.navigate(['login']);
+      return this.router.navigate(['login']);
     }
     if ( !this.userService.user ) {
       this.userService.getCurUserInfo().then( (user) => {

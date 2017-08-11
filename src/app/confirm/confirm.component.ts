@@ -21,7 +21,10 @@ export class ConfirmComponent extends ModalComponent implements OnInit{
 
   ngOnInit() {
     this.init();
-    this.confirmEventsSubscriber = this.confirmService.confirmEventSubject.subscribe({
+    this.confirmEventsSubscriber = this.confirmService.confirmEventSubject.
+    asObservable()
+    .debounceTime(300)
+    .subscribe({
       next: (modalConfig: ModalArgs) => { this.showModal( modalConfig ); }
     });
   }

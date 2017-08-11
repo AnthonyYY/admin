@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ModalArgs} from './modal-args';
 import {ModalService} from './modal.service';
 
@@ -9,6 +9,8 @@ import {ModalService} from './modal.service';
 })
 export class ModalComponent implements OnInit {
 
+  @Input()
+  public disabledAcceptBtn: boolean;
   public animated: boolean;
   public show: boolean;
   public cancelBtn: boolean;
