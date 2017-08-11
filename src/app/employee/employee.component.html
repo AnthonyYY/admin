@@ -1,3 +1,114 @@
-<p>
-  employee works!
-</p>
+<section class="content-header">
+  <h1>员工信息</h1>
+  <ol class="breadcrumb">
+    <li><a><i class="fa fa-dashboard"></i>基础信息管理</a></li>
+    <li class="active"><a><i class="fa fa-book"></i>员工信息</a></li>
+  </ol>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <app-collapse-box [collapse]="false" [icon]="'filter'" [boxTitle]="'员工过滤'"></app-collapse-box>
+
+      <div class="box box-info">
+        <div class="box-header">
+          <i class="fa fa-table"></i><h3 class="box-title">员工列表</h3>
+        </div>
+        <div class="box-body" style="border-top: 1px solid #dddddd;">
+          <div class="dataTables_wrapper form-inline dt-bootstrap">
+            <div class="row">
+              <div class="col-sm-12">
+                <table class="table table-bordered dataTable">
+                  <thead>
+                  <tr role="row">
+                    <th>课程名称</th>
+                    <th>课程价格</th>
+                    <th>课程类型</th>
+                    <th>教学课时</th>
+                    <th>报名人数</th>
+                    <th>招生人数</th>
+                    <th>退课人数</th>
+                    <th class="text-center">操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="8" class="box box-widget">
+                        <div class="box-header">
+                          <span>lorem</span>
+                          <span>lorem</span>
+                          <span>lorem</span>
+                          <span>lorem</span>
+                          <span>lorem</span>
+                          <span>lorem</span>
+                          <span>lorem</span>
+                          <span class="text-center">
+                            <button class="btn btn-xs btn-danger"><i class="fa fa-trash-o"></i>删除</button>
+                            <button data-widget="collapse" class="btn btn-xs btn-info"><i class="fa fa-plus"></i>更多</button>
+                          </span>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-xs-2 text-right">身份证号码:</div>
+                            <div class="col-xs-10">23987461329478130</div>
+                          </div>
+                          <div class="row">
+                            <div class="col-xs-2 text-right">毕业院校:</div>
+                            <div class="col-xs-10">啊是滴哦分好了哈佛啊</div>
+                          </div>
+                          <div class="row">
+                            <div class="col-xs-2 text-right">专业:</div>
+                            <div class="col-xs-10">啊是滴哦分好了哈佛啊</div>
+                          </div>
+                          <div class="row">
+                            <div class="col-xs-2 text-right">紧急联系人姓名:</div>
+                            <div class="col-xs-10">哦的撒</div>
+                          </div>
+                          <div class="row">
+                            <div class="col-xs-2 text-right">紧急联系人电话:</div>
+                            <div class="col-xs-10">983120741023</div>
+                          </div>
+                          <div class="row">
+                            <div class="col-xs-2 text-right">家庭住址:</div>
+                            <div class="col-xs-10">哦撒旦回复你啦可能就发</div>
+                          </div>
+                          <div class="row">
+                            <div class="col-xs-2 text-right">描述信息:</div>
+                            <div class="col-xs-10">哦阿斯蒂芬你哈地方了你白哦那就哦
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-5">
+                <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Showing 11 to 20 of 57
+                  entries
+                </div>
+              </div>
+              <div class="col-sm-7">
+                <div class="dataTables_paginate paging_simple_numbers pull-right" id="example2_paginate">
+                  <ul class="pagination">
+                    <li class="paginate_button previous" id="example2_previous"><a href="#" aria-controls="example2" data-dt-idx="0">Previous</a></li>
+                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="1">1</a></li>
+                    <li class="paginate_button active"><a href="#" aria-controls="example2" data-dt-idx="2">2</a></li>
+                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="3">3</a></li>
+                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="4">4</a></li>
+                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="5">5</a></li>
+                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="6">6</a></li>
+                    <li class="paginate_button next" id="example2_next"><a href="#" aria-controls="example2" data-dt-idx="7">Next</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
