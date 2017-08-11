@@ -11,15 +11,32 @@
     <div class="col-xs-12">
 
       <app-collapse-box [collapse]="false" [icon]="'filter'" [boxTitle]="'课程过滤'">
-        <div class="row">
-          <div class="col-xs-12 input-group-sm">
-            <label class="pull-left">
-              时间过滤:
-            </label>
-            <app-date-ranger-picker
-              [startTime]="'2017-01-01'"
-              (dateRangeSetEvent)="handleTimeRangeChange($event)"
-              class="pull-left"></app-date-ranger-picker>
+        <div class="col-xs-12 col-md-4 input-group-sm">
+          <label class="pull-left">
+            时间过滤:
+          </label>
+          <app-date-ranger-picker
+            [startTime]="syllabusFilter.timeRange.startTime"
+            (dateRangeSetEvent)="handleTimeRangeChange($event)"
+            class="pull-left"></app-date-ranger-picker>
+        </div>
+
+        <div class="col-xs-12 col-md-4 input-group-sm">
+          <label class="pull-left">
+            名称筛选:
+          </label>
+          <div class="input-group input-group-sm" style="width: 148px;">
+            <input type="text" class="form-control input-sm" placeholder="输入课程名称">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-md-4 input-group-sm">
+          <label class="pull-left">
+            类型筛选:
+          </label>
+          <div class="input-group input-group-sm" style="width: 148px;">
+            <select2 [cssImport]="false" [data]="[{id:'ALL',text:'全部'}].concat(syllabusTypes)" [width]="'148px'"></select2>
           </div>
         </div>
       </app-collapse-box>

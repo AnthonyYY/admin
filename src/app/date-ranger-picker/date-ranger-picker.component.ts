@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
@@ -8,12 +8,10 @@ import * as moment from 'moment';
 })
 export class DateRangerPickerComponent implements OnInit {
 
-  @Output()
-  dateRangeSetEvent: EventEmitter<{startTime: string, endTime: string}> = new EventEmitter();
-  @Output()
+  @Input()
   startTime: string;
   @Output()
-  endTime: string;
+  dateRangeSetEvent: EventEmitter<{startTime: string, endTime: string}> = new EventEmitter();
   constructor() { }
 
   ngOnInit() {
@@ -35,7 +33,7 @@ export class DateRangerPickerComponent implements OnInit {
         '本周': [moment().subtract(6, 'days'), moment()],
         '前30天': [moment().subtract(29, 'days'), moment()]
       },
-      startDate: '2017-01-01',
+      startDate: this.startTime,
       minDate: '2000-01-01'
     },(start, end, label) => {
       console.log(label);
