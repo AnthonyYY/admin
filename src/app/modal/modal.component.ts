@@ -17,7 +17,9 @@ export class ModalComponent implements OnInit {
   public closeBtn: boolean;
   public title: string;
   public content: string;
+  @Input()
   public modalType: string;
+  @Input()
   public modalSize: 'lg' | 'md' | 'sm' | '';
   public modalConfirmText: string;
   public modalCancelText: string;
@@ -33,15 +35,15 @@ export class ModalComponent implements OnInit {
     });
   }
 
-  init(){
+  init(): void {
     this.show = false;
     this.animated = true;
     this.cancelBtn = true;
     this.closeBtn = true;
-    this.modalType = 'default';
+    this.modalType = this.modalType ||  'default';
     this.modalConfirmText = '确定';
     this.modalCancelText = '取消';
-    this.modalSize = 'sm';
+    this.modalSize = this.modalSize || 'sm';
   }
 
   confirm(): void {}
@@ -49,7 +51,7 @@ export class ModalComponent implements OnInit {
   showModal (modalArgs?: ModalArgs) {
     if (modalArgs) { Object.assign(this, modalArgs); }
     this.show = true;
-    setTimeout( () => this.animated = true, 100);
+    setTimeout( () => this.animated = true, 200);
   }
 
   hideModal(): void {

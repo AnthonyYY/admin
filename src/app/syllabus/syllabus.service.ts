@@ -26,29 +26,29 @@ export class SyllabusService {
         this.alertService.alert({
           type: 'success',
           title: '提示',
-          content:'课程删除成功'
+          content: '课程删除成功'
         });
-      }else{
+      } else {
         this.alertService.alert({
           type: 'danger',
           title: '提示',
-          content:'课程删除失败'
+          content: '课程删除失败'
         });
         throw new Error('删除课程失败');
       }
     } );
   }
 
-  newSyllabus(syllabus: Syllabus): Promise<any>{
+  newSyllabus(syllabus: Syllabus): Promise<any> {
     return this.http.post( 'course', syllabus).then( data => {
-      if(data.success){
+      if (data.success) {
         this.alertService.alert({
           title: '提示',
           content: '课程创建成功',
           type: 'success'
         });
         return data.data.id;
-      }else{
+      } else {
         this.alertService.alert({
           title: '提示',
           content: '课程创建失败，请重试',
@@ -56,18 +56,18 @@ export class SyllabusService {
         });
         throw new Error('创建课程失败');
       }
-    } )
+    } );
   }
 
   updateSyllabus(syllabus: Syllabus) {
-    return this.http.put('course',syllabus).then( data => {
-      if(data.success){
+    return this.http.put('course', syllabus).then( data => {
+      if (data.success) {
         this.alertService.alert({
           type: 'success',
           title: '提示',
           content: '课程编辑成功',
-        })
-      }else{
+        });
+      } else {
         this.alertService.alert({
           type: 'danger',
           title: '提示',
@@ -75,7 +75,7 @@ export class SyllabusService {
         });
         throw new Error('课程编辑失败');
       }
-    } )
+    } );
   }
 
 }

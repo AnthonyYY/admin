@@ -32,6 +32,8 @@ import {ConfirmService} from './confirm/confirm.service';
 import {AlertService} from './alert/alert.service';
 import { CollapseBoxComponent } from './collapse-box/collapse-box.component';
 import { DateRangerPickerComponent } from './date-ranger-picker/date-ranger-picker.component';
+import {EmployeeService} from './employee/employee.service';
+import {StudentService} from './student/student.service';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,9 @@ import { DateRangerPickerComponent } from './date-ranger-picker/date-ranger-pick
     SyllabusService,
     ModalService,
     ConfirmService,
-    AlertService
+    AlertService,
+    EmployeeService,
+    StudentService
   ],
   bootstrap: [AppComponent]
 })

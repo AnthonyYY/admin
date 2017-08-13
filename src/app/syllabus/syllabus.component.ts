@@ -30,12 +30,12 @@ export class SyllabusComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.syllabusTypesMap = {NORMALGROUP:'常规班',ONETOONE:'一对一课程',BOUTIQUEGROUP:'精品小组'};
+    this.syllabusTypesMap = {NORMALGROUP: '常规班', ONETOONE: '一对一课程', BOUTIQUEGROUP: '精品小组'};
     this.syllabuses = [];
     this.syllabusTypes = [
       {
         id: 'NORMALGROUP',
-        text:'常规班'
+        text: '常规班'
       },
       {
         id: 'ONETOONE',
@@ -46,7 +46,7 @@ export class SyllabusComponent implements OnInit {
         text: '精品小组'
       }
     ];
-    this.syllabusFilter = {name:'',timeRange:{startTime: moment().format('YYYY')+'-01-01', endTime: moment().format('YYYY-MM-DD') }};
+    this.syllabusFilter = {name: '', timeRange: {startTime: moment().format('YYYY') + '-01-01', endTime: moment().format('YYYY-MM-DD') }};
     this.resetCurSyllabus();
     this.syllabusService.fetchSyllabusList()
       .then( syllabuses => {
@@ -54,28 +54,28 @@ export class SyllabusComponent implements OnInit {
       } );
   }
 
-  handleTimeRangeChange(value){
+  handleTimeRangeChange(value): void {
     console.log(value);
     this.syllabusFilter.timeRange = value;
   }
 
-  switchSyllabusType($event){
+  switchSyllabusType($event): void {
     this.curSyllabus.type = $event.value;
   }
 
-  findSyllabusById(id: string): Syllabus{
+  findSyllabusById(id: string): Syllabus {
     return this.syllabuses.find( syllabus => {
       return syllabus.id === id;
-    } )
+    } );
   }
 
-  resetCurSyllabus(){
+  resetCurSyllabus(): void {
     this.curSyllabus = new Syllabus();
     this.curSyllabus.type = 'ONETOONE';
     this.curSyllabus.schoolId = this.userService.user.schoolId;
   }
 
-  setCurSyllabus(syllabus){
+  setCurSyllabus(syllabus): void {
     this.curSyllabus = {...syllabus};
   }
 
@@ -95,28 +95,28 @@ export class SyllabusComponent implements OnInit {
           () => {
             this.syllabuses.splice(toRemoveIndex, 1);
           }
-        )
+        );
       }
     });
   }
 
-  newSyllabus(){
+  newSyllabus(): void {
     this.syllabusService.newSyllabus(this.curSyllabus).then( newSyllabusId => {
       this.curSyllabus.id = newSyllabusId;
       this.syllabuses.unshift({...this.curSyllabus});
-    } )
+    } );
   }
 
   updateSyllabus() {
-    this.syllabusService.updateSyllabus(this.curSyllabus).then( data => {
+    this.syllabusService.updateSyllabus(this.curSyllabus).then(() => {
       const toUpdateSyllabus = this.findSyllabusById(this.curSyllabus.id);
       const toUpdateSyllabusIndex = this.syllabuses.indexOf(toUpdateSyllabus);
       this.syllabuses[toUpdateSyllabusIndex] = this.curSyllabus;
       this.syllabuses = [...this.syllabuses];
-    } )
+    });
   }
 
-  saveSyllabus(){
-    !this.curSyllabus.id ? this.newSyllabus(): this.updateSyllabus();
+  saveSyllabus(): void {
+    !this.curSyllabus.id ? this.newSyllabus() : this.updateSyllabus();
   }
 }
