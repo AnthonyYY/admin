@@ -1,3 +1,56 @@
-<p>
-  schools works!
-</p>
+<app-content-header
+  [title]="'用户列表'" [menus]="contentHeader"></app-content-header>
+<div class="content">
+  <div class="box box-info">
+    <div class="box-header with-border">
+      <h3 class="box-title"><i class="fa fa-building-o"></i> 学校列表</h3>
+      <div class="box-tools">
+        <div class="btn-group btn-group-sm">
+          <button class="btn btn-primary" (click)="setCurSchool({name: '', remark: ''});schoolModal.showModal({
+            title: '添加校区信息'
+          })">
+            <i class="fa fa-plus"></i>
+            创建新校区
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="box-body">
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let school of schools">
+            <div class="box box-primary box-solid ">
+              <div class="box-header with-border">
+                <h4 class="box-title">{{ school.name }}</h4>
+                <div class="box-tools">
+                  <button class="btn btn-box-tool" (click)="setCurSchool(school);schoolModal.showModal({
+                    title: '编辑校区信息'
+                  })">
+                    <i class="fa fa-sliders"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="box-body">{{ school.remark }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal #schoolModal [disabledAcceptBtn]="">
+  <div class="form-group clearfix">
+    <label for="schoolName" class="control-label col-xs-3">学校名称:</label>
+    <div class="col-xs-9">
+      <input [(ngModel)]="curSchool.name" id="schoolName" class="form-control" placeholder="请填写校区名称">
+    </div>
+  </div>
+
+  <div class="form-group clearfix">
+    <label for="schoolRemark" class="control-label col-xs-3">备注信息:</label>
+    <div class="col-xs-9">
+      <textarea id="schoolRemark" class="form-control" rows="3" placeholder="校区信息" [(ngModel)]="curSchool.remark"></textarea>
+    </div>
+  </div>
+</app-modal>

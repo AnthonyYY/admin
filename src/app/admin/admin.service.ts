@@ -44,4 +44,24 @@ export class AdminService {
     } );
   }
 
+  setRoleType(body): Promise<any> {
+    return this.http.put('admin/user/role', body).then( data => {
+      console.log(data);
+      if (data.success) {
+        this.alertService.alert({
+          title: '提示',
+          content: '角色类型已更新',
+          type: 'success'
+        });
+      } else {
+        this.alertService.alert({
+          title: '提示',
+          content: '角色类型已失败',
+          type: 'danger'
+        });
+      }
+      return data.data;
+    } );
+  }
+
 }

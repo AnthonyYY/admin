@@ -14,7 +14,7 @@
               <tr>
                 <th>姓名</th>
                 <th>电话</th>
-                <th>角色ID</th>
+                <th>角色类型</th>
                 <th>用户类型</th>
                 <th>最后登录时间</th>
                 <th>最后登录IP</th>
@@ -26,9 +26,9 @@
                 <tr *ngFor="let user of users">
                   <td>{{ user.name }}</td>
                   <td>{{ user.phone }}</td>
-                  <td>{{ user.roleId }}</td>
-                  <td>{{ user.userType }}</td>
-                  <td>{{ user.lastLoginTime | date: 'yyyy-MM-dd' }}</td>
+                  <td>{{ roles[user.roleId] }}</td>
+                  <td>{{ user.userType === 'ADMIN' ? '系统管理员' : '员工' }}</td>
+                  <td>{{ user.lastLoginTime | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
                   <td>{{ user.lastLoginIp }}</td>
                   <td>{{ user.username }}</td>
                   <td class="text-center">
@@ -41,17 +41,6 @@
                         <ul class="dropdown-menu dropdown-menu-right">
                           <li class="text-center"
                             (click)="setCurUsr(user);
-                            passwordmodal.showModal({
-                              modalSize: 'md',
-                              hasFooter: false,
-                              title: curUsr.username + ' 的用户密码'
-                            })">
-                            <a href="javascript:void(0)">
-                              <i class="fa fa-eye"></i>查看密码
-                            </a>
-                          </li>
-                          <li class="text-center"
-                            (click)="setCurUsr(user);
                             clearPassword();
                             passwordModifyModal.showModal({
                               title: '设置新密码 ' + curUsr.username,
@@ -61,7 +50,12 @@
                               <i class="fa fa-key"></i>修改密码
                             </a>
                           </li>
-                          <li class="text-center">
+                          <li class="text-center"
+                              (click)="setCurRoleId(user);
+                              roleSwitchModal.showModal({
+                                title: '修改用户类型',
+                                confirm: saveCurRoleId
+                              })">
                             <a href="javascript:void(0)">
                               <i class="fa fa-edit"></i>编辑角色
                             </a>
@@ -80,20 +74,6 @@
     </div>
   </div>
 </div>
-
-<app-modal #passwordmodal>
-  <div class="input-group">
-    <input id="password" readonly type="text" class="form-control text-center" [(value)]="curUsr.password">
-    <span class="input-group-addon"
-          data-toggle="tooltip"
-          data-placement="top"
-          title="点击复制"
-          style="cursor: pointer;"
-          onclick="document.getElementById('password').select();document.execCommand('copy');">
-      <i class="fa fa-clipboard"></i>
-    </span>
-  </div>
-</app-modal>
 
 <app-modal #passwordModifyModal
    [disabledAcceptBtn]="!newPassword.password ||
@@ -124,6 +104,14 @@
   </div>
 </app-modal>
 
-<app-modal #roleModal>
-  <input type="text">
+<app-modal #roleSwitchModal>
+  <div class="form-group">
+    <select2 id="courseType"
+             [value]="curUsr.roleId"
+             [cssImport]="false"
+             [width]="'100%'"
+             (valueChanged)="switchRoleId($event)"
+             [options]="{minimumResultsForSearch: -1}"
+             [data]="roleList"></select2>
+  </div>
 </app-modal>

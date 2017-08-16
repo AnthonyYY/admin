@@ -33,7 +33,6 @@ export class HeaderComponent implements OnInit {
           this.roleService.navigateByRole(user.roleId);
         } );
     }
-    this.roleService.fetchRoleEnums();
   }
 
   signOut() {

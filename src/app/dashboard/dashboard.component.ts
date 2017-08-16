@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {RoleService} from '../common/role.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private roleService: RoleService
+  ) { }
 
   ngOnInit() {
+    this.roleService.fetchRoleEnums();
   }
 
 }

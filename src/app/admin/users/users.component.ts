@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Sidebar} from '../../sidebar/sidebar';
 import {AdminService} from '../admin.service';
 import {User} from '../../models/user';
+import {RoleService} from '../../common/role.service';
 
 @Component({
   selector: 'app-users',
@@ -12,11 +13,17 @@ export class UsersComponent implements OnInit {
   contentHeader: Sidebar[];
   users: User[];
   curUsr: User;
+  curRoleId: string;
+  roles: object;
+  roleList: Array<any> = [{id: 1, text: 12}];
   newPassword: {id: string, password: string, rePassword: string};
   constructor(
-    private adminService: AdminService
+    private adminService: AdminService,
+    private roleService: RoleService
   ) {
     this.setNewPassword = this.setNewPassword.bind(this);
+    this.setCurUsr = this.setCurUsr.bind(this);
+    this.saveCurRoleId = this.saveCurRoleId.bind(this);
   }
 
   ngOnInit() {
@@ -24,15 +31,44 @@ export class UsersComponent implements OnInit {
       {name: '主页', icon: 'fa-dashboard'},
       {name: '用户列表页', icon: 'fa-users'}
     ];
+    this.roles = this.roleService.roles;
+    setTimeout(() => {
+      this.roleList = this.roleService.roleList;
+      console.log(this.roleList);
+    }, 1000);
     this.curUsr = new User();
     this.newPassword = {id: '', password: '', rePassword: ''};
     this.fetchUserList();
+  }
+  findUsrById(id): User {
+    return this.users.find( user => {
+      return user.id === id;
+    } );
   }
   clearPassword(): void {
     this.newPassword = {id: '', password: '', rePassword: ''};
   }
   setCurUsr(user: User): void {
     this.curUsr = {...user};
+  }
+  setCurRoleId(user): void {
+    this.setCurUsr(user);
+    this.curRoleId = this.curUsr.roleId;
+  }
+  switchRoleId($event): void {
+    this.curRoleId = $event.value;
+  }
+  saveCurRoleId(): void {
+    this.curUsr.roleId = this.curRoleId;
+    this.adminService.setRoleType({
+      id: this.curUsr.id,
+      roleList: [this.curUsr.roleId],
+    }).then( (result) => {
+      console.log(result);
+    } );
+    const curUsr = this.findUsrById(this.curUsr.id);
+    const curUsrIdx = this.users.indexOf(curUsr);
+    this.users[curUsrIdx].roleId = this.curUsr.roleId;
   }
   setNewPassword(): void {
     const curUsrId = this.curUsr.id;

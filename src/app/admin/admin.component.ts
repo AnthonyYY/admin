@@ -12,12 +12,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class AdminComponent implements OnInit {
 
   sidebarMenu: Array<Sidebar>;
-  contentHeader: Array<Sidebar>;
   schools: Array<School>;
-  constructor(
-    private schoolService: SchoolService,
-    private router: Router
-  ) { }
+  constructor() { }
 
   ngOnInit() {
     this.sidebarMenu = [
@@ -32,9 +28,5 @@ export class AdminComponent implements OnInit {
         icon: 'fa-building'
       },
     ];
-    this.schoolService.fetchSchoolList().then( schools => {
-      this.schools = schools;
-    } );
   }
-
 }
