@@ -8,4 +8,5 @@ export interface ModalArgs {
   modalConfirmText?: string;
   modalCancelText?: string;
   size?: 'lg' | 'md' | 'sm' | '';
+  hasFooter?: boolean;
 }

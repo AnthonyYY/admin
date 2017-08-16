@@ -23,25 +23,26 @@ export class HttpService {
     return requestOptions.merge(options || {});
   }
 
+  static _successHandle(res) {
+    if ( res.status === 200 ) {
+      return {success: true, data: res.json().data};
+    }else {
+      return {success: false, data: null};
+    }
+  }
+
   private _handle401(status): void {
     if ( status === 401 ) {
       this.confirmService.confirmEventSubject.next({
         confirm: () => {
           this.router.navigate(['login']);
+          UserService.removeAccessToken();
         },
         content: '登陆超时，请重新登陆',
         modalType: 'danger',
         closeBtn: false,
         cancelBtn: false
       });
-    }
-  }
-
-  static _successHandle(res) {
-    if ( res.status === 200 ) {
-      return {success: true, data: res.json().data};
-    }else {
-      return {success: false, data: null};
     }
   }
 

@@ -2,7 +2,7 @@ export class User {
   name: string;
   password: string;
   phone: string;
-  userType: 'ADMIN' | 'EMPLOYEE';
+  userType: string;
   username: string;
   entityId: string;
   roleId: string;

@@ -6,9 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./role.component.less']
 })
 export class RoleComponent implements OnInit {
-
-  constructor() { }
-
+  constructor() {}
   ngOnInit() {
   }
 

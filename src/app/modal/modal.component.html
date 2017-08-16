@@ -11,7 +11,7 @@
         <p>{{ content }}</p>
         <ng-content *ngIf="!content"></ng-content>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" *ngIf="hasFooter">
         <button type="button" class="btn {{modalType == 'default'?'btn-default':'btn-outline'}}" (click)="hideModal()" [style.display]="cancelBtn?'inline-block':'none'">{{ modalCancelText }}</button>
         <button type="button" class="btn {{modalType == 'default'?'btn-primary':'btn-outline'}} pull-right" [disabled]="disabledAcceptBtn" (click)="confirm();hideModal()">{{ modalConfirmText }}</button>
       </div>

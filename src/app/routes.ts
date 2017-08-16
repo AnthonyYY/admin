@@ -1,15 +1,16 @@
 import {Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
-import {BasicInfoComponent} from './basic-info/basic-info.component';
 import {AuditComponent} from './audit/audit.component';
 import {PermissionComponent} from './permission/permission.component';
-import {SyllabusComponent} from './syllabus/syllabus.component';
 import {EmployeeComponent} from './employee/employee.component';
 import {StudentComponent} from './student/student.component';
 import {UserComponent} from './user/user.component';
 import {RoleComponent} from './role/role.component';
 import {SchoolComponent} from './school/school.component';
+import {AdminComponent} from './admin/admin.component';
+import {UsersComponent} from './admin/users/users.component';
+import {SchoolsComponent} from './admin/schools/schools.component';
 
 export const routes: Routes = [
   {
@@ -22,22 +23,21 @@ export const routes: Routes = [
     component: DashboardComponent,
     children: [
       {
-        path: '',
-        redirectTo: 'basic-info',
-        pathMatch: 'full'
-      },
-      {
-        path: 'basic-info',
-        component: BasicInfoComponent,
+        path: 'admin',
+        component: AdminComponent,
         children: [
           {
             path: '',
-            redirectTo: 'syllabus',
+            redirectTo: 'users',
             pathMatch: 'full'
           },
           {
-            path: 'syllabus',
-            component: SyllabusComponent
+            path: 'users',
+            component: UsersComponent,
+          },
+          {
+            path: 'schools',
+            component: SchoolsComponent
           },
           {
             path: 'employees',

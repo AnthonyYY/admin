@@ -34,6 +34,14 @@ import { CollapseBoxComponent } from './collapse-box/collapse-box.component';
 import { DateRangerPickerComponent } from './date-ranger-picker/date-ranger-picker.component';
 import {EmployeeService} from './employee/employee.service';
 import {StudentService} from './student/student.service';
+import { AdminComponent } from './admin/admin.component';
+import {RoleService} from './common/role.service';
+import {SchoolService} from './common/school.service';
+import { ContentHeaderComponent } from './content-header/content-header.component';
+import { UsersComponent } from './admin/users/users.component';
+import { SchoolsComponent } from './admin/schools/schools.component';
+import {AdminService} from './admin/admin.service';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -56,14 +64,19 @@ import {StudentService} from './student/student.service';
     ModalComponent,
     ConfirmComponent,
     CollapseBoxComponent,
-    DateRangerPickerComponent
+    DateRangerPickerComponent,
+    AdminComponent,
+    ContentHeaderComponent,
+    UsersComponent,
+    SchoolsComponent,
+    PaginationComponent
   ],
   imports: [
     Select2Module,
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, {useHash: true})
   ],
   providers: [
     HttpService,
@@ -73,7 +86,10 @@ import {StudentService} from './student/student.service';
     ConfirmService,
     AlertService,
     EmployeeService,
-    StudentService
+    StudentService,
+    RoleService,
+    SchoolService,
+    AdminService
   ],
   bootstrap: [AppComponent]
 })

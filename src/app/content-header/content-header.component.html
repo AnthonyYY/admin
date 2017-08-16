@@ -1,0 +1,13 @@
+<section class="content-header">
+  <h1>
+    {{ title }}
+    <small>{{ subTitle }}</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li *ngFor="let menu of menus;let idx=index" [class.active]="(menus.length-1) == idx">
+      <a href="javascript: void(0)">
+        <i class="fa {{menu.icon}}"></i>{{menu.name}}
+      </a>
+    </li>
+  </ol>
+</section>

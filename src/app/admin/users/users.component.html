@@ -1,0 +1,129 @@
+<app-content-header
+  [title]="'用户列表'" [menus]="contentHeader"></app-content-header>
+<div class="content">
+  <div class="box box-info">
+    <div class="box-header">
+      <i class="fa fa-table"></i><h3 class="box-title">用户列表</h3>
+    </div>
+    <div class="box-body" style="border-top: 1px solid #dddddd;">
+      <div class="dataTables_wrapper form-inline dt-bootstrap">
+        <div class="row">
+          <div class="col-sm-12">
+            <table class="table table-bordered table-hover dataTable">
+              <thead>
+              <tr>
+                <th>姓名</th>
+                <th>电话</th>
+                <th>角色ID</th>
+                <th>用户类型</th>
+                <th>最后登录时间</th>
+                <th>最后登录IP</th>
+                <th>用户名</th>
+                <th class="text-center">相关操作</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users">
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.phone }}</td>
+                  <td>{{ user.roleId }}</td>
+                  <td>{{ user.userType }}</td>
+                  <td>{{ user.lastLoginTime | date: 'yyyy-MM-dd' }}</td>
+                  <td>{{ user.lastLoginIp }}</td>
+                  <td>{{ user.username }}</td>
+                  <td class="text-center">
+                    <div class="dropdown btn-group btn-group-sm">
+                      <div class="btn-group btn-group-xs">
+                        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                          操作
+                          <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                          <li class="text-center"
+                            (click)="setCurUsr(user);
+                            passwordmodal.showModal({
+                              modalSize: 'md',
+                              hasFooter: false,
+                              title: curUsr.username + ' 的用户密码'
+                            })">
+                            <a href="javascript:void(0)">
+                              <i class="fa fa-eye"></i>查看密码
+                            </a>
+                          </li>
+                          <li class="text-center"
+                            (click)="setCurUsr(user);
+                            clearPassword();
+                            passwordModifyModal.showModal({
+                              title: '设置新密码 ' + curUsr.username,
+                              confirm: setNewPassword
+                            })">
+                            <a href="javascript:void(0)">
+                              <i class="fa fa-key"></i>修改密码
+                            </a>
+                          </li>
+                          <li class="text-center">
+                            <a href="javascript:void(0)">
+                              <i class="fa fa-edit"></i>编辑角色
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <app-pagination></app-pagination>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal #passwordmodal>
+  <div class="input-group">
+    <input id="password" readonly type="text" class="form-control text-center" [(value)]="curUsr.password">
+    <span class="input-group-addon"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="点击复制"
+          style="cursor: pointer;"
+          onclick="document.getElementById('password').select();document.execCommand('copy');">
+      <i class="fa fa-clipboard"></i>
+    </span>
+  </div>
+</app-modal>
+
+<app-modal #passwordModifyModal
+   [disabledAcceptBtn]="!newPassword.password ||
+   !newPassword.rePassword ||
+   (newPassword.password !== newPassword.rePassword)">
+  <div class="form-group clearfix">
+    <label for="newPassword" class="control-label col-sm-3">新密码:</label>
+    <div class="col-sm-9">
+      <input type="password"
+             id="newPassword"
+             name="newPassword"
+             class="form-control"
+             [(ngModel)]="newPassword.password"
+             placeholder="新密码">
+    </div>
+  </div>
+
+  <div class="form-group clearfix">
+    <label for="newRePassword" class="control-label col-sm-3">再次输入:</label>
+    <div class="col-sm-9">
+      <input type="password"
+             id="newRePassword"
+             name="newRePassword"
+             class="form-control"
+             [(ngModel)]="newPassword.rePassword"
+             placeholder="再次输入新密码">
+    </div>
+  </div>
+</app-modal>
+
+<app-modal #roleModal>
+  <input type="text">
+</app-modal>

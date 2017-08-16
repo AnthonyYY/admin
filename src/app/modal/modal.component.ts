@@ -22,6 +22,7 @@ export class ModalComponent implements OnInit {
   @Input()
   public modalSize: 'lg' | 'md' | 'sm' | '';
   public modalConfirmText: string;
+  public hasFooter: boolean;
   public modalCancelText: string;
   public modalEventsSubscriber;
   constructor(
@@ -43,6 +44,7 @@ export class ModalComponent implements OnInit {
     this.modalType = this.modalType ||  'default';
     this.modalConfirmText = '确定';
     this.modalCancelText = '取消';
+    this.hasFooter = true;
     this.modalSize = this.modalSize || 'sm';
   }
 

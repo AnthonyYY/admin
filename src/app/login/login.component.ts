@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   ) { }
   ngOnInit() {
     this.user = new Usr('admin', 'admin');
-    if(UserService.getAccessToken()){
+    if (UserService.getAccessToken()) {
       this.userService.getCurUserInfo().then( success => success && this.router.navigate(["dashboard"]));
     }
   }
@@ -36,14 +36,16 @@ export class LoginComponent implements OnInit {
         const data = res.json();
         if ( data.status === true ) {
           UserService.saveAccessToken(data.data.accessToken);
-          this.router.navigate(['dashboard']);
+          setTimeout(() => {
+            this.router.navigate(['dashboard']);
+          });
         }else {
           throw res;
         }
       } )
       .catch( err => {
         that.alertService.alert({
-          type:'warning',
+          type: 'warning',
           title: '登录失败',
           content: err.json().data});
       } );

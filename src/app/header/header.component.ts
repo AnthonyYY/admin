@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {UserService} from '../common/user.service';
 import {HttpService} from '../service/http.service';
-import {User} from "../models/user";
+import {User} from '../models/user';
+import {RoleService} from '../common/role.service';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private userService: UserService,
-    private http: HttpService
+    private http: HttpService,
+    private roleService: RoleService,
   ) { }
 
   ngOnInit() {
@@ -24,11 +26,14 @@ export class HeaderComponent implements OnInit {
     if (!UserService.getAccessToken()) {
       return this.router.navigate(['login']);
     }
-    if ( !this.userService.user ) {
-      this.userService.getCurUserInfo().then( (user) => {
-        this.user = user;
-      } );
+    if ( !this.userService.user.name ) {
+      this.userService.getCurUserInfo()
+        .then( user => {
+          this.user = user;
+          this.roleService.navigateByRole(user.roleId);
+        } );
     }
+    this.roleService.fetchRoleEnums();
   }
 
   signOut() {
