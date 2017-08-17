@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ConsultantMainService} from '../consultant-main.service';
 import {UnallocatedStudent} from '../unallocated-student';
 import {Sidebar} from '../../sidebar/sidebar';
+import {Student} from '../student';
 
 @Component({
   selector: 'app-unallocated-students',
@@ -12,6 +13,7 @@ export class UnallocatedStudentsComponent implements OnInit {
 
   unAllocatedStudents: UnallocatedStudent[];
   curUnallocatedStudent: UnallocatedStudent;
+  curStudent: Student;
   contentHeader: Sidebar[];
   constructor(
     private consultantService: ConsultantMainService
@@ -20,6 +22,7 @@ export class UnallocatedStudentsComponent implements OnInit {
   ngOnInit() {
     this.fetchUnallocatedStudents();
     this.curUnallocatedStudent = new UnallocatedStudent();
+    this.curStudent = new Student();
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
       {name: '学生列表页', icon: 'fa-users'}

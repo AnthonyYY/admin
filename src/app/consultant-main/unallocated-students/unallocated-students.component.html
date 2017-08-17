@@ -12,7 +12,8 @@
               modalSize: 'lg',
               title: '添加学生'
           })">
-            <i class="fa fa-plus">创建学生</i>
+            <i class="fa fa-plus"> 创建学生</i>
+            <i class="fa fa-plus"> 创建学生</i>
           </button>
         </div>
       </div>
@@ -27,15 +28,15 @@
         <div class="form-group clearfix">
           <label for="name" class="control-label col-xs-2">姓名</label>
           <div class="col-xs-10">
-            <input class="form-control" id="name" name="name" placeholder="学生姓名" [(ngModel)]="curUnallocatedStudent.name">
+            <input class="form-control" id="name" name="name" placeholder="学生姓名" [(ngModel)]="curStudent.name">
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group clearfix">
           <label for="gender" class="control-label col-xs-2">性别</label>
           <div class="col-xs-10">
             <select2 id="gender"
-                     [value]="curUnallocatedStudent.sex"
+                     [value]="curStudent.sex"
                      [cssImport]="false"
                      [width]="'100%'"
                      (valueChanged)="switchGender($event)"
@@ -47,14 +48,21 @@
         <div class="form-group clearfix">
           <label for="phone" class="control-label col-xs-2">电话</label>
           <div class="col-xs-10">
-            <input type="tel" class="form-control" id="phone" name="phone" placeholder="电话姓名" [(ngModel)]="curUnallocatedStudent.phone">
+            <input type="tel" class="form-control" id="phone" name="phone" placeholder="电话姓名" [(ngModel)]="curStudent.phone">
           </div>
         </div>
 
         <div class="form-group clearfix">
           <label for="grade" class="control-label col-xs-2">年级</label>
           <div class="col-xs-10">
-            <input type="tel" class="form-control" id="grade" name="grade" placeholder="学生年级" [(ngModel)]="curUnallocatedStudent.grade">
+            <input type="tel" class="form-control" id="grade" name="grade" placeholder="学生年级" [(ngModel)]="curStudent.grade">
+          </div>
+        </div>
+
+        <div class="form-group clearfix">
+          <label for="birthday" class="control-label col-xs-2">生日</label>
+          <div class="col-xs-10">
+            <input type="tel" class="form-control" id="birthday" name="birthday" placeholder="出生日期" [(ngModel)]="curStudent.birthday">
           </div>
         </div>
       </div>
