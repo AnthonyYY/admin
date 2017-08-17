@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
     private userService: UserService
   ) { }
   ngOnInit() {
-    this.user = new Usr('admin', 'admin');
+    this.user = new Usr('', '');
     if (UserService.getAccessToken()) {
       this.userService.getCurUserInfo().then( success => success && this.router.navigate(["dashboard"]));
     }
