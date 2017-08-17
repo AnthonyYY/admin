@@ -17,7 +17,7 @@ export class RoleService {
   fetchRoleEnums(): void {
     this.http.get('common/role').then( data => {
       if (data.success) {
-        data.data.forEach( (role, index) => {
+        data.data.forEach( (role ) => {
           role['text'] = role['roleName'];
           role['id'] = role['roleId'];
           this.roles[role.roleId] = role.roleName;
@@ -25,7 +25,7 @@ export class RoleService {
         this.roleList.push(...data.data);
         this.roles = data.data;
       } else {
-        throw Error('获取角色列表失败');
+        this.alertService.alert({title: '提示', content: '角色列表获取失败', type: 'danger'});
       }
     } );
   }

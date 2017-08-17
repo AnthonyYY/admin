@@ -19,7 +19,6 @@ import { EmployeeComponent } from './employee/employee.component';
 import { StudentComponent } from './student/student.component';
 import { UserComponent } from './user/user.component';
 import { RoleComponent } from './role/role.component';
-import { SchoolComponent } from './school/school.component';
 import {HttpModule} from '@angular/http';
 import {HttpService} from './service/http.service';
 import { AlertComponent } from './alert/alert.component';
@@ -42,6 +41,8 @@ import { UsersComponent } from './admin/users/users.component';
 import { SchoolsComponent } from './admin/schools/schools.component';
 import {AdminService} from './admin/admin.service';
 import { PaginationComponent } from './pagination/pagination.component';
+import { TimeRangePipe } from './common/time-range.pipe';
+import { MatchItemPipe } from './common/match-item.pipe';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,6 @@ import { PaginationComponent } from './pagination/pagination.component';
     StudentComponent,
     UserComponent,
     RoleComponent,
-    SchoolComponent,
     AlertComponent,
     ModalComponent,
     ConfirmComponent,
@@ -69,7 +69,9 @@ import { PaginationComponent } from './pagination/pagination.component';
     ContentHeaderComponent,
     UsersComponent,
     SchoolsComponent,
-    PaginationComponent
+    PaginationComponent,
+    TimeRangePipe,
+    MatchItemPipe
   ],
   imports: [
     Select2Module,

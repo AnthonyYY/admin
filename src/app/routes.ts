@@ -7,7 +7,6 @@ import {EmployeeComponent} from './employee/employee.component';
 import {StudentComponent} from './student/student.component';
 import {UserComponent} from './user/user.component';
 import {RoleComponent} from './role/role.component';
-import {SchoolComponent} from './school/school.component';
 import {AdminComponent} from './admin/admin.component';
 import {UsersComponent} from './admin/users/users.component';
 import {SchoolsComponent} from './admin/schools/schools.component';
@@ -28,7 +27,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'schools',
+            redirectTo: 'users',
             pathMatch: 'full'
           },
           {
@@ -54,10 +53,6 @@ export const routes: Routes = [
           {
             path: 'roles',
             component: RoleComponent
-          },
-          {
-            path: 'schools',
-            component: SchoolComponent
           }
         ]
       },

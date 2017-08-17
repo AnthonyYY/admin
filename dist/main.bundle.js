@@ -16,7 +16,7 @@ webpackEmptyContext.id = "../../../../../src async recursive";
 /***/ "../../../../../src/app/admin/admin.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-sidebar [sidebarMenu]=\"sidebarMenu\"></app-sidebar>\n<div class=\"content-wrapper\">\n  <router-outlet></router-outlet>\n</div>\n"
+module.exports = "<app-sidebar [sidebarMenu]=\"sidebarMenu\"></app-sidebar>\r\n<div class=\"content-wrapper\">\r\n  <router-outlet></router-outlet>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -43,8 +43,6 @@ module.exports = module.exports.toString();
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_school_service__ = __webpack_require__("../../../../../src/app/common/school.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -56,15 +54,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-
-
 var AdminComponent = (function () {
-    function AdminComponent(schoolService, router) {
-        this.schoolService = schoolService;
-        this.router = router;
+    function AdminComponent() {
     }
     AdminComponent.prototype.ngOnInit = function () {
-        var _this = this;
         this.sidebarMenu = [
             {
                 name: '用户列表',
@@ -77,9 +70,6 @@ var AdminComponent = (function () {
                 icon: 'fa-building'
             },
         ];
-        this.schoolService.fetchSchoolList().then(function (schools) {
-            _this.schools = schools;
-        });
     };
     return AdminComponent;
 }());
@@ -89,10 +79,9 @@ AdminComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/admin/admin.component.html"),
         styles: [__webpack_require__("../../../../../src/app/admin/admin.component.less")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__common_school_service__["a" /* SchoolService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__common_school_service__["a" /* SchoolService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [])
 ], AdminComponent);
 
-var _a, _b;
 //# sourceMappingURL=admin.component.js.map
 
 /***/ }),
@@ -158,6 +147,69 @@ var AdminService = (function () {
             }
         });
     };
+    AdminService.prototype.setRoleType = function (body) {
+        var _this = this;
+        return this.http.put('admin/user/role', body).then(function (data) {
+            console.log(data);
+            if (data.success) {
+                _this.alertService.alert({
+                    title: '提示',
+                    content: '角色类型已更新',
+                    type: 'success'
+                });
+            }
+            else {
+                _this.alertService.alert({
+                    title: '提示',
+                    content: '角色类型已失败',
+                    type: 'danger'
+                });
+            }
+            return data.data;
+        });
+    };
+    AdminService.prototype.updateSchoolInfo = function (body) {
+        var _this = this;
+        return this.http.put('admin/school/', body).then(function (data) {
+            if (data.success) {
+                _this.alertService.alert({
+                    title: '提示',
+                    content: '校区信息已更新',
+                    type: 'success'
+                });
+                return data.data;
+            }
+            else {
+                _this.alertService.alert({
+                    title: '提示',
+                    content: '更新校区信息失败',
+                    type: 'danger'
+                });
+                throw Error('更新校区信息失败');
+            }
+        });
+    };
+    AdminService.prototype.addSchool = function (body) {
+        var _this = this;
+        return this.http.post('admin/school', body).then(function (data) {
+            if (data.success) {
+                _this.alertService.alert({
+                    title: '提示',
+                    content: '成功添加新校区' + body.name,
+                    type: 'success'
+                });
+                return data.data;
+            }
+            else {
+                _this.alertService.alert({
+                    title: '提示',
+                    content: '添加校区信息失败',
+                    type: 'danger'
+                });
+                throw Error('添加校区信息失败');
+            }
+        });
+    };
     return AdminService;
 }());
 AdminService = __decorate([
@@ -173,7 +225,7 @@ var _a, _b;
 /***/ "../../../../../src/app/admin/schools/schools.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  schools works!\n</p>\n"
+module.exports = "<app-content-header\r\n  [title]=\"'用户列表'\" [menus]=\"contentHeader\"></app-content-header>\r\n<div class=\"content\">\r\n\r\n  <app-collapse-box [collapse]=\"false\" [icon]=\"'filter'\" [boxTitle]=\"'校区过滤'\">\r\n    <div class=\"col-xs-12 col-md-4 input-group-sm\">\r\n      <label class=\"pull-left\">\r\n        创建时间:\r\n      </label>\r\n      <app-date-ranger-picker\r\n        [startTime]=\"schoolCreatedFilterTime.start\"\r\n        (dateRangeSetEvent)=\"handleTimeRangeChange($event)\"\r\n        class=\"pull-left\"></app-date-ranger-picker>\r\n    </div>\r\n\r\n    <div class=\"col-xs-12 col-md-4 input-group-sm\">\r\n      <label class=\"pull-left\">\r\n        校区名称:\r\n      </label>\r\n      <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\r\n        <input type=\"text\" class=\"form-control input-sm\" [(ngModel)]=\"schoolFilterName\" placeholder=\"输入校区名称\">\r\n        <span class=\"input-group-addon\"><i class=\"fa fa-search\"></i></span>\r\n      </div>\r\n    </div>\r\n  </app-collapse-box>\r\n\r\n  <div class=\"box box-primary\">\r\n    <div class=\"box-header with-border\">\r\n      <h3 class=\"box-title\"><i class=\"fa fa-building-o\"></i> 学校列表</h3>\r\n      <div class=\"box-tools\">\r\n        <div class=\"btn-group btn-group-sm\">\r\n          <button class=\"btn btn-primary\"\r\n          (click)=\"setCurSchool({name: '', remark: ''});\r\n            schoolModal.showModal({\r\n              title: '添加校区信息',\r\n              confirm: addSchool\r\n          })\">\r\n            <i class=\"fa fa-plus\"></i>\r\n            创建新校区\r\n          </button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"box-body\">\r\n      <p class=\"text-info text-center\" *ngIf=\"!schools\">暂无校区信息</p>\r\n      <div class=\"col-xs-12\">\r\n        <div class=\"row\">\r\n          <div class=\"col-xs-12 col-sm-6 col-md-4 col-lg-3\" *ngFor=\"let school of schools | timeRange: schoolCreatedFilterTime | matchItem: schoolFilterName:'name'\">\r\n            <div class=\"box box-primary box-solid \">\r\n              <div class=\"box-header with-border\">\r\n                <h4 class=\"box-title\">{{ school.name }}</h4>\r\n                <div class=\"box-tools\">\r\n                  <button class=\"btn btn-box-tool\" (click)=\"setCurSchool(school);schoolModal.showModal({\r\n                    title: '编辑校区信息',\r\n                    confirm: updateSchoolInfo\r\n                  })\">\r\n                    <i class=\"fa fa-sliders\"></i>\r\n                  </button>\r\n                </div>\r\n              </div>\r\n              <div class=\"box-body\">{{ school.remark }}</div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n<app-modal #schoolModal [disabledAcceptBtn]=\"\">\r\n  <div class=\"form-group clearfix\">\r\n    <label for=\"schoolName\" class=\"control-label col-xs-3\">学校名称:</label>\r\n    <div class=\"col-xs-9\">\r\n      <input [(ngModel)]=\"curSchool.name\" id=\"schoolName\" class=\"form-control\" placeholder=\"请填写校区名称\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"form-group clearfix\">\r\n    <label for=\"schoolRemark\" class=\"control-label col-xs-3\">备注信息:</label>\r\n    <div class=\"col-xs-9\">\r\n      <textarea id=\"schoolRemark\" class=\"form-control\" rows=\"3\" placeholder=\"校区信息\" [(ngModel)]=\"curSchool.remark\"></textarea>\r\n    </div>\r\n  </div>\r\n</app-modal>\r\n"
 
 /***/ }),
 
@@ -185,7 +237,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".box.box-solid {\n  cursor: pointer;\n  transition: box-shadow 0.2s ease, margin 0.2s ease;\n}\n.box.box-solid .box-body {\n  height: 5em;\n}\n.box.box-solid:hover {\n  position: relative;\n  box-shadow: 0 0 6px #9e9e9e, 0 0 6px #9e9e9e;\n  margin-top: -3px;\n  margin-bottom: 23px;\n}\napp-modal .form-group label {\n  margin-top: 6px;\n}\n", ""]);
 
 // exports
 
@@ -200,7 +252,17 @@ module.exports = module.exports.toString();
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_school_service__ = __webpack_require__("../../../../../src/app/common/school.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__admin_service__ = __webpack_require__("../../../../../src/app/admin/admin.service.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SchoolsComponent; });
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -211,10 +273,65 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var SchoolsComponent = (function () {
-    function SchoolsComponent() {
+    function SchoolsComponent(schoolService, adminService) {
+        this.schoolService = schoolService;
+        this.adminService = adminService;
+        this.updateSchoolInfo = this.updateSchoolInfo.bind(this);
+        this.addSchool = this.addSchool.bind(this);
     }
     SchoolsComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.contentHeader = [
+            { name: '主页', icon: 'fa-dashboard' },
+            { name: '校区列表页', icon: 'fa-building' }
+        ];
+        this.schoolService.fetchSchoolList().then(function (schools) {
+            _this.schools = schools;
+        });
+        this.curSchool = { remark: '', name: '', id: '' };
+        this.schoolCreatedFilterTime = {
+            start: new Date(new Date().getFullYear() + '-01-01').getTime(),
+            end: Infinity
+        };
+        this.schoolFilterName = '';
+    };
+    SchoolsComponent.prototype.findSchoolById = function (id) {
+        return this.schools.find(function (school) {
+            return id === school.id;
+        });
+    };
+    SchoolsComponent.prototype.setCurSchool = function (school) {
+        this.curSchool = __assign({}, school);
+    };
+    SchoolsComponent.prototype.updateSchoolInfo = function () {
+        var _this = this;
+        var body = {
+            id: this.curSchool.id,
+            name: this.curSchool.name,
+            remark: this.curSchool.remark
+        };
+        this.adminService.updateSchoolInfo(body).then(function (data) {
+            var curSchool = _this.findSchoolById(_this.curSchool.id);
+            curSchool.name = _this.curSchool.name;
+            curSchool.remark = _this.curSchool.remark;
+        });
+    };
+    SchoolsComponent.prototype.addSchool = function () {
+        var _this = this;
+        this.adminService.addSchool(this.curSchool).then(function (data) {
+            _this.schools.unshift(__assign({}, _this.curSchool, { createTime: Date.now(), id: data.id }));
+        });
+    };
+    /* handle school list filter */
+    SchoolsComponent.prototype.handleTimeRangeChange = function ($event) {
+        this.schoolCreatedFilterTime = {
+            start: $event.start,
+            end: $event.end,
+        };
+        this.schoolCreatedFilterTime = __assign({}, this.schoolCreatedFilterTime);
     };
     return SchoolsComponent;
 }());
@@ -224,9 +341,10 @@ SchoolsComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/admin/schools/schools.component.html"),
         styles: [__webpack_require__("../../../../../src/app/admin/schools/schools.component.less")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__common_school_service__["a" /* SchoolService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__common_school_service__["a" /* SchoolService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__admin_service__["a" /* AdminService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__admin_service__["a" /* AdminService */]) === "function" && _b || Object])
 ], SchoolsComponent);
 
+var _a, _b;
 //# sourceMappingURL=schools.component.js.map
 
 /***/ }),
@@ -234,7 +352,7 @@ SchoolsComponent = __decorate([
 /***/ "../../../../../src/app/admin/users/users.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-content-header\n  [title]=\"'用户列表'\" [menus]=\"contentHeader\"></app-content-header>\n<div class=\"content\">\n  <div class=\"box box-info\">\n    <div class=\"box-header\">\n      <i class=\"fa fa-table\"></i><h3 class=\"box-title\">用户列表</h3>\n    </div>\n    <div class=\"box-body\" style=\"border-top: 1px solid #dddddd;\">\n      <div class=\"dataTables_wrapper form-inline dt-bootstrap\">\n        <div class=\"row\">\n          <div class=\"col-sm-12\">\n            <table class=\"table table-bordered table-hover dataTable\">\n              <thead>\n              <tr>\n                <th>姓名</th>\n                <th>电话</th>\n                <th>角色ID</th>\n                <th>用户类型</th>\n                <th>最后登录时间</th>\n                <th>最后登录IP</th>\n                <th>用户名</th>\n                <th class=\"text-center\">相关操作</th>\n              </tr>\n              </thead>\n              <tbody>\n                <tr *ngFor=\"let user of users\">\n                  <td>{{ user.name }}</td>\n                  <td>{{ user.phone }}</td>\n                  <td>{{ user.roleId }}</td>\n                  <td>{{ user.userType }}</td>\n                  <td>{{ user.lastLoginTime | date: 'yyyy-MM-dd' }}</td>\n                  <td>{{ user.lastLoginIp }}</td>\n                  <td>{{ user.username }}</td>\n                  <td class=\"text-center\">\n                    <div class=\"dropdown btn-group btn-group-sm\">\n                      <div class=\"btn-group btn-group-xs\">\n                        <button class=\"btn btn-primary dropdown-toggle\" data-toggle=\"dropdown\">\n                          操作\n                          <span class=\"caret\"></span>\n                        </button>\n                        <ul class=\"dropdown-menu dropdown-menu-right\">\n                          <li class=\"text-center\"\n                            (click)=\"setCurUsr(user);\n                            passwordmodal.showModal({\n                              modalSize: 'md',\n                              hasFooter: false,\n                              title: curUsr.username + ' 的用户密码'\n                            })\">\n                            <a href=\"javascript:void(0)\">\n                              <i class=\"fa fa-eye\"></i>查看密码\n                            </a>\n                          </li>\n                          <li class=\"text-center\"\n                            (click)=\"setCurUsr(user);\n                            clearPassword();\n                            passwordModifyModal.showModal({\n                              title: '设置新密码 ' + curUsr.username,\n                              confirm: setNewPassword\n                            })\">\n                            <a href=\"javascript:void(0)\">\n                              <i class=\"fa fa-key\"></i>修改密码\n                            </a>\n                          </li>\n                          <li class=\"text-center\">\n                            <a href=\"javascript:void(0)\">\n                              <i class=\"fa fa-edit\"></i>编辑角色\n                            </a>\n                          </li>\n                        </ul>\n                      </div>\n                    </div>\n                  </td>\n                </tr>\n              </tbody>\n            </table>\n          </div>\n        </div>\n        <app-pagination></app-pagination>\n      </div>\n    </div>\n  </div>\n</div>\n\n<app-modal #passwordmodal>\n  <div class=\"input-group\">\n    <input id=\"password\" readonly type=\"text\" class=\"form-control text-center\" [(value)]=\"curUsr.password\">\n    <span class=\"input-group-addon\"\n          data-toggle=\"tooltip\"\n          data-placement=\"top\"\n          title=\"点击复制\"\n          style=\"cursor: pointer;\"\n          onclick=\"document.getElementById('password').select();document.execCommand('copy');\">\n      <i class=\"fa fa-clipboard\"></i>\n    </span>\n  </div>\n</app-modal>\n\n<app-modal #passwordModifyModal\n   [disabledAcceptBtn]=\"!newPassword.password ||\n   !newPassword.rePassword ||\n   (newPassword.password !== newPassword.rePassword)\">\n  <div class=\"form-group clearfix\">\n    <label for=\"newPassword\" class=\"control-label col-sm-3\">新密码:</label>\n    <div class=\"col-sm-9\">\n      <input type=\"password\"\n             id=\"newPassword\"\n             name=\"newPassword\"\n             class=\"form-control\"\n             [(ngModel)]=\"newPassword.password\"\n             placeholder=\"新密码\">\n    </div>\n  </div>\n\n  <div class=\"form-group clearfix\">\n    <label for=\"newRePassword\" class=\"control-label col-sm-3\">再次输入:</label>\n    <div class=\"col-sm-9\">\n      <input type=\"password\"\n             id=\"newRePassword\"\n             name=\"newRePassword\"\n             class=\"form-control\"\n             [(ngModel)]=\"newPassword.rePassword\"\n             placeholder=\"再次输入新密码\">\n    </div>\n  </div>\n</app-modal>\n\n<app-modal #roleModal>\n  <input type=\"text\">\n</app-modal>\n"
+module.exports = "<app-content-header\r\n  [title]=\"'用户列表'\" [menus]=\"contentHeader\"></app-content-header>\r\n<div class=\"content\">\r\n\r\n  <app-collapse-box [collapse]=\"false\" [icon]=\"'filter'\" [boxTitle]=\"'用户过滤'\">\r\n    <div class=\"col-xs-12 col-md-4 input-group-sm\">\r\n      <label class=\"pull-left\">\r\n        创建时间:\r\n      </label>\r\n      <app-date-ranger-picker\r\n        [startTime]=\"userCreatedFilterTime.start\"\r\n        (dateRangeSetEvent)=\"handleTimeRangeChange($event)\"\r\n        class=\"pull-left\"></app-date-ranger-picker>\r\n    </div>\r\n\r\n    <div class=\"col-xs-12 col-md-4 input-group-sm\">\r\n      <label class=\"pull-left\">\r\n        类型筛选:\r\n      </label>\r\n      <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\r\n        <select2 (valueChanged)=\"switchFilterRoleId($event)\" [cssImport]=\"false\" [options]=\"{minimumResultsForSearch: -1}\" [data]=\"[{id:'',text:'全部'}].concat(rolesList)\" [width]=\"'148px'\"></select2>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"col-xs-12 col-md-4 input-group-sm\">\r\n      <label class=\"pull-left\">\r\n        用户姓名:\r\n      </label>\r\n      <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\r\n        <input type=\"text\" class=\"form-control input-sm\" [(ngModel)]=\"userFilterName\" placeholder=\"输入用户名称\">\r\n        <span class=\"input-group-addon\"><i class=\"fa fa-search\"></i></span>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"col-xs-12 col-md-4 input-group-sm\">\r\n      <label class=\"pull-left\">\r\n        用户名:\r\n      </label>\r\n      <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\r\n        <input type=\"text\" class=\"form-control input-sm\" [(ngModel)]=\"userFilterUserName\" placeholder=\"输入用户名\">\r\n        <span class=\"input-group-addon\"><i class=\"fa fa-search\"></i></span>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"col-xs-12 col-md-4 input-group-sm\">\r\n      <label class=\"pull-left\">\r\n        电话:\r\n      </label>\r\n      <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\r\n        <input type=\"text\" class=\"form-control input-sm\" [(ngModel)]=\"userFilterUserPhone\" placeholder=\"输入电话号码\">\r\n        <span class=\"input-group-addon\"><i class=\"fa fa-search\"></i></span>\r\n      </div>\r\n    </div>\r\n  </app-collapse-box>\r\n\r\n  <div class=\"box box-primary\">\r\n    <div class=\"box-header\">\r\n      <i class=\"fa fa-table\"></i><h3 class=\"box-title\">用户列表</h3>\r\n    </div>\r\n    <div class=\"box-body\" style=\"border-top: 1px solid #dddddd;\">\r\n      <div class=\"dataTables_wrapper form-inline dt-bootstrap\">\r\n        <div class=\"row\">\r\n          <div class=\"col-sm-12\">\r\n            <table class=\"table table-bordered table-hover dataTable\">\r\n              <thead>\r\n              <tr>\r\n                <th>姓名</th>\r\n                <th>电话</th>\r\n                <th>角色类型</th>\r\n                <th>用户类型</th>\r\n                <th>最后登录时间</th>\r\n                <th>最后登录IP</th>\r\n                <th>用户名</th>\r\n                <th class=\"text-center\">相关操作</th>\r\n              </tr>\r\n              </thead>\r\n              <tbody>\r\n                <tr *ngFor=\"let user of users |\r\n                  timeRange: userCreatedFilterTime |\r\n                  matchItem: userFilterName : 'name' |\r\n                  matchItem: userFilterUserName : 'username' |\r\n                  matchItem: userFilterUserPhone : 'phone' |\r\n                  matchItem: userFilterUserRoleId : 'roleId' \" >\r\n                  <td>{{ user.name }}</td>\r\n                  <td>{{ user.phone }}</td>\r\n                  <td>{{ roles[user.roleId] }}</td>\r\n                  <td>{{ user.userType === 'ADMIN' ? '系统管理员' : '员工' }}</td>\r\n                  <td>{{ user.lastLoginTime | date: 'yyyy-MM-dd HH:mm:ss' }}</td>\r\n                  <td>{{ user.lastLoginIp }}</td>\r\n                  <td>{{ user.username }}</td>\r\n                  <td class=\"text-center\">\r\n                    <div class=\"dropdown btn-group btn-group-sm\">\r\n                      <div class=\"btn-group btn-group-xs\">\r\n                        <button class=\"btn btn-primary dropdown-toggle\" data-toggle=\"dropdown\">\r\n                          操作\r\n                          <span class=\"caret\"></span>\r\n                        </button>\r\n                        <ul class=\"dropdown-menu dropdown-menu-right\">\r\n                          <li class=\"text-center\"\r\n                            (click)=\"setCurUsr(user);\r\n                            clearPassword();\r\n                            passwordModifyModal.showModal({\r\n                              title: '设置新密码 ' + curUsr.username,\r\n                              confirm: setNewPassword\r\n                            })\">\r\n                            <a href=\"javascript:void(0)\">\r\n                              <i class=\"fa fa-key\"></i>修改密码\r\n                            </a>\r\n                          </li>\r\n                          <li class=\"text-center\"\r\n                              (click)=\"setCurRoleId(user);\r\n                              roleSwitchModal.showModal({\r\n                                title: '修改用户类型',\r\n                                confirm: saveCurRoleId\r\n                              })\">\r\n                            <a href=\"javascript:void(0)\">\r\n                              <i class=\"fa fa-edit\"></i>编辑角色\r\n                            </a>\r\n                          </li>\r\n                        </ul>\r\n                      </div>\r\n                    </div>\r\n                  </td>\r\n                </tr>\r\n              </tbody>\r\n            </table>\r\n          </div>\r\n        </div>\r\n        <app-pagination></app-pagination>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n<app-modal #passwordModifyModal\r\n   [disabledAcceptBtn]=\"!newPassword.password ||\r\n   !newPassword.rePassword ||\r\n   (newPassword.password !== newPassword.rePassword)\">\r\n  <div class=\"form-group clearfix\">\r\n    <label for=\"newPassword\" class=\"control-label col-sm-3\">新密码:</label>\r\n    <div class=\"col-sm-9\">\r\n      <input type=\"password\"\r\n             id=\"newPassword\"\r\n             name=\"newPassword\"\r\n             class=\"form-control\"\r\n             [(ngModel)]=\"newPassword.password\"\r\n             placeholder=\"新密码\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"form-group clearfix\">\r\n    <label for=\"newRePassword\" class=\"control-label col-sm-3\">再次输入:</label>\r\n    <div class=\"col-sm-9\">\r\n      <input type=\"password\"\r\n             id=\"newRePassword\"\r\n             name=\"newRePassword\"\r\n             class=\"form-control\"\r\n             [(ngModel)]=\"newPassword.rePassword\"\r\n             placeholder=\"再次输入新密码\">\r\n    </div>\r\n  </div>\r\n</app-modal>\r\n\r\n<app-modal #roleSwitchModal>\r\n  <div class=\"form-group\">\r\n    <select2 id=\"courseType\"\r\n             [value]=\"curUsr.roleId\"\r\n             [cssImport]=\"false\"\r\n             [width]=\"'100%'\"\r\n             (valueChanged)=\"switchRoleId($event)\"\r\n             [options]=\"{minimumResultsForSearch: -1}\"\r\n             [data]=\"roleList\"></select2>\r\n  </div>\r\n</app-modal>\r\n"
 
 /***/ }),
 
@@ -263,6 +381,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__admin_service__ = __webpack_require__("../../../../../src/app/admin/admin.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_user__ = __webpack_require__("../../../../../src/app/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_role_service__ = __webpack_require__("../../../../../src/app/common/role.service.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersComponent; });
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -284,25 +403,69 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var UsersComponent = (function () {
-    function UsersComponent(adminService) {
+    function UsersComponent(adminService, roleService) {
         this.adminService = adminService;
+        this.roleService = roleService;
+        this.roleList = [{ id: 1, text: 12 }];
         this.setNewPassword = this.setNewPassword.bind(this);
+        this.setCurUsr = this.setCurUsr.bind(this);
+        this.saveCurRoleId = this.saveCurRoleId.bind(this);
     }
     UsersComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.rolesList = this.roleService.roleList;
         this.contentHeader = [
             { name: '主页', icon: 'fa-dashboard' },
             { name: '用户列表页', icon: 'fa-users' }
         ];
+        this.roles = this.roleService.roles;
+        setTimeout(function () {
+            _this.roleList = _this.roleService.roleList;
+            console.log(_this.roleList);
+        }, 1000);
         this.curUsr = new __WEBPACK_IMPORTED_MODULE_2__models_user__["a" /* User */]();
         this.newPassword = { id: '', password: '', rePassword: '' };
         this.fetchUserList();
+        this.userCreatedFilterTime = {
+            start: new Date(new Date().getFullYear() + '-01-01').getTime(),
+            end: Infinity
+        };
+        this.userFilterName = '';
+        this.userFilterUserName = '';
+        this.userFilterUserPhone = '';
+        this.userFilterUserRoleId = '';
+    };
+    UsersComponent.prototype.findUsrById = function (id) {
+        return this.users.find(function (user) {
+            return user.id === id;
+        });
     };
     UsersComponent.prototype.clearPassword = function () {
         this.newPassword = { id: '', password: '', rePassword: '' };
     };
     UsersComponent.prototype.setCurUsr = function (user) {
         this.curUsr = __assign({}, user);
+    };
+    UsersComponent.prototype.setCurRoleId = function (user) {
+        this.setCurUsr(user);
+        this.curRoleId = this.curUsr.roleId;
+    };
+    UsersComponent.prototype.switchRoleId = function ($event) {
+        this.curRoleId = $event.value;
+    };
+    UsersComponent.prototype.saveCurRoleId = function () {
+        this.curUsr.roleId = this.curRoleId;
+        this.adminService.setRoleType({
+            id: this.curUsr.id,
+            roleList: [this.curUsr.roleId],
+        }).then(function (result) {
+            console.log(result);
+        });
+        var curUsr = this.findUsrById(this.curUsr.id);
+        var curUsrIdx = this.users.indexOf(curUsr);
+        this.users[curUsrIdx].roleId = this.curUsr.roleId;
     };
     UsersComponent.prototype.setNewPassword = function () {
         var curUsrId = this.curUsr.id;
@@ -317,6 +480,16 @@ var UsersComponent = (function () {
             _this.users = users;
         });
     };
+    UsersComponent.prototype.handleTimeRangeChange = function ($event) {
+        this.userCreatedFilterTime = {
+            start: $event.start,
+            end: $event.end,
+        };
+        this.userCreatedFilterTime = __assign({}, this.userCreatedFilterTime);
+    };
+    UsersComponent.prototype.switchFilterRoleId = function ($event) {
+        this.userFilterUserRoleId = $event.value == '全部' ? '' : $event.value;
+    };
     return UsersComponent;
 }());
 UsersComponent = __decorate([
@@ -325,10 +498,10 @@ UsersComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/admin/users/users.component.html"),
         styles: [__webpack_require__("../../../../../src/app/admin/users/users.component.less")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__admin_service__["a" /* AdminService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__admin_service__["a" /* AdminService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__admin_service__["a" /* AdminService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__admin_service__["a" /* AdminService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__common_role_service__["a" /* RoleService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__common_role_service__["a" /* RoleService */]) === "function" && _b || Object])
 ], UsersComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=users.component.js.map
 
 /***/ }),
@@ -336,7 +509,7 @@ var _a;
 /***/ "../../../../../src/app/alert/alert.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div [hidden]=\"!visible\" id=\"alert\" class=\"alert alert-{{ type }}\" [class.alert-dismissable]=\"dismissable\" role=\"alert\">\n  <button type=\"button\" class=\"close\" (click)=\"closeAlert()\" aria-label=\"Close\">\n    <span>&times;</span>\n  </button>\n  <h4>{{ title }}</h4>\n  <p>{{ content }}</p>\n</div>\n"
+module.exports = "<div [hidden]=\"!visible\" id=\"alert\" class=\"alert alert-{{ type }}\" [class.alert-dismissable]=\"dismissable\" role=\"alert\">\r\n  <button type=\"button\" class=\"close\" (click)=\"closeAlert()\" aria-label=\"Close\">\r\n    <span>&times;</span>\r\n  </button>\r\n  <h4>{{ title }}</h4>\r\n  <p>{{ content }}</p>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -477,7 +650,7 @@ AppSettings.API_ENDPOINT = 'http://www.qianhengnet.com:8412/';
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--系统全局使用的confirm组件可以通过ModalService服务调用(confirm组件看作modal组件的一种分类)-->\n<app-confirm></app-confirm>\n<!--系统全局使用的alert组件可以通过AlertService服务调用-->\n<app-alert></app-alert>\n<router-outlet></router-outlet>\n"
+module.exports = "<!--系统全局使用的confirm组件可以通过ModalService服务调用(confirm组件看作modal组件的一种分类)-->\r\n<app-confirm></app-confirm>\r\n<!--系统全局使用的alert组件可以通过AlertService服务调用-->\r\n<app-alert></app-alert>\r\n<router-outlet></router-outlet>\r\n"
 
 /***/ }),
 
@@ -555,29 +728,30 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__student_student_component__ = __webpack_require__("../../../../../src/app/student/student.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__user_user_component__ = __webpack_require__("../../../../../src/app/user/user.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__role_role_component__ = __webpack_require__("../../../../../src/app/role/role.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__school_school_component__ = __webpack_require__("../../../../../src/app/school/school.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__service_http_service__ = __webpack_require__("../../../../../src/app/service/http.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__alert_alert_component__ = __webpack_require__("../../../../../src/app/alert/alert.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__common_user_service__ = __webpack_require__("../../../../../src/app/common/user.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__syllabus_syllabus_service__ = __webpack_require__("../../../../../src/app/syllabus/syllabus.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__modal_modal_component__ = __webpack_require__("../../../../../src/app/modal/modal.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__modal_modal_service__ = __webpack_require__("../../../../../src/app/modal/modal.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__confirm_confirm_component__ = __webpack_require__("../../../../../src/app/confirm/confirm.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__confirm_confirm_service__ = __webpack_require__("../../../../../src/app/confirm/confirm.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__alert_alert_service__ = __webpack_require__("../../../../../src/app/alert/alert.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__collapse_box_collapse_box_component__ = __webpack_require__("../../../../../src/app/collapse-box/collapse-box.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__date_ranger_picker_date_ranger_picker_component__ = __webpack_require__("../../../../../src/app/date-ranger-picker/date-ranger-picker.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__employee_employee_service__ = __webpack_require__("../../../../../src/app/employee/employee.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__student_student_service__ = __webpack_require__("../../../../../src/app/student/student.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__admin_admin_component__ = __webpack_require__("../../../../../src/app/admin/admin.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__common_role_service__ = __webpack_require__("../../../../../src/app/common/role.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__common_school_service__ = __webpack_require__("../../../../../src/app/common/school.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__content_header_content_header_component__ = __webpack_require__("../../../../../src/app/content-header/content-header.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__admin_users_users_component__ = __webpack_require__("../../../../../src/app/admin/users/users.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__admin_schools_schools_component__ = __webpack_require__("../../../../../src/app/admin/schools/schools.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__admin_admin_service__ = __webpack_require__("../../../../../src/app/admin/admin.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__pagination_pagination_component__ = __webpack_require__("../../../../../src/app/pagination/pagination.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__service_http_service__ = __webpack_require__("../../../../../src/app/service/http.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__alert_alert_component__ = __webpack_require__("../../../../../src/app/alert/alert.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__common_user_service__ = __webpack_require__("../../../../../src/app/common/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__syllabus_syllabus_service__ = __webpack_require__("../../../../../src/app/syllabus/syllabus.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__modal_modal_component__ = __webpack_require__("../../../../../src/app/modal/modal.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__modal_modal_service__ = __webpack_require__("../../../../../src/app/modal/modal.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__confirm_confirm_component__ = __webpack_require__("../../../../../src/app/confirm/confirm.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__confirm_confirm_service__ = __webpack_require__("../../../../../src/app/confirm/confirm.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__alert_alert_service__ = __webpack_require__("../../../../../src/app/alert/alert.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__collapse_box_collapse_box_component__ = __webpack_require__("../../../../../src/app/collapse-box/collapse-box.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__date_ranger_picker_date_ranger_picker_component__ = __webpack_require__("../../../../../src/app/date-ranger-picker/date-ranger-picker.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__employee_employee_service__ = __webpack_require__("../../../../../src/app/employee/employee.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__student_student_service__ = __webpack_require__("../../../../../src/app/student/student.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__admin_admin_component__ = __webpack_require__("../../../../../src/app/admin/admin.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__common_role_service__ = __webpack_require__("../../../../../src/app/common/role.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__common_school_service__ = __webpack_require__("../../../../../src/app/common/school.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__content_header_content_header_component__ = __webpack_require__("../../../../../src/app/content-header/content-header.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__admin_users_users_component__ = __webpack_require__("../../../../../src/app/admin/users/users.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__admin_schools_schools_component__ = __webpack_require__("../../../../../src/app/admin/schools/schools.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__admin_admin_service__ = __webpack_require__("../../../../../src/app/admin/admin.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__pagination_pagination_component__ = __webpack_require__("../../../../../src/app/pagination/pagination.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__common_time_range_pipe__ = __webpack_require__("../../../../../src/app/common/time-range.pipe.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__common_match_item_pipe__ = __webpack_require__("../../../../../src/app/common/match-item.pipe.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -585,6 +759,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -650,37 +825,38 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_17__student_student_component__["a" /* StudentComponent */],
             __WEBPACK_IMPORTED_MODULE_18__user_user_component__["a" /* UserComponent */],
             __WEBPACK_IMPORTED_MODULE_19__role_role_component__["a" /* RoleComponent */],
-            __WEBPACK_IMPORTED_MODULE_20__school_school_component__["a" /* SchoolComponent */],
-            __WEBPACK_IMPORTED_MODULE_23__alert_alert_component__["a" /* AlertComponent */],
-            __WEBPACK_IMPORTED_MODULE_26__modal_modal_component__["a" /* ModalComponent */],
-            __WEBPACK_IMPORTED_MODULE_28__confirm_confirm_component__["a" /* ConfirmComponent */],
-            __WEBPACK_IMPORTED_MODULE_31__collapse_box_collapse_box_component__["a" /* CollapseBoxComponent */],
-            __WEBPACK_IMPORTED_MODULE_32__date_ranger_picker_date_ranger_picker_component__["a" /* DateRangerPickerComponent */],
-            __WEBPACK_IMPORTED_MODULE_35__admin_admin_component__["a" /* AdminComponent */],
-            __WEBPACK_IMPORTED_MODULE_38__content_header_content_header_component__["a" /* ContentHeaderComponent */],
-            __WEBPACK_IMPORTED_MODULE_39__admin_users_users_component__["a" /* UsersComponent */],
-            __WEBPACK_IMPORTED_MODULE_40__admin_schools_schools_component__["a" /* SchoolsComponent */],
-            __WEBPACK_IMPORTED_MODULE_42__pagination_pagination_component__["a" /* PaginationComponent */]
+            __WEBPACK_IMPORTED_MODULE_22__alert_alert_component__["a" /* AlertComponent */],
+            __WEBPACK_IMPORTED_MODULE_25__modal_modal_component__["a" /* ModalComponent */],
+            __WEBPACK_IMPORTED_MODULE_27__confirm_confirm_component__["a" /* ConfirmComponent */],
+            __WEBPACK_IMPORTED_MODULE_30__collapse_box_collapse_box_component__["a" /* CollapseBoxComponent */],
+            __WEBPACK_IMPORTED_MODULE_31__date_ranger_picker_date_ranger_picker_component__["a" /* DateRangerPickerComponent */],
+            __WEBPACK_IMPORTED_MODULE_34__admin_admin_component__["a" /* AdminComponent */],
+            __WEBPACK_IMPORTED_MODULE_37__content_header_content_header_component__["a" /* ContentHeaderComponent */],
+            __WEBPACK_IMPORTED_MODULE_38__admin_users_users_component__["a" /* UsersComponent */],
+            __WEBPACK_IMPORTED_MODULE_39__admin_schools_schools_component__["a" /* SchoolsComponent */],
+            __WEBPACK_IMPORTED_MODULE_41__pagination_pagination_component__["a" /* PaginationComponent */],
+            __WEBPACK_IMPORTED_MODULE_42__common_time_range_pipe__["a" /* TimeRangePipe */],
+            __WEBPACK_IMPORTED_MODULE_43__common_match_item_pipe__["a" /* MatchItemPipe */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_2_ng2_select2__["Select2Module"],
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
             __WEBPACK_IMPORTED_MODULE_9__angular_forms__["a" /* FormsModule */],
-            __WEBPACK_IMPORTED_MODULE_21__angular_http__["a" /* HttpModule */],
+            __WEBPACK_IMPORTED_MODULE_20__angular_http__["a" /* HttpModule */],
             __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_5__routes__["a" /* routes */], { useHash: true })
         ],
         providers: [
-            __WEBPACK_IMPORTED_MODULE_22__service_http_service__["a" /* HttpService */],
-            __WEBPACK_IMPORTED_MODULE_24__common_user_service__["a" /* UserService */],
-            __WEBPACK_IMPORTED_MODULE_25__syllabus_syllabus_service__["a" /* SyllabusService */],
-            __WEBPACK_IMPORTED_MODULE_27__modal_modal_service__["a" /* ModalService */],
-            __WEBPACK_IMPORTED_MODULE_29__confirm_confirm_service__["a" /* ConfirmService */],
-            __WEBPACK_IMPORTED_MODULE_30__alert_alert_service__["a" /* AlertService */],
-            __WEBPACK_IMPORTED_MODULE_33__employee_employee_service__["a" /* EmployeeService */],
-            __WEBPACK_IMPORTED_MODULE_34__student_student_service__["a" /* StudentService */],
-            __WEBPACK_IMPORTED_MODULE_36__common_role_service__["a" /* RoleService */],
-            __WEBPACK_IMPORTED_MODULE_37__common_school_service__["a" /* SchoolService */],
-            __WEBPACK_IMPORTED_MODULE_41__admin_admin_service__["a" /* AdminService */]
+            __WEBPACK_IMPORTED_MODULE_21__service_http_service__["a" /* HttpService */],
+            __WEBPACK_IMPORTED_MODULE_23__common_user_service__["a" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_24__syllabus_syllabus_service__["a" /* SyllabusService */],
+            __WEBPACK_IMPORTED_MODULE_26__modal_modal_service__["a" /* ModalService */],
+            __WEBPACK_IMPORTED_MODULE_28__confirm_confirm_service__["a" /* ConfirmService */],
+            __WEBPACK_IMPORTED_MODULE_29__alert_alert_service__["a" /* AlertService */],
+            __WEBPACK_IMPORTED_MODULE_32__employee_employee_service__["a" /* EmployeeService */],
+            __WEBPACK_IMPORTED_MODULE_33__student_student_service__["a" /* StudentService */],
+            __WEBPACK_IMPORTED_MODULE_35__common_role_service__["a" /* RoleService */],
+            __WEBPACK_IMPORTED_MODULE_36__common_school_service__["a" /* SchoolService */],
+            __WEBPACK_IMPORTED_MODULE_40__admin_admin_service__["a" /* AdminService */]
         ],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* AppComponent */]]
     })
@@ -693,7 +869,7 @@ AppModule = __decorate([
 /***/ "../../../../../src/app/audit/audit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  audit works!\n</p>\n"
+module.exports = "<p>\r\n  audit works!\r\n</p>\r\n"
 
 /***/ }),
 
@@ -754,7 +930,7 @@ AuditComponent = __decorate([
 /***/ "../../../../../src/app/basic-info/basic-info.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n"
+module.exports = "<router-outlet></router-outlet>\r\n"
 
 /***/ }),
 
@@ -815,7 +991,7 @@ BasicInfoComponent = __decorate([
 /***/ "../../../../../src/app/collapse-box/collapse-box.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"box box-primary with-box\" [class.collapsed-box]=\"collapse\">\n  <div class=\"box-header with-border\">\n    <h3 class=\"box-title\"><i class=\"fa fa-{{icon}}\"></i>{{ boxTitle }}</h3>\n    <div class=\"box-tools pull-right\">\n      <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa {{collapse?'fa-plus':'fa-minus'}}\"></i></button>\n    </div>\n  </div>\n  <div class=\"box-body\">\n    <ng-content></ng-content>\n  </div>\n</div>\n"
+module.exports = "<div class=\"box box-default with-box\" [class.collapsed-box]=\"collapse\">\n  <div class=\"box-header with-border\">\n    <h3 class=\"box-title\"><i class=\"fa fa-{{icon}}\"></i>{{ boxTitle }}</h3>\n    <div class=\"box-tools pull-right\">\n      <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\"><i class=\"fa {{collapse?'fa-plus':'fa-minus'}}\"></i></button>\n    </div>\n  </div>\n  <div class=\"box-body\">\n    <ng-content></ng-content>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -884,6 +1060,41 @@ CollapseBoxComponent = __decorate([
 
 /***/ }),
 
+/***/ "../../../../../src/app/common/match-item.pipe.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MatchItemPipe; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var MatchItemPipe = (function () {
+    function MatchItemPipe() {
+    }
+    MatchItemPipe.prototype.transform = function (value, filter, field) {
+        if (!value || !filter)
+            return value;
+        return value.filter(function (val) {
+            return val[field].indexOf(filter) > -1;
+        });
+    };
+    return MatchItemPipe;
+}());
+MatchItemPipe = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Pipe"])({
+        name: 'matchItem'
+    })
+], MatchItemPipe);
+
+//# sourceMappingURL=match-item.pipe.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/common/role.service.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -911,23 +1122,39 @@ var RoleService = (function () {
         this.http = http;
         this.router = router;
         this.alertService = alertService;
+        this.roles = {};
+        this.roleList = [];
     }
     RoleService.prototype.fetchRoleEnums = function () {
         var _this = this;
         this.http.get('common/role').then(function (data) {
             if (data.success) {
-                console.log(data.data);
+                data.data.forEach(function (role) {
+                    role['text'] = role['roleName'];
+                    role['id'] = role['roleId'];
+                    _this.roles[role.roleId] = role.roleName;
+                });
+                (_a = _this.roleList).push.apply(_a, data.data);
                 _this.roles = data.data;
             }
             else {
-                throw Error('获取角色列表失败');
+                _this.alertService.alert({ title: '提示', content: '角色列表获取失败', type: 'danger' });
             }
+            var _a;
         });
     };
     RoleService.prototype.navigateByRole = function (roleId) {
         switch (roleId) {
             case 'SUPER_ADMIN':
                 this.router.navigate(['dashboard/admin']);
+                break;
+            case 'CONSULTANT':
+                break;
+            case 'FINANCE':
+                break;
+            case 'STUDENTMANAGER':
+                break;
+            case 'TEACHER':
                 break;
             default:
                 this.alertService.alert({ title: '提示', content: '角色异常', type: 'danger' });
@@ -987,6 +1214,41 @@ SchoolService = __decorate([
 
 var _a;
 //# sourceMappingURL=school.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/common/time-range.pipe.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TimeRangePipe; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var TimeRangePipe = (function () {
+    function TimeRangePipe() {
+    }
+    TimeRangePipe.prototype.transform = function (arr, args) {
+        if (!arr || !args)
+            return arr;
+        return arr.filter(function (value) {
+            return (value.createTime > args.start) && (value.createTime < args.end);
+        });
+    };
+    return TimeRangePipe;
+}());
+TimeRangePipe = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Pipe"])({
+        name: 'timeRange'
+    })
+], TimeRangePipe);
+
+//# sourceMappingURL=time-range.pipe.js.map
 
 /***/ }),
 
@@ -1185,7 +1447,7 @@ ConfirmService = __decorate([
 /***/ "../../../../../src/app/content-header/content-header.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"content-header\">\n  <h1>\n    {{ title }}\n    <small>{{ subTitle }}</small>\n  </h1>\n  <ol class=\"breadcrumb\">\n    <li *ngFor=\"let menu of menus;let idx=index\" [class.active]=\"(menus.length-1) == idx\">\n      <a href=\"javascript: void(0)\">\n        <i class=\"fa {{menu.icon}}\"></i>{{menu.name}}\n      </a>\n    </li>\n  </ol>\n</section>\n"
+module.exports = "<section class=\"content-header\">\r\n  <h1>\r\n    {{ title }}\r\n    <small>{{ subTitle }}</small>\r\n  </h1>\r\n  <ol class=\"breadcrumb\">\r\n    <li *ngFor=\"let menu of menus;let idx=index\" [class.active]=\"(menus.length-1) == idx\">\r\n      <a href=\"javascript: void(0)\">\r\n        <i class=\"fa {{menu.icon}}\"></i>{{menu.name}}\r\n      </a>\r\n    </li>\r\n  </ol>\r\n</section>\r\n"
 
 /***/ }),
 
@@ -1257,7 +1519,7 @@ ContentHeaderComponent = __decorate([
 /***/ "../../../../../src/app/dashboard/dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-header></app-header>\n<router-outlet></router-outlet>\n\n<app-footer></app-footer>\n"
+module.exports = "<app-header></app-header>\r\n<router-outlet></router-outlet>\r\n\r\n<app-footer></app-footer>\r\n"
 
 /***/ }),
 
@@ -1269,7 +1531,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".content-wrapper {\n  min-height: calc(100vh - 101px);\n}\n", ""]);
+exports.push([module.i, "", ""]);
 
 // exports
 
@@ -1284,6 +1546,7 @@ module.exports = module.exports.toString();
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_role_service__ = __webpack_require__("../../../../../src/app/common/role.service.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DashboardComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1295,10 +1558,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var DashboardComponent = (function () {
-    function DashboardComponent() {
+    function DashboardComponent(roleService) {
+        this.roleService = roleService;
     }
     DashboardComponent.prototype.ngOnInit = function () {
+        this.roleService.fetchRoleEnums();
     };
     return DashboardComponent;
 }());
@@ -1308,9 +1574,10 @@ DashboardComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/dashboard/dashboard.component.html"),
         styles: [__webpack_require__("../../../../../src/app/dashboard/dashboard.component.less")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__common_role_service__["a" /* RoleService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__common_role_service__["a" /* RoleService */]) === "function" && _a || Object])
 ], DashboardComponent);
 
+var _a;
 //# sourceMappingURL=dashboard.component.js.map
 
 /***/ }),
@@ -1383,18 +1650,17 @@ var DateRangerPickerComponent = (function () {
                 '本周': [__WEBPACK_IMPORTED_MODULE_1_moment__().subtract(6, 'days'), __WEBPACK_IMPORTED_MODULE_1_moment__()],
                 '前30天': [__WEBPACK_IMPORTED_MODULE_1_moment__().subtract(29, 'days'), __WEBPACK_IMPORTED_MODULE_1_moment__()]
             },
-            startDate: this.startTime,
+            startDate: __WEBPACK_IMPORTED_MODULE_1_moment__(this.startTime).format('YYYY-MM-DD'),
             minDate: '2000-01-01'
-        }, function (start, end, label) {
-            console.log(label);
-            _this.dateRangeSetEvent.emit({ startTime: start, endTime: end });
+        }, function (start, end) {
+            _this.dateRangeSetEvent.emit({ start: start.valueOf(), end: end.valueOf() });
         });
     };
     return DateRangerPickerComponent;
 }());
 __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
-    __metadata("design:type", String)
+    __metadata("design:type", Number)
 ], DateRangerPickerComponent.prototype, "startTime", void 0);
 __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
@@ -1417,7 +1683,7 @@ var _a;
 /***/ "../../../../../src/app/employee/employee.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"content-header\">\n  <h1>员工信息</h1>\n  <ol class=\"breadcrumb\">\n    <li><a><i class=\"fa fa-dashboard\"></i>基础信息管理</a></li>\n    <li class=\"active\"><a><i class=\"fa fa-book\"></i>员工信息</a></li>\n  </ol>\n</section>\n\n<section class=\"content\">\n  <div class=\"row\">\n    <div class=\"col-xs-12\">\n      <app-collapse-box [collapse]=\"false\" [icon]=\"'filter'\" [boxTitle]=\"'员工过滤'\">\n\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\n          <label class=\"pull-left\">\n            时间过滤:\n          </label>\n          <app-date-ranger-picker class=\"pull-left\"></app-date-ranger-picker>\n        </div>\n\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\n          <label class=\"pull-left\">\n            名称筛选:\n          </label>\n          <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\n            <input type=\"text\" class=\"form-control input-sm\" placeholder=\"输入员工名称\">\n            <span class=\"input-group-addon\"><i class=\"fa fa-search\"></i></span>\n          </div>\n        </div>\n\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\n          <label class=\"pull-left\">\n            性别筛选:\n          </label>\n          <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\n            <select2 [cssImport]=\"false\" [options]=\"{minimumResultsForSearch: -1}\" [data]=\"[{id:'ALL',text:'全部'}].concat(syllabusTypes)\" [width]=\"'148px'\"></select2>\n          </div>\n        </div>\n\n      </app-collapse-box>\n\n      <div class=\"box box-info\">\n        <div class=\"box-header\">\n          <i class=\"fa fa-table\"></i><h3 class=\"box-title\">员工列表</h3>\n          <div class=\"box-tools\">\n            <div class=\"btn-group btn-group-sm pull-right syllabus-add-btn\">\n              <button (click)=\"modal.showModal({\n                 title: '添加新员工',\n                 confirm: newEmployee\n            })\" class=\"btn btn-info\"><i class=\"fa fa-plus\"></i>新增员工</button>\n            </div>\n          </div>\n        </div>\n        <div class=\"box-body\" style=\"border-top: 1px solid #dddddd;\">\n          <div class=\"dataTables_wrapper form-inline dt-bootstrap\">\n            <div class=\"row\">\n              <div class=\"col-sm-12\">\n                <table class=\"table table-bordered dataTable\">\n                  <thead>\n                    <tr role=\"row\">\n                      <th>姓名</th>\n                      <th>性别</th>\n                      <th>电话</th>\n                      <th>邮箱</th>\n                      <th>生日</th>\n                      <th>学校</th>\n                      <th>专业</th>\n                      <th class=\"text-center\">操作</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                    <tr *ngFor=\"let employee of employees\">\n                      <td colspan=\"8\" class=\"box box-widget collapsed-box\">\n                        <div class=\"box-header\">\n                          <span>{{ employee.name }}</span>\n                          <span>{{ employee.sex == 'MALE' ? '男' : '女' }}</span>\n                          <span>{{ employee.phone }}</span>\n                          <span>{{ employee.email }}</span>\n                          <span>{{ employee.birthday | date: 'YYYY-MM-DD' }}</span>\n                          <span>{{ employee.education }}</span>\n                          <span>{{ employee.specialty }}</span>\n                          <span class=\"text-center\">\n                            <button (click)=\"removeEmployee(employee.id)\" class=\"btn btn-xs btn-danger\"><i class=\"fa fa-trash-o\"></i>删除</button>\n                            <button data-widget=\"collapse\" class=\"btn btn-xs btn-info\"><i class=\"fa fa-plus\"></i>更多</button>\n                          </span>\n                        </div>\n                        <div class=\"box-body\">\n                          <div class=\"detail-container clearfix\">\n\n                            <div>\n                              <div class=\"col-xs-2 text-right\">身份证号码: &nbsp;&nbsp;</div>\n                              <div class=\"col-xs-8\">{{ employee.idCard }}</div>\n                            </div>\n                            <div>\n                              <div class=\"col-xs-2 text-right\">毕业院校: &nbsp;&nbsp;</div>\n                              <div class=\"col-xs-8\">{{ employee.graduationSchool }}</div>\n                            </div>\n                            <div>\n                              <div class=\"col-xs-2 text-right\">紧急联系人姓名: &nbsp;&nbsp;</div>\n                              <div class=\"col-xs-8\">{{ employee.clamantName }}</div>\n                            </div>\n                            <div>\n                              <div class=\"col-xs-2 text-right\">紧急联系人电话: &nbsp;&nbsp;</div>\n                              <div class=\"col-xs-8\">{{ employee.clamantPhone }}</div>\n                            </div>\n                            <div>\n                              <div class=\"col-xs-2 text-right\">家庭住址: &nbsp;&nbsp;</div>\n                              <div class=\"col-xs-8\">{{ employee.address }}</div>\n                            </div>\n                            <div>\n                              <div class=\"col-xs-2 text-right\">描述信息: &nbsp;&nbsp;</div>\n                              <div class=\"col-xs-8\">{{ employee.remark }}</div>\n                            </div>\n\n                          </div>\n                        </div>\n                      </td>\n                    </tr>\n                  </tbody>\n                </table>\n              </div>\n            </div>\n            <div class=\"row\">\n              <div class=\"col-sm-5\">\n                <div class=\"dataTables_info\" id=\"example2_info\" role=\"status\" aria-live=\"polite\">Showing 11 to 20 of 57\n                  entries\n                </div>\n              </div>\n              <div class=\"col-sm-7\">\n                <div class=\"dataTables_paginate paging_simple_numbers pull-right\" id=\"example2_paginate\">\n                  <ul class=\"pagination\">\n                    <li class=\"paginate_button previous\" id=\"example2_previous\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"0\">Previous</a></li>\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"1\">1</a></li>\n                    <li class=\"paginate_button active\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"2\">2</a></li>\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"3\">3</a></li>\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"4\">4</a></li>\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"5\">5</a></li>\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"6\">6</a></li>\n                    <li class=\"paginate_button next\" id=\"example2_next\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"7\">Next</a></li>\n                  </ul>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</section>\n\n<app-modal #modal [modalSize]=\"'lg'\">\n  <form class=\"form-horizontal\">\n    <div class=\"row\">\n      <div class=\"col-xs-12 col-md-5\">\n        <div class=\"form-group\">\n          <label for=\"name\" class=\"control-label col-md-2\">姓名: </label>\n          <div class=\"col-md-10\">\n            <input id=\"name\" name=\"name\" placeholder=\"请输入员工姓名\" class=\"form-control\" [(ngModel)]=\"curEmployee.name\">\n          </div>\n        </div>\n\n        <div class=\"form-group\">\n          <label for=\"gender\" class=\"control-label col-md-2\">性别: </label>\n          <div class=\"col-md-10\">\n            <select2\n              id=\"gender\"\n              (valueChanged)=\"switchEmployeeGender($event)\"\n              [value]=\"curEmployee.sex\"\n              [cssImport]=\"false\"\n              [options]=\"{minimumResultsForSearch: -1, placeholder: '请输入员工性别'}\"\n              [data]=\"[{id:'',text: ''},{id:'MALE',text:'男'},{id:'FEMALE',text:'女'}]\"\n              [width]=\"'100%'\"></select2>\n          </div>\n        </div>\n\n        <div class=\"form-group\">\n          <label for=\"education\" class=\"control-label col-md-2\">学历: </label>\n          <div class=\"col-md-10\">\n            <input type=\"text\" id=\"education\" name=\"education\" placeholder=\"请输入员工学历\" class=\"form-control\" [(ngModel)]=\"curEmployee.education\">\n          </div>\n        </div>\n\n        <div class=\"form-group\">\n          <label for=\"phone\" class=\"control-label col-md-2\">电话: </label>\n          <div class=\"col-md-10\">\n            <input id=\"phone\" name=\"phone\" placeholder=\"请输入员工电话\" class=\"form-control\" [(ngModel)]=\"curEmployee.phone\">\n          </div>\n        </div>\n\n        <div class=\"form-group\">\n          <label for=\"email\" class=\"control-label col-md-2\">邮箱: </label>\n          <div class=\"col-md-10\">\n            <input type=\"text\" id=\"email\" name=\"email\" placeholder=\"请输入员工电话\" class=\"form-control\" [(ngModel)]=\"curEmployee.email\">\n          </div>\n        </div>\n\n        <div class=\"form-group\">\n          <label for=\"specialty\" class=\"control-label col-md-2\">专业: </label>\n          <div class=\"col-md-10\">\n            <input type=\"text\" id=\"specialty\" name=\"specialty\" placeholder=\"请输入员工电话\" class=\"form-control\" [(ngModel)]=\"curEmployee.specialty\">\n          </div>\n        </div>\n      </div>\n\n      <div class=\"col-xs-12 col-md-7\">\n        <div class=\"form-group\">\n          <label for=\"clamantName\" class=\"control-label col-md-3\">联系人姓名: </label>\n          <div class=\"col-md-9\">\n            <input type=\"text\" id=\"clamantName\" name=\"clamantName\" placeholder=\"请输入联系人姓名\" class=\"form-control\" [(ngModel)]=\"curEmployee.clamantName\">\n          </div>\n        </div>\n\n        <div class=\"form-group\">\n          <label for=\"clamantPhone\" class=\"control-label col-md-3\">联系人电话: </label>\n          <div class=\"col-md-9\">\n            <input type=\"number\" id=\"clamantPhone\" name=\"clamantPhone\" placeholder=\"请输入联系人电话\" class=\"form-control\" [(ngModel)]=\"curEmployee.phone\">\n          </div>\n        </div>\n\n        <div class=\"form-group\">\n          <label for=\"idCard\" class=\"control-label col-md-3\">身份证号: </label>\n          <div class=\"col-md-9\">\n            <input id=\"idCard\" name=\"idCard\" placeholder=\"请输入身份证\" class=\"form-control\" [(ngModel)]=\"curEmployee.idCard\">\n          </div>\n        </div>\n\n        <div class=\"form-group\">\n          <label for=\"graduationSchool\" class=\"control-label col-md-3\">毕业院校: </label>\n          <div class=\"col-md-9\">\n            <input id=\"graduationSchool\" name=\"graduationSchool\" placeholder=\"请输入毕业院校\" class=\"form-control\" [(ngModel)]=\"curEmployee.graduationSchool\">\n          </div>\n        </div>\n\n        <div class=\"form-group\">\n          <label for=\"address\" class=\"control-label col-md-3\">家庭住址: </label>\n          <div class=\"col-md-9\">\n            <input id=\"address\" name=\"address\" placeholder=\"请输入家庭住址\" class=\"form-control\" [(ngModel)]=\"curEmployee.address\">\n          </div>\n        </div>\n\n        <div class=\"form-group\">\n          <label for=\"remark\" class=\"control-label col-md-3\">描述信息: </label>\n          <div class=\"col-md-9\">\n            <textarea id=\"remark\" name=\"remark\" placeholder=\"请输入描述信息\" class=\"form-control\" cols=\"1\" rows=\"1\" [(ngModel)]=\"curEmployee.remark\"></textarea>\n          </div>\n        </div>\n      </div>\n    </div>\n  </form>\n</app-modal>\n"
+module.exports = "<section class=\"content-header\">\r\n  <h1>员工信息</h1>\r\n  <ol class=\"breadcrumb\">\r\n    <li><a><i class=\"fa fa-dashboard\"></i>基础信息管理</a></li>\r\n    <li class=\"active\"><a><i class=\"fa fa-book\"></i>员工信息</a></li>\r\n  </ol>\r\n</section>\r\n\r\n<section class=\"content\">\r\n  <div class=\"row\">\r\n    <div class=\"col-xs-12\">\r\n      <app-collapse-box [collapse]=\"false\" [icon]=\"'filter'\" [boxTitle]=\"'员工过滤'\">\r\n\r\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\r\n          <label class=\"pull-left\">\r\n            时间过滤:\r\n          </label>\r\n          <app-date-ranger-picker class=\"pull-left\"></app-date-ranger-picker>\r\n        </div>\r\n\r\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\r\n          <label class=\"pull-left\">\r\n            名称筛选:\r\n          </label>\r\n          <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\r\n            <input type=\"text\" class=\"form-control input-sm\" placeholder=\"输入员工名称\">\r\n            <span class=\"input-group-addon\"><i class=\"fa fa-search\"></i></span>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\r\n          <label class=\"pull-left\">\r\n            性别筛选:\r\n          </label>\r\n          <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\r\n            <select2 [cssImport]=\"false\" [options]=\"{minimumResultsForSearch: -1}\" [data]=\"[{id:'ALL',text:'全部'}].concat(syllabusTypes)\" [width]=\"'148px'\"></select2>\r\n          </div>\r\n        </div>\r\n\r\n      </app-collapse-box>\r\n\r\n      <div class=\"box box-info\">\r\n        <div class=\"box-header\">\r\n          <i class=\"fa fa-table\"></i><h3 class=\"box-title\">员工列表</h3>\r\n          <div class=\"box-tools\">\r\n            <div class=\"btn-group btn-group-sm pull-right syllabus-add-btn\">\r\n              <button (click)=\"modal.showModal({\r\n                 title: '添加新员工',\r\n                 confirm: newEmployee\r\n            })\" class=\"btn btn-info\"><i class=\"fa fa-plus\"></i>新增员工</button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div class=\"box-body\" style=\"border-top: 1px solid #dddddd;\">\r\n          <div class=\"dataTables_wrapper form-inline dt-bootstrap\">\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-12\">\r\n                <table class=\"table table-bordered dataTable\">\r\n                  <thead>\r\n                    <tr role=\"row\">\r\n                      <th>姓名</th>\r\n                      <th>性别</th>\r\n                      <th>电话</th>\r\n                      <th>邮箱</th>\r\n                      <th>生日</th>\r\n                      <th>学校</th>\r\n                      <th>专业</th>\r\n                      <th class=\"text-center\">操作</th>\r\n                    </tr>\r\n                  </thead>\r\n                  <tbody>\r\n                    <tr *ngFor=\"let employee of employees\">\r\n                      <td colspan=\"8\" class=\"box box-widget collapsed-box\">\r\n                        <div class=\"box-header\">\r\n                          <span>{{ employee.name }}</span>\r\n                          <span>{{ employee.sex == 'MALE' ? '男' : '女' }}</span>\r\n                          <span>{{ employee.phone }}</span>\r\n                          <span>{{ employee.email }}</span>\r\n                          <span>{{ employee.birthday | date: 'YYYY-MM-DD' }}</span>\r\n                          <span>{{ employee.education }}</span>\r\n                          <span>{{ employee.specialty }}</span>\r\n                          <span class=\"text-center\">\r\n                            <button (click)=\"removeEmployee(employee.id)\" class=\"btn btn-xs btn-danger\"><i class=\"fa fa-trash-o\"></i>删除</button>\r\n                            <button data-widget=\"collapse\" class=\"btn btn-xs btn-info\"><i class=\"fa fa-plus\"></i>更多</button>\r\n                          </span>\r\n                        </div>\r\n                        <div class=\"box-body\">\r\n                          <div class=\"detail-container clearfix\">\r\n\r\n                            <div>\r\n                              <div class=\"col-xs-2 text-right\">身份证号码: &nbsp;&nbsp;</div>\r\n                              <div class=\"col-xs-8\">{{ employee.idCard }}</div>\r\n                            </div>\r\n                            <div>\r\n                              <div class=\"col-xs-2 text-right\">毕业院校: &nbsp;&nbsp;</div>\r\n                              <div class=\"col-xs-8\">{{ employee.graduationSchool }}</div>\r\n                            </div>\r\n                            <div>\r\n                              <div class=\"col-xs-2 text-right\">紧急联系人姓名: &nbsp;&nbsp;</div>\r\n                              <div class=\"col-xs-8\">{{ employee.clamantName }}</div>\r\n                            </div>\r\n                            <div>\r\n                              <div class=\"col-xs-2 text-right\">紧急联系人电话: &nbsp;&nbsp;</div>\r\n                              <div class=\"col-xs-8\">{{ employee.clamantPhone }}</div>\r\n                            </div>\r\n                            <div>\r\n                              <div class=\"col-xs-2 text-right\">家庭住址: &nbsp;&nbsp;</div>\r\n                              <div class=\"col-xs-8\">{{ employee.address }}</div>\r\n                            </div>\r\n                            <div>\r\n                              <div class=\"col-xs-2 text-right\">描述信息: &nbsp;&nbsp;</div>\r\n                              <div class=\"col-xs-8\">{{ employee.remark }}</div>\r\n                            </div>\r\n\r\n                          </div>\r\n                        </div>\r\n                      </td>\r\n                    </tr>\r\n                  </tbody>\r\n                </table>\r\n              </div>\r\n            </div>\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-5\">\r\n                <div class=\"dataTables_info\" id=\"example2_info\" role=\"status\" aria-live=\"polite\">Showing 11 to 20 of 57\r\n                  entries\r\n                </div>\r\n              </div>\r\n              <div class=\"col-sm-7\">\r\n                <div class=\"dataTables_paginate paging_simple_numbers pull-right\" id=\"example2_paginate\">\r\n                  <ul class=\"pagination\">\r\n                    <li class=\"paginate_button previous\" id=\"example2_previous\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"0\">Previous</a></li>\r\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"1\">1</a></li>\r\n                    <li class=\"paginate_button active\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"2\">2</a></li>\r\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"3\">3</a></li>\r\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"4\">4</a></li>\r\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"5\">5</a></li>\r\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"6\">6</a></li>\r\n                    <li class=\"paginate_button next\" id=\"example2_next\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"7\">Next</a></li>\r\n                  </ul>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>\r\n\r\n<app-modal #modal [modalSize]=\"'lg'\">\r\n  <form class=\"form-horizontal\">\r\n    <div class=\"row\">\r\n      <div class=\"col-xs-12 col-md-5\">\r\n        <div class=\"form-group\">\r\n          <label for=\"name\" class=\"control-label col-md-2\">姓名: </label>\r\n          <div class=\"col-md-10\">\r\n            <input id=\"name\" name=\"name\" placeholder=\"请输入员工姓名\" class=\"form-control\" [(ngModel)]=\"curEmployee.name\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"form-group\">\r\n          <label for=\"gender\" class=\"control-label col-md-2\">性别: </label>\r\n          <div class=\"col-md-10\">\r\n            <select2\r\n              id=\"gender\"\r\n              (valueChanged)=\"switchEmployeeGender($event)\"\r\n              [value]=\"curEmployee.sex\"\r\n              [cssImport]=\"false\"\r\n              [options]=\"{minimumResultsForSearch: -1, placeholder: '请输入员工性别'}\"\r\n              [data]=\"[{id:'',text: ''},{id:'MALE',text:'男'},{id:'FEMALE',text:'女'}]\"\r\n              [width]=\"'100%'\"></select2>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"form-group\">\r\n          <label for=\"education\" class=\"control-label col-md-2\">学历: </label>\r\n          <div class=\"col-md-10\">\r\n            <input type=\"text\" id=\"education\" name=\"education\" placeholder=\"请输入员工学历\" class=\"form-control\" [(ngModel)]=\"curEmployee.education\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"form-group\">\r\n          <label for=\"phone\" class=\"control-label col-md-2\">电话: </label>\r\n          <div class=\"col-md-10\">\r\n            <input id=\"phone\" name=\"phone\" placeholder=\"请输入员工电话\" class=\"form-control\" [(ngModel)]=\"curEmployee.phone\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"form-group\">\r\n          <label for=\"email\" class=\"control-label col-md-2\">邮箱: </label>\r\n          <div class=\"col-md-10\">\r\n            <input type=\"text\" id=\"email\" name=\"email\" placeholder=\"请输入员工电话\" class=\"form-control\" [(ngModel)]=\"curEmployee.email\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"form-group\">\r\n          <label for=\"specialty\" class=\"control-label col-md-2\">专业: </label>\r\n          <div class=\"col-md-10\">\r\n            <input type=\"text\" id=\"specialty\" name=\"specialty\" placeholder=\"请输入员工电话\" class=\"form-control\" [(ngModel)]=\"curEmployee.specialty\">\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"col-xs-12 col-md-7\">\r\n        <div class=\"form-group\">\r\n          <label for=\"clamantName\" class=\"control-label col-md-3\">联系人姓名: </label>\r\n          <div class=\"col-md-9\">\r\n            <input type=\"text\" id=\"clamantName\" name=\"clamantName\" placeholder=\"请输入联系人姓名\" class=\"form-control\" [(ngModel)]=\"curEmployee.clamantName\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"form-group\">\r\n          <label for=\"clamantPhone\" class=\"control-label col-md-3\">联系人电话: </label>\r\n          <div class=\"col-md-9\">\r\n            <input type=\"number\" id=\"clamantPhone\" name=\"clamantPhone\" placeholder=\"请输入联系人电话\" class=\"form-control\" [(ngModel)]=\"curEmployee.phone\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"form-group\">\r\n          <label for=\"idCard\" class=\"control-label col-md-3\">身份证号: </label>\r\n          <div class=\"col-md-9\">\r\n            <input id=\"idCard\" name=\"idCard\" placeholder=\"请输入身份证\" class=\"form-control\" [(ngModel)]=\"curEmployee.idCard\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"form-group\">\r\n          <label for=\"graduationSchool\" class=\"control-label col-md-3\">毕业院校: </label>\r\n          <div class=\"col-md-9\">\r\n            <input id=\"graduationSchool\" name=\"graduationSchool\" placeholder=\"请输入毕业院校\" class=\"form-control\" [(ngModel)]=\"curEmployee.graduationSchool\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"form-group\">\r\n          <label for=\"address\" class=\"control-label col-md-3\">家庭住址: </label>\r\n          <div class=\"col-md-9\">\r\n            <input id=\"address\" name=\"address\" placeholder=\"请输入家庭住址\" class=\"form-control\" [(ngModel)]=\"curEmployee.address\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"form-group\">\r\n          <label for=\"remark\" class=\"control-label col-md-3\">描述信息: </label>\r\n          <div class=\"col-md-9\">\r\n            <textarea id=\"remark\" name=\"remark\" placeholder=\"请输入描述信息\" class=\"form-control\" cols=\"1\" rows=\"1\" [(ngModel)]=\"curEmployee.remark\"></textarea>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </form>\r\n</app-modal>\r\n"
 
 /***/ }),
 
@@ -1604,7 +1870,7 @@ var Employee = (function () {
 /***/ "../../../../../src/app/footer/footer.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<footer class=\"main-footer\">Copyright © 2011-2017 SegmentFault. 当前呈现版本 17.06.16 </footer>\n"
+module.exports = "<footer class=\"main-footer\">Copyright © 2011-2017 SegmentFault. 当前呈现版本 17.06.16 </footer>\r\n"
 
 /***/ }),
 
@@ -1665,7 +1931,7 @@ FooterComponent = __decorate([
 /***/ "../../../../../src/app/header/header.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<header class=\"main-header\">\n\n  <a href=\"javascript:void(0)\" class=\"logo\">\n    <span class=\"logo-mini\"><b>Edu</b></span>\n    <span class=\"logo-lg\"><b>Edu</b>Admin</span>\n  </a>\n\n  <nav class=\"navbar navbar-static-top\" role=\"navigation\">\n    <a href=\"javascript:void(0)\" class=\"sidebar-toggle\" data-toggle=\"offcanvas\" role=\"button\"></a>\n\n    <div class=\"navbar-custom-menu\">\n      <ul class=\"nav navbar-nav\">\n        <li class=\"dropdown user user-menu\">\n          <a href=\"javascript:void(0)\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">\n            <img src=\"https://adminlte.io/themes/AdminLTE/dist/img/user2-160x160.jpg\" class=\"user-image\" alt=\"User Image\">\n            <span class=\"hidden-xs\">{{ user.username }}&nbsp;</span>\n          </a>\n          <ul class=\"dropdown-menu\">\n            <!-- User image -->\n            <li class=\"user-header\">\n              <img src=\"https://adminlte.io/themes/AdminLTE/dist/img/user2-160x160.jpg\" class=\"img-circle\" alt=\"User Image\">\n\n              <p>\n                {{ user.username }}&nbsp;\n              </p>\n            </li>\n            <!-- Menu Body -->\n            <li class=\"user-body\">\n              <div class=\"row\">\n                <div class=\"col-xs-6 text-center\">\n                  <a href=\"#\">用户类型</a>\n                </div>\n                <div class=\"col-xs-6 text-center\">\n                  <a href=\"#\">姓名</a>\n                </div>\n                <div class=\"col-xs-6 text-center\">\n                  <a href=\"#\">{{ user.userType }}</a>\n                </div>\n                <div class=\"col-xs-6 text-center\">\n                  <a href=\"#\">{{ user.name }}</a>\n                </div>\n              </div>\n              <!-- /.row -->\n            </li>\n            <!-- Menu Footer-->\n            <li class=\"user-footer\">\n              <div class=\"pull-right\">\n                <a href=\"javascript:void(0);\" class=\"btn btn-default btn-flat\" (click)=\"signOut()\">登出</a>\n              </div>\n            </li>\n          </ul>\n        </li>\n        <li>\n          <a href=\"javascript:void(0)\" (click)=\"signOut()\">\n            <span class=\"fa fa-sign-out\"></span>\n          </a>\n        </li>\n      </ul>\n    </div>\n  </nav>\n</header>\n"
+module.exports = "<header class=\"main-header\">\r\n\r\n  <a href=\"javascript:void(0)\" class=\"logo\">\r\n    <span class=\"logo-mini\"><b>Edu</b></span>\r\n    <span class=\"logo-lg\"><b>Edu</b>Admin</span>\r\n  </a>\r\n\r\n  <nav class=\"navbar navbar-static-top\" role=\"navigation\">\r\n    <a href=\"javascript:void(0)\" class=\"sidebar-toggle\" data-toggle=\"offcanvas\" role=\"button\"></a>\r\n\r\n    <div class=\"navbar-custom-menu\">\r\n      <ul class=\"nav navbar-nav\">\r\n        <li class=\"dropdown user user-menu\">\r\n          <a href=\"javascript:void(0)\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">\r\n            <img src=\"https://adminlte.io/themes/AdminLTE/dist/img/user2-160x160.jpg\" class=\"user-image\" alt=\"User Image\">\r\n            <span class=\"hidden-xs\">{{ user.username }}&nbsp;</span>\r\n          </a>\r\n          <ul class=\"dropdown-menu\">\r\n            <!-- User image -->\r\n            <li class=\"user-header\">\r\n              <img src=\"https://adminlte.io/themes/AdminLTE/dist/img/user2-160x160.jpg\" class=\"img-circle\" alt=\"User Image\">\r\n\r\n              <p>\r\n                {{ user.username }}&nbsp;\r\n              </p>\r\n            </li>\r\n            <!-- Menu Body -->\r\n            <li class=\"user-body\">\r\n              <div class=\"row\">\r\n                <div class=\"col-xs-6 text-center\">\r\n                  <a href=\"#\">用户类型</a>\r\n                </div>\r\n                <div class=\"col-xs-6 text-center\">\r\n                  <a href=\"#\">姓名</a>\r\n                </div>\r\n                <div class=\"col-xs-6 text-center\">\r\n                  <a href=\"#\">{{ user.userType }}</a>\r\n                </div>\r\n                <div class=\"col-xs-6 text-center\">\r\n                  <a href=\"#\">{{ user.name }}</a>\r\n                </div>\r\n              </div>\r\n              <!-- /.row -->\r\n            </li>\r\n            <!-- Menu Footer-->\r\n            <li class=\"user-footer\">\r\n              <div class=\"pull-right\">\r\n                <a href=\"javascript:void(0);\" class=\"btn btn-default btn-flat\" (click)=\"signOut()\">登出</a>\r\n              </div>\r\n            </li>\r\n          </ul>\r\n        </li>\r\n        <li>\r\n          <a href=\"javascript:void(0)\" (click)=\"signOut()\">\r\n            <span class=\"fa fa-sign-out\"></span>\r\n          </a>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </nav>\r\n</header>\r\n"
 
 /***/ }),
 
@@ -1733,7 +1999,6 @@ var HeaderComponent = (function () {
                 _this.roleService.navigateByRole(user.roleId);
             });
         }
-        this.roleService.fetchRoleEnums();
     };
     HeaderComponent.prototype.signOut = function () {
         var _this = this;
@@ -1763,7 +2028,7 @@ var _a, _b, _c, _d;
 /***/ "../../../../../src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"login-page\">\n  <div class=\"login-box\">\n\n    <div class=\"login-logo\">\n      <strong>Edu</strong> Admin\n    </div>\n\n    <div class=\"login-box-body box box-info\">\n      <div class=\"login-box-msg\">管理系统登录页</div>\n      <form>\n        <p class=\"input-group\">\n          <span class=\"input-group-addon\">\n            <i class=\"fa fa-user\"></i>\n          </span>\n          <label for=\"username\"></label>\n          <input\n            id=\"username\"\n            name=\"username\"\n            class=\"form-control\"\n            placeholder=\"请输入用户名\"\n            [(ngModel)]=\"user.username\"\n            title=\"用户名不能少于5个字符\"\n            data-placement=\"right\"\n            data-toggle=\"tooltip\">\n        </p>\n\n        <p class=\"input-group\">\n        <span class=\"input-group-addon\">\n          <i class=\"fa fa-lock\"></i>\n        </span>\n          <label for=\"password\"></label>\n          <input\n            id=\"password\"\n            name=\"password\"\n            type=\"password\"\n            class=\"form-control\"\n            placeholder=\"请输入密码\"\n            [(ngModel)]=\"user.password\"\n            title=\"密码不能少于5个字符\"\n            data-placement=\"right\"\n            data-toggle=\"tooltip\">\n        </p>\n\n        <button class=\"btn btn-primary btn-block\" [disabled]=\"!(user.username.length >= 5 && user.password.length >= 5)\" (click)=\"login()\">登录</button>\n      </form>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"login-page\">\r\n  <div class=\"login-box\">\r\n\r\n    <div class=\"login-logo\">\r\n      <strong>Edu</strong> Admin\r\n    </div>\r\n\r\n    <div class=\"login-box-body box box-info\">\r\n      <div class=\"login-box-msg\">管理系统登录页</div>\r\n      <form>\r\n        <p class=\"input-group\">\r\n          <span class=\"input-group-addon\">\r\n            <i class=\"fa fa-user\"></i>\r\n          </span>\r\n          <label for=\"username\"></label>\r\n          <input\r\n            id=\"username\"\r\n            name=\"username\"\r\n            class=\"form-control\"\r\n            placeholder=\"请输入用户名\"\r\n            [(ngModel)]=\"user.username\"\r\n            title=\"用户名不能少于5个字符\"\r\n            data-placement=\"right\"\r\n            data-toggle=\"tooltip\">\r\n        </p>\r\n\r\n        <p class=\"input-group\">\r\n        <span class=\"input-group-addon\">\r\n          <i class=\"fa fa-lock\"></i>\r\n        </span>\r\n          <label for=\"password\"></label>\r\n          <input\r\n            id=\"password\"\r\n            name=\"password\"\r\n            type=\"password\"\r\n            class=\"form-control\"\r\n            placeholder=\"请输入密码\"\r\n            [(ngModel)]=\"user.password\"\r\n            title=\"密码不能少于5个字符\"\r\n            data-placement=\"right\"\r\n            data-toggle=\"tooltip\">\r\n        </p>\r\n\r\n        <button class=\"btn btn-primary btn-block\" [disabled]=\"!(user.username.length >= 5 && user.password.length >= 5)\" (click)=\"login()\">登录</button>\r\n      </form>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -1877,7 +2142,7 @@ var _a, _b, _c, _d;
 /***/ "../../../../../src/app/modal/modal.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"modal fade\" [class.in]=\"animated\" [style.display]=\"show?'block':'none'\">\n  <div class=\"modal-dialog modal-{{modalSize}} modal-{{modalType}}\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <button type=\"button\" class=\"close\" [hidden]=\"!closeBtn\">\n          <span (click)=\"hideModal()\">×</span>\n        </button>\n        <h4 class=\"modal-title\">{{ title || '提示' }}</h4>\n      </div>\n      <div class=\"modal-body\">\n        <p>{{ content }}</p>\n        <ng-content *ngIf=\"!content\"></ng-content>\n      </div>\n      <div class=\"modal-footer\" *ngIf=\"hasFooter\">\n        <button type=\"button\" class=\"btn {{modalType == 'default'?'btn-default':'btn-outline'}}\" (click)=\"hideModal()\" [style.display]=\"cancelBtn?'inline-block':'none'\">{{ modalCancelText }}</button>\n        <button type=\"button\" class=\"btn {{modalType == 'default'?'btn-primary':'btn-outline'}} pull-right\" [disabled]=\"disabledAcceptBtn\" (click)=\"confirm();hideModal()\">{{ modalConfirmText }}</button>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"modal fade\" [class.in]=\"animated\" [style.display]=\"show?'block':'none'\">\r\n  <div class=\"modal-dialog modal-{{modalSize}} modal-{{modalType}}\">\r\n    <div class=\"modal-content\">\r\n      <div class=\"modal-header\">\r\n        <button type=\"button\" class=\"close\" [hidden]=\"!closeBtn\">\r\n          <span (click)=\"hideModal()\">×</span>\r\n        </button>\r\n        <h4 class=\"modal-title\">{{ title || '提示' }}</h4>\r\n      </div>\r\n      <div class=\"modal-body\">\r\n        <p>{{ content }}</p>\r\n        <ng-content *ngIf=\"!content\"></ng-content>\r\n      </div>\r\n      <div class=\"modal-footer\" *ngIf=\"hasFooter\">\r\n        <button type=\"button\" class=\"btn {{modalType == 'default'?'btn-default':'btn-outline'}}\" (click)=\"hideModal()\" [style.display]=\"cancelBtn?'inline-block':'none'\">{{ modalCancelText }}</button>\r\n        <button type=\"button\" class=\"btn {{modalType == 'default'?'btn-primary':'btn-outline'}} pull-right\" [disabled]=\"disabledAcceptBtn\" (click)=\"confirm();hideModal()\">{{ modalConfirmText }}</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -2063,7 +2328,7 @@ var Usr = (function () {
 /***/ "../../../../../src/app/pagination/pagination.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-sm-5\">\n    <div class=\"dataTables_info\" id=\"example2_info\" role=\"status\" aria-live=\"polite\">Showing 11 to 20 of 57\n      entries\n    </div>\n  </div>\n  <div class=\"col-sm-7\">\n    <div class=\"dataTables_paginate paging_simple_numbers pull-right\" id=\"example2_paginate\">\n      <ul class=\"pagination\">\n        <li class=\"paginate_button previous\" id=\"example2_previous\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"0\">Previous</a></li>\n        <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"1\">1</a></li>\n        <li class=\"paginate_button active\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"2\">2</a></li>\n        <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"3\">3</a></li>\n        <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"4\">4</a></li>\n        <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"5\">5</a></li>\n        <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"6\">6</a></li>\n        <li class=\"paginate_button next\" id=\"example2_next\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"7\">Next</a></li>\n      </ul>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\">\r\n  <div class=\"col-sm-5\">\r\n    <div class=\"dataTables_info\" id=\"example2_info\" role=\"status\" aria-live=\"polite\">Showing 11 to 20 of 57\r\n      entries\r\n    </div>\r\n  </div>\r\n  <div class=\"col-sm-7\">\r\n    <div class=\"dataTables_paginate paging_simple_numbers pull-right\" id=\"example2_paginate\">\r\n      <ul class=\"pagination\">\r\n        <li class=\"paginate_button previous\" id=\"example2_previous\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"0\">Previous</a></li>\r\n        <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"1\">1</a></li>\r\n        <li class=\"paginate_button active\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"2\">2</a></li>\r\n        <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"3\">3</a></li>\r\n        <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"4\">4</a></li>\r\n        <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"5\">5</a></li>\r\n        <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"6\">6</a></li>\r\n        <li class=\"paginate_button next\" id=\"example2_next\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"7\">Next</a></li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -2124,7 +2389,7 @@ PaginationComponent = __decorate([
 /***/ "../../../../../src/app/permission/permission.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  permission works!\n</p>\n"
+module.exports = "<p>\r\n  permission works!\r\n</p>\r\n"
 
 /***/ }),
 
@@ -2185,7 +2450,7 @@ PermissionComponent = __decorate([
 /***/ "../../../../../src/app/role/role.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"content-header\">\n  <h1>角色信息</h1>\n  <ol class=\"breadcrumb\">\n    <li><a><i class=\"fa fa-dashboard\"></i>基础信息管理</a></li>\n    <li class=\"active\"><a><i class=\"fa fa-book\"></i>角色信息</a></li>\n  </ol>\n</section>\n\n<section class=\"content\">\n  <div class=\"box box-info\">\n    <div class=\"box-header\"></div>\n    <div class=\"box-body\">\n      <div class=\"row\">\n        <div class=\"col-lg-3 col-md-4 col-sm-6 col-xs-12\">\n          <div class=\"box box-widget widget-user\">\n            <div class=\"widget-user-header bg-aqua-active\">\n              <h4>\n                前台出纳专员\n                <small class=\"pull-right\">\n                  <i class=\"fa fa-edit\"></i>\n                </small>\n              </h4>\n            </div>\n            <div class=\"widget-user-image\">\n              <img class=\"img-circle\" src=\"https://adminlte.io/themes/AdminLTE/dist/img/user1-128x128.jpg\" alt=\"User Avatar\">\n            </div>\n            <div class=\"box-footer\">\n              <div class=\"form-group\">\n                <p>哦阿斯顿舒服的哈市的佛夫哈 u 私房话</p>\n                <textarea *ngIf=\"false\" rows=\"2\" readonly class=\"form-control\">哦阿斯顿舒服的哈市的佛夫哈 u 私房话</textarea>\n              </div>\n            </div>\n          </div>\n        </div>\n        <div class=\"col-lg-3 col-md-4 col-sm-6 col-xs-12\">\n          <div class=\"box box-widget widget-user\">\n            <div class=\"widget-user-header bg-aqua-active\">\n              <h4>\n                前台出纳专员\n                <small class=\"pull-right\">\n                  <i class=\"fa fa-edit\"></i>\n                </small>\n              </h4>\n            </div>\n            <div class=\"widget-user-image\">\n              <img class=\"img-circle\" src=\"https://adminlte.io/themes/AdminLTE/dist/img/user1-128x128.jpg\" alt=\"User Avatar\">\n            </div>\n            <div class=\"box-footer\">\n              <div class=\"form-group\">\n                <textarea rows=\"2\" readonly class=\"form-control\">哦阿斯顿舒服的哈市的佛夫哈 u 私房话</textarea>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</section>\n"
+module.exports = "<section class=\"content-header\">\r\n  <h1>角色信息</h1>\r\n  <ol class=\"breadcrumb\">\r\n    <li><a><i class=\"fa fa-dashboard\"></i>基础信息管理</a></li>\r\n    <li class=\"active\"><a><i class=\"fa fa-book\"></i>角色信息</a></li>\r\n  </ol>\r\n</section>\r\n\r\n<section class=\"content\">\r\n  <div class=\"box box-info\">\r\n    <div class=\"box-header\"></div>\r\n    <div class=\"box-body\">\r\n      <div class=\"row\">\r\n        <div class=\"col-lg-3 col-md-4 col-sm-6 col-xs-12\">\r\n          <div class=\"box box-widget widget-user\">\r\n            <div class=\"widget-user-header bg-aqua-active\">\r\n              <h4>\r\n                前台出纳专员\r\n                <small class=\"pull-right\">\r\n                  <i class=\"fa fa-edit\"></i>\r\n                </small>\r\n              </h4>\r\n            </div>\r\n            <div class=\"widget-user-image\">\r\n              <img class=\"img-circle\" src=\"https://adminlte.io/themes/AdminLTE/dist/img/user1-128x128.jpg\" alt=\"User Avatar\">\r\n            </div>\r\n            <div class=\"box-footer\">\r\n              <div class=\"form-group\">\r\n                <p>哦阿斯顿舒服的哈市的佛夫哈 u 私房话</p>\r\n                <textarea *ngIf=\"false\" rows=\"2\" readonly class=\"form-control\">哦阿斯顿舒服的哈市的佛夫哈 u 私房话</textarea>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div class=\"col-lg-3 col-md-4 col-sm-6 col-xs-12\">\r\n          <div class=\"box box-widget widget-user\">\r\n            <div class=\"widget-user-header bg-aqua-active\">\r\n              <h4>\r\n                前台出纳专员\r\n                <small class=\"pull-right\">\r\n                  <i class=\"fa fa-edit\"></i>\r\n                </small>\r\n              </h4>\r\n            </div>\r\n            <div class=\"widget-user-image\">\r\n              <img class=\"img-circle\" src=\"https://adminlte.io/themes/AdminLTE/dist/img/user1-128x128.jpg\" alt=\"User Avatar\">\r\n            </div>\r\n            <div class=\"box-footer\">\r\n              <div class=\"form-group\">\r\n                <textarea rows=\"2\" readonly class=\"form-control\">哦阿斯顿舒服的哈市的佛夫哈 u 私房话</textarea>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>\r\n"
 
 /***/ }),
 
@@ -2255,12 +2520,10 @@ RoleComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__student_student_component__ = __webpack_require__("../../../../../src/app/student/student.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__user_user_component__ = __webpack_require__("../../../../../src/app/user/user.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__role_role_component__ = __webpack_require__("../../../../../src/app/role/role.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__school_school_component__ = __webpack_require__("../../../../../src/app/school/school.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__admin_admin_component__ = __webpack_require__("../../../../../src/app/admin/admin.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__admin_users_users_component__ = __webpack_require__("../../../../../src/app/admin/users/users.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__admin_schools_schools_component__ = __webpack_require__("../../../../../src/app/admin/schools/schools.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__admin_admin_component__ = __webpack_require__("../../../../../src/app/admin/admin.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__admin_users_users_component__ = __webpack_require__("../../../../../src/app/admin/users/users.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__admin_schools_schools_component__ = __webpack_require__("../../../../../src/app/admin/schools/schools.component.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return routes; });
-
 
 
 
@@ -2284,7 +2547,7 @@ var routes = [
         children: [
             {
                 path: 'admin',
-                component: __WEBPACK_IMPORTED_MODULE_9__admin_admin_component__["a" /* AdminComponent */],
+                component: __WEBPACK_IMPORTED_MODULE_8__admin_admin_component__["a" /* AdminComponent */],
                 children: [
                     {
                         path: '',
@@ -2293,11 +2556,11 @@ var routes = [
                     },
                     {
                         path: 'users',
-                        component: __WEBPACK_IMPORTED_MODULE_10__admin_users_users_component__["a" /* UsersComponent */],
+                        component: __WEBPACK_IMPORTED_MODULE_9__admin_users_users_component__["a" /* UsersComponent */],
                     },
                     {
                         path: 'schools',
-                        component: __WEBPACK_IMPORTED_MODULE_11__admin_schools_schools_component__["a" /* SchoolsComponent */]
+                        component: __WEBPACK_IMPORTED_MODULE_10__admin_schools_schools_component__["a" /* SchoolsComponent */]
                     },
                     {
                         path: 'employees',
@@ -2314,10 +2577,6 @@ var routes = [
                     {
                         path: 'roles',
                         component: __WEBPACK_IMPORTED_MODULE_7__role_role_component__["a" /* RoleComponent */]
-                    },
-                    {
-                        path: 'schools',
-                        component: __WEBPACK_IMPORTED_MODULE_8__school_school_component__["a" /* SchoolComponent */]
                     }
                 ]
             },
@@ -2337,67 +2596,6 @@ var routes = [
     }
 ];
 //# sourceMappingURL=routes.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/school/school.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<p>\n  school works!\n</p>\n"
-
-/***/ }),
-
-/***/ "../../../../../src/app/school/school.component.less":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-
-/***/ "../../../../../src/app/school/school.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SchoolComponent; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var SchoolComponent = (function () {
-    function SchoolComponent() {
-    }
-    SchoolComponent.prototype.ngOnInit = function () {
-    };
-    return SchoolComponent;
-}());
-SchoolComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'app-school',
-        template: __webpack_require__("../../../../../src/app/school/school.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/school/school.component.less")]
-    }),
-    __metadata("design:paramtypes", [])
-], SchoolComponent);
-
-//# sourceMappingURL=school.component.js.map
 
 /***/ }),
 
@@ -2527,7 +2725,7 @@ var HttpService_1, _a, _b, _c;
 /***/ "../../../../../src/app/sidebar/sidebar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"main-sidebar\">\n  <div class=\"sidebar\">\n    <ul class=\"sidebar-menu\">\n      <li class=\"header\">菜单栏</li>\n      <li\n        class=\"treeview\"\n        *ngFor=\"let menu of sidebarMenu\"\n        [routerLink]=\"menu.routerLink\"\n        routerLinkActive=\"active\">\n        <a href=\"javascript:void(0)\">\n          <i class=\"fa {{menu.icon}}\"></i>\n          <i class=\"fa fa-angle-left pull-right\"></i>\n          <span>{{ menu.name }}</span>\n        </a>\n      </li>\n    </ul>\n  </div>\n</section>\n"
+module.exports = "<section class=\"main-sidebar\">\r\n  <div class=\"sidebar\">\r\n    <ul class=\"sidebar-menu\">\r\n      <li class=\"header\">菜单栏</li>\r\n      <li\r\n        class=\"treeview\"\r\n        *ngFor=\"let menu of sidebarMenu\"\r\n        [routerLink]=\"menu.routerLink\"\r\n        routerLinkActive=\"active\">\r\n        <a href=\"javascript:void(0)\">\r\n          <i class=\"fa {{menu.icon}}\"></i>\r\n          <i class=\"fa fa-angle-left pull-right\"></i>\r\n          <span>{{ menu.name }}</span>\r\n        </a>\r\n      </li>\r\n    </ul>\r\n  </div>\r\n</section>\r\n"
 
 /***/ }),
 
@@ -2590,7 +2788,7 @@ SidebarComponent = __decorate([
 /***/ "../../../../../src/app/student/student.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"content-header\">\n  <h1>学生信息</h1>\n  <ol class=\"breadcrumb\">\n    <li><a><i class=\"fa fa-dashboard\"></i>基础信息管理</a></li>\n    <li class=\"active\"><a><i class=\"fa fa-book\"></i>学生信息</a></li>\n  </ol>\n</section>\n\n<div class=\"content\">\n  <div class=\"row\">\n    <div class=\"col-xs-12\">\n      <app-collapse-box [collapse]=\"false\" [icon]=\"'filter'\" [boxTitle]=\"'学生过滤'\">\n\n\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\n          <label class=\"pull-left\">\n            时间过滤:\n          </label>\n          <app-date-ranger-picker class=\"pull-left\"></app-date-ranger-picker>\n        </div>\n\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\n          <label class=\"pull-left\">\n            名称筛选:\n          </label>\n          <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\n            <input type=\"text\" class=\"form-control input-sm\" placeholder=\"输入学生姓名\">\n            <span class=\"input-group-addon\"><i class=\"fa fa-search\"></i></span>\n          </div>\n        </div>\n\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\n          <label class=\"pull-left\">\n            性别筛选:\n          </label>\n          <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\n            <select2 [cssImport]=\"false\" [options]=\"{minimumResultsForSearch: -1}\" [data]=\"[{id:'ALL',text:'全部'}].concat(syllabusTypes)\" [width]=\"'148px'\"></select2>\n          </div>\n        </div>\n\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\n          <label class=\"pull-left\">\n            学科筛选:\n          </label>\n          <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\n            <select2 [cssImport]=\"false\" [options]=\"{minimumResultsForSearch: -1}\" [data]=\"[{id:'ALL',text:'全部'}].concat(syllabusTypes)\" [width]=\"'148px'\"></select2>\n          </div>\n        </div>\n\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\n          <label class=\"pull-left\">\n            年级筛选:\n          </label>\n          <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\n            <select2 [cssImport]=\"false\" [options]=\"{minimumResultsForSearch: -1}\" [data]=\"[{id:'ALL',text:'全部'}].concat(syllabusTypes)\" [width]=\"'148px'\"></select2>\n          </div>\n        </div>\n\n\n      </app-collapse-box>\n\n      <div class=\"box box-info\">\n        <div class=\"box-header\">\n          <i class=\"fa fa-table\"></i><h3 class=\"box-title\">学生列表</h3>\n          <div class=\"box-tools\">\n            <div class=\"btn-group btn-group-sm pull-right syllabus-add-btn\">\n              <button (click)=\"modal.showModal({\n                 title: '添加新学生'\n            })\" class=\"btn btn-info\"><i class=\"fa fa-plus\"></i>新增学生</button>\n            </div>\n          </div>\n        </div>\n        <div class=\"box-body\" style=\"border-top: 1px solid #dddddd;\">\n          <div class=\"dataTables_wrapper form-inline dt-bootstrap\">\n            <div class=\"row\">\n              <div class=\"col-sm-12\">\n                <table class=\"table table-bordered dataTable\">\n                  <thead>\n                    <tr role=\"row\">\n                      <th>姓名</th>\n                      <th>性别</th>\n                      <th>电话</th>\n                      <th>生日</th>\n                      <th>学科</th>\n                      <th>年级</th>\n                      <th>学校</th>\n                      <th class=\"text-center\">操作</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                  <tr *ngFor=\"let student of students\">\n                    <td colspan=\"8\" class=\"box box-widget collapsed-box\">\n                      <div class=\"box-header\">\n                        <span>{{ student.name }}</span>\n                        <span>{{ student.sex == 'MALE' ? '男' : '女' }}</span>\n                        <span>{{ student.phone }}</span>\n                        <span>{{ student.birthday | date: 'yyyy-MM-dd' }}</span>\n                        <span>{{ student.subject }}</span>\n                        <span>{{ student.grade }}</span>\n                        <span>{{ student.orignSchool }}</span>\n                        <span class=\"text-center\">\n                            <button (click)=\"removeStudent(student.id)\" class=\"btn btn-xs btn-danger\"><i class=\"fa fa-trash-o\"></i>删除</button>\n                            <button data-widget=\"collapse\" class=\"btn btn-xs btn-info\"><i class=\"fa fa-plus\"></i>更多</button>\n                          </span>\n                      </div>\n                      <div class=\"box-body\">\n                        <div class=\"detail-container clearfix\">\n\n                          <div>\n                            <div class=\"col-xs-2 text-right\">身份证号码: &nbsp;&nbsp;</div>\n                            <div class=\"col-xs-8\">{{ student.idCard }}</div>\n                          </div>\n                          <div>\n                            <div class=\"col-xs-2 text-right\">家长姓名: &nbsp;&nbsp;</div>\n                            <div class=\"col-xs-8\">{{ student.parentName }}</div>\n                          </div>\n                          <div>\n                            <div class=\"col-xs-2 text-right\">家长性别: &nbsp;&nbsp;</div>\n                            <div class=\"col-xs-8\">{{ student.parentSex === 'MALE' ? '男' : '女' }}</div>\n                          </div>\n                          <div>\n                            <div class=\"col-xs-2 text-right\">家长电话: &nbsp;&nbsp;</div>\n                            <div class=\"col-xs-8\">{{ student.parentPhone }}</div>\n                          </div>\n                          <div>\n                            <div class=\"col-xs-2 text-right\">家长身份证号: &nbsp;&nbsp;</div>\n                            <div class=\"col-xs-8\">{{ student.parentIdCard }}</div>\n                          </div>\n                          <div>\n                            <div class=\"col-xs-2 text-right\">家庭住址: &nbsp;&nbsp;</div>\n                            <div class=\"col-xs-8\">{{ student.address }}</div>\n                          </div>\n                          <div>\n                            <div class=\"col-xs-2 text-right\">描述信息: &nbsp;&nbsp;</div>\n                            <div class=\"col-xs-8\">{{ student.remark }}</div>\n                          </div>\n\n                        </div>\n                      </div>\n                    </td>\n                  </tr>\n                  </tbody>\n                </table>\n              </div>\n            </div>\n\n            <div class=\"row\">\n              <div class=\"col-sm-5\">\n                <div class=\"dataTables_info\" id=\"example2_info\" role=\"status\" aria-live=\"polite\">Showing 11 to 20 of 57\n                  entries\n                </div>\n              </div>\n              <div class=\"col-sm-7\">\n                <div class=\"dataTables_paginate paging_simple_numbers pull-right\" id=\"example2_paginate\">\n                  <ul class=\"pagination\">\n                    <li class=\"paginate_button previous\" id=\"example2_previous\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"0\">Previous</a></li>\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"1\">1</a></li>\n                    <li class=\"paginate_button active\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"2\">2</a></li>\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"3\">3</a></li>\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"4\">4</a></li>\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"5\">5</a></li>\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"6\">6</a></li>\n                    <li class=\"paginate_button next\" id=\"example2_next\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"7\">Next</a></li>\n                  </ul>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n<app-modal #modal></app-modal>\n"
+module.exports = "<section class=\"content-header\">\r\n  <h1>学生信息</h1>\r\n  <ol class=\"breadcrumb\">\r\n    <li><a><i class=\"fa fa-dashboard\"></i>基础信息管理</a></li>\r\n    <li class=\"active\"><a><i class=\"fa fa-book\"></i>学生信息</a></li>\r\n  </ol>\r\n</section>\r\n\r\n<div class=\"content\">\r\n  <div class=\"row\">\r\n    <div class=\"col-xs-12\">\r\n      <app-collapse-box [collapse]=\"false\" [icon]=\"'filter'\" [boxTitle]=\"'学生过滤'\">\r\n\r\n\r\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\r\n          <label class=\"pull-left\">\r\n            时间过滤:\r\n          </label>\r\n          <app-date-ranger-picker class=\"pull-left\"></app-date-ranger-picker>\r\n        </div>\r\n\r\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\r\n          <label class=\"pull-left\">\r\n            名称筛选:\r\n          </label>\r\n          <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\r\n            <input type=\"text\" class=\"form-control input-sm\" placeholder=\"输入学生姓名\">\r\n            <span class=\"input-group-addon\"><i class=\"fa fa-search\"></i></span>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\r\n          <label class=\"pull-left\">\r\n            性别筛选:\r\n          </label>\r\n          <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\r\n            <select2 [cssImport]=\"false\" [options]=\"{minimumResultsForSearch: -1}\" [data]=\"[{id:'ALL',text:'全部'}].concat(syllabusTypes)\" [width]=\"'148px'\"></select2>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\r\n          <label class=\"pull-left\">\r\n            学科筛选:\r\n          </label>\r\n          <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\r\n            <select2 [cssImport]=\"false\" [options]=\"{minimumResultsForSearch: -1}\" [data]=\"[{id:'ALL',text:'全部'}].concat(syllabusTypes)\" [width]=\"'148px'\"></select2>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\r\n          <label class=\"pull-left\">\r\n            年级筛选:\r\n          </label>\r\n          <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\r\n            <select2 [cssImport]=\"false\" [options]=\"{minimumResultsForSearch: -1}\" [data]=\"[{id:'ALL',text:'全部'}].concat(syllabusTypes)\" [width]=\"'148px'\"></select2>\r\n          </div>\r\n        </div>\r\n\r\n\r\n      </app-collapse-box>\r\n\r\n      <div class=\"box box-info\">\r\n        <div class=\"box-header\">\r\n          <i class=\"fa fa-table\"></i><h3 class=\"box-title\">学生列表</h3>\r\n          <div class=\"box-tools\">\r\n            <div class=\"btn-group btn-group-sm pull-right syllabus-add-btn\">\r\n              <button (click)=\"modal.showModal({\r\n                 title: '添加新学生'\r\n            })\" class=\"btn btn-info\"><i class=\"fa fa-plus\"></i>新增学生</button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div class=\"box-body\" style=\"border-top: 1px solid #dddddd;\">\r\n          <div class=\"dataTables_wrapper form-inline dt-bootstrap\">\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-12\">\r\n                <table class=\"table table-bordered dataTable\">\r\n                  <thead>\r\n                    <tr role=\"row\">\r\n                      <th>姓名</th>\r\n                      <th>性别</th>\r\n                      <th>电话</th>\r\n                      <th>生日</th>\r\n                      <th>学科</th>\r\n                      <th>年级</th>\r\n                      <th>学校</th>\r\n                      <th class=\"text-center\">操作</th>\r\n                    </tr>\r\n                  </thead>\r\n                  <tbody>\r\n                  <tr *ngFor=\"let student of students\">\r\n                    <td colspan=\"8\" class=\"box box-widget collapsed-box\">\r\n                      <div class=\"box-header\">\r\n                        <span>{{ student.name }}</span>\r\n                        <span>{{ student.sex == 'MALE' ? '男' : '女' }}</span>\r\n                        <span>{{ student.phone }}</span>\r\n                        <span>{{ student.birthday | date: 'yyyy-MM-dd' }}</span>\r\n                        <span>{{ student.subject }}</span>\r\n                        <span>{{ student.grade }}</span>\r\n                        <span>{{ student.orignSchool }}</span>\r\n                        <span class=\"text-center\">\r\n                            <button (click)=\"removeStudent(student.id)\" class=\"btn btn-xs btn-danger\"><i class=\"fa fa-trash-o\"></i>删除</button>\r\n                            <button data-widget=\"collapse\" class=\"btn btn-xs btn-info\"><i class=\"fa fa-plus\"></i>更多</button>\r\n                          </span>\r\n                      </div>\r\n                      <div class=\"box-body\">\r\n                        <div class=\"detail-container clearfix\">\r\n\r\n                          <div>\r\n                            <div class=\"col-xs-2 text-right\">身份证号码: &nbsp;&nbsp;</div>\r\n                            <div class=\"col-xs-8\">{{ student.idCard }}</div>\r\n                          </div>\r\n                          <div>\r\n                            <div class=\"col-xs-2 text-right\">家长姓名: &nbsp;&nbsp;</div>\r\n                            <div class=\"col-xs-8\">{{ student.parentName }}</div>\r\n                          </div>\r\n                          <div>\r\n                            <div class=\"col-xs-2 text-right\">家长性别: &nbsp;&nbsp;</div>\r\n                            <div class=\"col-xs-8\">{{ student.parentSex === 'MALE' ? '男' : '女' }}</div>\r\n                          </div>\r\n                          <div>\r\n                            <div class=\"col-xs-2 text-right\">家长电话: &nbsp;&nbsp;</div>\r\n                            <div class=\"col-xs-8\">{{ student.parentPhone }}</div>\r\n                          </div>\r\n                          <div>\r\n                            <div class=\"col-xs-2 text-right\">家长身份证号: &nbsp;&nbsp;</div>\r\n                            <div class=\"col-xs-8\">{{ student.parentIdCard }}</div>\r\n                          </div>\r\n                          <div>\r\n                            <div class=\"col-xs-2 text-right\">家庭住址: &nbsp;&nbsp;</div>\r\n                            <div class=\"col-xs-8\">{{ student.address }}</div>\r\n                          </div>\r\n                          <div>\r\n                            <div class=\"col-xs-2 text-right\">描述信息: &nbsp;&nbsp;</div>\r\n                            <div class=\"col-xs-8\">{{ student.remark }}</div>\r\n                          </div>\r\n\r\n                        </div>\r\n                      </div>\r\n                    </td>\r\n                  </tr>\r\n                  </tbody>\r\n                </table>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-5\">\r\n                <div class=\"dataTables_info\" id=\"example2_info\" role=\"status\" aria-live=\"polite\">Showing 11 to 20 of 57\r\n                  entries\r\n                </div>\r\n              </div>\r\n              <div class=\"col-sm-7\">\r\n                <div class=\"dataTables_paginate paging_simple_numbers pull-right\" id=\"example2_paginate\">\r\n                  <ul class=\"pagination\">\r\n                    <li class=\"paginate_button previous\" id=\"example2_previous\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"0\">Previous</a></li>\r\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"1\">1</a></li>\r\n                    <li class=\"paginate_button active\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"2\">2</a></li>\r\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"3\">3</a></li>\r\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"4\">4</a></li>\r\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"5\">5</a></li>\r\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"6\">6</a></li>\r\n                    <li class=\"paginate_button next\" id=\"example2_next\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"7\">Next</a></li>\r\n                  </ul>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n<app-modal #modal></app-modal>\r\n"
 
 /***/ }),
 
@@ -2706,7 +2904,7 @@ var _a;
 /***/ "../../../../../src/app/syllabus/syllabus.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"content-header\">\n  <h1>课程信息</h1>\n  <ol class=\"breadcrumb\">\n    <li><a><i class=\"fa fa-dashboard\"></i>基础信息管理</a></li>\n    <li class=\"active\"><a><i class=\"fa fa-book\"></i>课程信息</a></li>\n  </ol>\n</section>\n<section class=\"content\">\n  <div class=\"row\">\n\n    <div class=\"col-xs-12\">\n\n      <app-collapse-box [collapse]=\"false\" [icon]=\"'filter'\" [boxTitle]=\"'课程过滤'\">\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\n          <label class=\"pull-left\">\n            时间过滤:\n          </label>\n          <app-date-ranger-picker\n            [startTime]=\"syllabusFilter.timeRange.startTime\"\n            (dateRangeSetEvent)=\"handleTimeRangeChange($event)\"\n            class=\"pull-left\"></app-date-ranger-picker>\n        </div>\n\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\n          <label class=\"pull-left\">\n            名称筛选:\n          </label>\n          <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\n            <input type=\"text\" class=\"form-control input-sm\" placeholder=\"输入课程名称\">\n            <span class=\"input-group-addon\"><i class=\"fa fa-search\"></i></span>\n          </div>\n        </div>\n\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\n          <label class=\"pull-left\">\n            类型筛选:\n          </label>\n          <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\n            <select2 [cssImport]=\"false\" [options]=\"{minimumResultsForSearch: -1}\" [data]=\"[{id:'ALL',text:'全部'}].concat(syllabusTypes)\" [width]=\"'148px'\"></select2>\n          </div>\n        </div>\n      </app-collapse-box>\n\n      <div class=\"box box-info\">\n        <div class=\"box-header\">\n          <i class=\"fa fa-table\"></i><h3 class=\"box-title\">课程列表</h3>\n          <div class=\"box-tools\">\n            <div class=\"btn-group btn-group-sm pull-right syllabus-add-btn\" (click)=\"resetCurSyllabus();modal.showModal({\n                title: '添加新课程',\n                confirm: saveSyllabus\n            })\">\n              <button class=\"btn btn-info\"><i class=\"fa fa-plus\"></i>添加新课程</button>\n            </div>\n          </div>\n        </div>\n        <div class=\"box-body\" style=\"border-top: 1px solid #dddddd;\">\n          <div class=\"dataTables_wrapper form-inline dt-bootstrap\">\n            <div class=\"row\">\n              <div class=\"col-sm-12\">\n                <table id=\"example2\" class=\"table table-bordered table-hover dataTable\">\n                  <thead>\n                    <tr role=\"row\">\n                      <th>课程名称</th>\n                      <th>课程价格</th>\n                      <th>课程类型</th>\n                      <th>教学课时</th>\n                      <th>报名人数</th>\n                      <th>招生人数</th>\n                      <th>退课人数</th>\n                      <th class=\"text-center\">操作</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                    <tr\n                      role=\"row\"\n                      *ngFor=\"let syllabus of syllabuses; let i = index;\" class=\"{{i%2 == 1 ? 'odd' : 'even'}}\"\n                      (click)=\"setCurSyllabus(syllabus);modal.showModal({\n                        title: '编辑课程:' + syllabus.name,\n                        confirm: saveSyllabus\n                      })\">\n                      <td>{{syllabus.name}}</td>\n                      <td>{{syllabus.price}}</td>\n                      <td>{{syllabusTypesMap[syllabus.type]}}</td>\n                      <td>{{syllabus.studyHour || 0}}</td>\n                      <td>{{syllabus.selectedNum || 0}}</td>\n                      <td>{{syllabus.studentNum || 0}}</td>\n                      <td>{{syllabus.backNum || 0}}</td>\n                      <td class=\"text-center\">\n                        <button class=\"btn btn-danger btn-xs\" (click)=\"removeSyllabus(syllabus.id,$event)\">\n                          <i class=\"fa fa-trash\"></i>\n                          删除\n                        </button>\n                      </td>\n                    </tr>\n                    <tr *ngIf=\"syllabuses.length == 0\">\n                      <td class=\"text-center\" colspan=\"7\">没有相关课程信息</td>\n                    </tr>\n                  </tbody>\n                </table>\n              </div>\n            </div>\n            <div class=\"row\">\n              <div class=\"col-sm-5\">\n                <div class=\"dataTables_info\" id=\"example2_info\" role=\"status\" aria-live=\"polite\">Showing 11 to 20 of 57\n                  entries\n                </div>\n              </div>\n              <div class=\"col-sm-7\">\n                <div class=\"dataTables_paginate paging_simple_numbers pull-right\" id=\"example2_paginate\">\n                  <ul class=\"pagination\">\n                    <li class=\"paginate_button previous\" id=\"example2_previous\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"0\">Previous</a></li>\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"1\">1</a></li>\n                    <li class=\"paginate_button active\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"2\">2</a></li>\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"3\">3</a></li>\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"4\">4</a></li>\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"5\">5</a></li>\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"6\">6</a></li>\n                    <li class=\"paginate_button next\" id=\"example2_next\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"7\">Next</a></li>\n                  </ul>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</section>\n\n<app-modal #modal [disabledAcceptBtn]=\"!(curSyllabus.name && curSyllabus.price && curSyllabus.studyHour)\" [modalSize]=\"'sm'\">\n  <form class=\"form-horizontal\" name=\"courseForm\">\n    <div class=\"box-body\">\n      <div class=\"form-group\">\n        <label class=\"col-xs-3 control-label\">课程类型</label>\n        <div class=\"col-xs-9\">\n          <select2 id=\"courseType\" [value]=\"curSyllabus.type\" [cssImport]=\"false\" [width]=\"'100%'\"  [options]=\"{minimumResultsForSearch: -1}\" [data]=\"syllabusTypes\" (valueChanged)=\"switchSyllabusType($event)\"></select2>\n        </div>\n      </div>\n\n      <div class=\"form-group\">\n        <label for=\"courseName\" class=\"col-xs-3 control-label\">课程名称</label>\n        <div class=\"col-xs-9\">\n          <input type=\"text\" id=\"courseName\" name=\"courseName\" class=\"form-control\" placeholder=\"请输入课程名称\" [(ngModel)]=\"curSyllabus.name\">\n        </div>\n      </div>\n\n      <div class=\"form-group\">\n        <label for=\"coursePrice\" class=\"col-xs-3 control-label\">课程价格</label>\n        <div class=\"col-xs-9\">\n          <div class=\"input-group\">\n            <input type=\"number\" id=\"coursePrice\" name=\"coursePrice\" min=\"0\" class=\"form-control\" placeholder=\"请输入课程价格\" [(ngModel)]=\"curSyllabus.price\">\n            <span class=\"input-group-addon\">元</span>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"form-group\">\n        <label for=\"courseDuration\" class=\"col-xs-3 control-label\">教学课时</label>\n        <div class=\"col-xs-9\">\n          <div class=\"input-group\">\n            <input type=\"number\" id=\"courseDuration\" name=\"courseDuration\" min=\"0\" class=\"form-control\" placeholder=\"教学课时\" [(ngModel)]=\"curSyllabus.studyHour\">\n            <span class=\"input-group-addon\">时</span>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"form-group\">\n        <label for=\"courseAcceptStuCount\" class=\"col-xs-3 control-label\">招收人数</label>\n        <div class=\"col-xs-9\">\n          <input type=\"number\" id=\"courseAcceptStuCount\" name=\"courseAcceptStuCount\" class=\"form-control\" placeholder=\"请输入招收人数\" [(ngModel)]=\"curSyllabus.studentNum\">\n        </div>\n      </div>\n    </div>\n  </form>\n</app-modal>\n"
+module.exports = "<section class=\"content-header\">\r\n  <h1>课程信息</h1>\r\n  <ol class=\"breadcrumb\">\r\n    <li><a><i class=\"fa fa-dashboard\"></i>基础信息管理</a></li>\r\n    <li class=\"active\"><a><i class=\"fa fa-book\"></i>课程信息</a></li>\r\n  </ol>\r\n</section>\r\n<section class=\"content\">\r\n  <div class=\"row\">\r\n\r\n    <div class=\"col-xs-12\">\r\n\r\n      <app-collapse-box [collapse]=\"false\" [icon]=\"'filter'\" [boxTitle]=\"'课程过滤'\">\r\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\r\n          <label class=\"pull-left\">\r\n            时间过滤:\r\n          </label>\r\n          <app-date-ranger-picker\r\n            [startTime]=\"syllabusFilter.timeRange.startTime\"\r\n            (dateRangeSetEvent)=\"handleTimeRangeChange($event)\"\r\n            class=\"pull-left\"></app-date-ranger-picker>\r\n        </div>\r\n\r\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\r\n          <label class=\"pull-left\">\r\n            名称筛选:\r\n          </label>\r\n          <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\r\n            <input type=\"text\" class=\"form-control input-sm\" placeholder=\"输入课程名称\">\r\n            <span class=\"input-group-addon\"><i class=\"fa fa-search\"></i></span>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"col-xs-12 col-md-4 input-group-sm\">\r\n          <label class=\"pull-left\">\r\n            类型筛选:\r\n          </label>\r\n          <div class=\"input-group input-group-sm\" style=\"width: 148px;\">\r\n            <select2 [cssImport]=\"false\" [options]=\"{minimumResultsForSearch: -1}\" [data]=\"[{id:'ALL',text:'全部'}].concat(syllabusTypes)\" [width]=\"'148px'\"></select2>\r\n          </div>\r\n        </div>\r\n      </app-collapse-box>\r\n\r\n      <div class=\"box box-info\">\r\n        <div class=\"box-header\">\r\n          <i class=\"fa fa-table\"></i><h3 class=\"box-title\">课程列表</h3>\r\n          <div class=\"box-tools\">\r\n            <div class=\"btn-group btn-group-sm pull-right syllabus-add-btn\" (click)=\"resetCurSyllabus();modal.showModal({\r\n                title: '添加新课程',\r\n                confirm: saveSyllabus\r\n            })\">\r\n              <button class=\"btn btn-info\"><i class=\"fa fa-plus\"></i>添加新课程</button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div class=\"box-body\" style=\"border-top: 1px solid #dddddd;\">\r\n          <div class=\"dataTables_wrapper form-inline dt-bootstrap\">\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-12\">\r\n                <table id=\"example2\" class=\"table table-bordered table-hover dataTable\">\r\n                  <thead>\r\n                    <tr role=\"row\">\r\n                      <th>课程名称</th>\r\n                      <th>课程价格</th>\r\n                      <th>课程类型</th>\r\n                      <th>教学课时</th>\r\n                      <th>报名人数</th>\r\n                      <th>招生人数</th>\r\n                      <th>退课人数</th>\r\n                      <th class=\"text-center\">操作</th>\r\n                    </tr>\r\n                  </thead>\r\n                  <tbody>\r\n                    <tr\r\n                      role=\"row\"\r\n                      *ngFor=\"let syllabus of syllabuses; let i = index;\" class=\"{{i%2 == 1 ? 'odd' : 'even'}}\"\r\n                      (click)=\"setCurSyllabus(syllabus);modal.showModal({\r\n                        title: '编辑课程:' + syllabus.name,\r\n                        confirm: saveSyllabus\r\n                      })\">\r\n                      <td>{{syllabus.name}}</td>\r\n                      <td>{{syllabus.price}}</td>\r\n                      <td>{{syllabusTypesMap[syllabus.type]}}</td>\r\n                      <td>{{syllabus.studyHour || 0}}</td>\r\n                      <td>{{syllabus.selectedNum || 0}}</td>\r\n                      <td>{{syllabus.studentNum || 0}}</td>\r\n                      <td>{{syllabus.backNum || 0}}</td>\r\n                      <td class=\"text-center\">\r\n                        <button class=\"btn btn-danger btn-xs\" (click)=\"removeSyllabus(syllabus.id,$event)\">\r\n                          <i class=\"fa fa-trash\"></i>\r\n                          删除\r\n                        </button>\r\n                      </td>\r\n                    </tr>\r\n                    <tr *ngIf=\"syllabuses.length == 0\">\r\n                      <td class=\"text-center\" colspan=\"7\">没有相关课程信息</td>\r\n                    </tr>\r\n                  </tbody>\r\n                </table>\r\n              </div>\r\n            </div>\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-5\">\r\n                <div class=\"dataTables_info\" id=\"example2_info\" role=\"status\" aria-live=\"polite\">Showing 11 to 20 of 57\r\n                  entries\r\n                </div>\r\n              </div>\r\n              <div class=\"col-sm-7\">\r\n                <div class=\"dataTables_paginate paging_simple_numbers pull-right\" id=\"example2_paginate\">\r\n                  <ul class=\"pagination\">\r\n                    <li class=\"paginate_button previous\" id=\"example2_previous\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"0\">Previous</a></li>\r\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"1\">1</a></li>\r\n                    <li class=\"paginate_button active\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"2\">2</a></li>\r\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"3\">3</a></li>\r\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"4\">4</a></li>\r\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"5\">5</a></li>\r\n                    <li class=\"paginate_button \"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"6\">6</a></li>\r\n                    <li class=\"paginate_button next\" id=\"example2_next\"><a href=\"#\" aria-controls=\"example2\" data-dt-idx=\"7\">Next</a></li>\r\n                  </ul>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>\r\n\r\n<app-modal #modal [disabledAcceptBtn]=\"!(curSyllabus.name && curSyllabus.price && curSyllabus.studyHour)\" [modalSize]=\"'sm'\">\r\n  <form class=\"form-horizontal\" name=\"courseForm\">\r\n    <div class=\"box-body\">\r\n      <div class=\"form-group\">\r\n        <label class=\"col-xs-3 control-label\">课程类型</label>\r\n        <div class=\"col-xs-9\">\r\n          <select2 id=\"courseType\" [value]=\"curSyllabus.type\" [cssImport]=\"false\" [width]=\"'100%'\"  [options]=\"{minimumResultsForSearch: -1}\" [data]=\"syllabusTypes\" (valueChanged)=\"switchSyllabusType($event)\"></select2>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"form-group\">\r\n        <label for=\"courseName\" class=\"col-xs-3 control-label\">课程名称</label>\r\n        <div class=\"col-xs-9\">\r\n          <input type=\"text\" id=\"courseName\" name=\"courseName\" class=\"form-control\" placeholder=\"请输入课程名称\" [(ngModel)]=\"curSyllabus.name\">\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"form-group\">\r\n        <label for=\"coursePrice\" class=\"col-xs-3 control-label\">课程价格</label>\r\n        <div class=\"col-xs-9\">\r\n          <div class=\"input-group\">\r\n            <input type=\"number\" id=\"coursePrice\" name=\"coursePrice\" min=\"0\" class=\"form-control\" placeholder=\"请输入课程价格\" [(ngModel)]=\"curSyllabus.price\">\r\n            <span class=\"input-group-addon\">元</span>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"form-group\">\r\n        <label for=\"courseDuration\" class=\"col-xs-3 control-label\">教学课时</label>\r\n        <div class=\"col-xs-9\">\r\n          <div class=\"input-group\">\r\n            <input type=\"number\" id=\"courseDuration\" name=\"courseDuration\" min=\"0\" class=\"form-control\" placeholder=\"教学课时\" [(ngModel)]=\"curSyllabus.studyHour\">\r\n            <span class=\"input-group-addon\">时</span>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"form-group\">\r\n        <label for=\"courseAcceptStuCount\" class=\"col-xs-3 control-label\">招收人数</label>\r\n        <div class=\"col-xs-9\">\r\n          <input type=\"number\" id=\"courseAcceptStuCount\" name=\"courseAcceptStuCount\" class=\"form-control\" placeholder=\"请输入招收人数\" [(ngModel)]=\"curSyllabus.studentNum\">\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </form>\r\n</app-modal>\r\n"
 
 /***/ }),
 
@@ -2976,7 +3174,7 @@ var _a, _b;
 /***/ "../../../../../src/app/user/user.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  user works!\n</p>\n"
+module.exports = "<p>\r\n  user works!\r\n</p>\r\n"
 
 /***/ }),
 

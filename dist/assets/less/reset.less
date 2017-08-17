@@ -6,13 +6,42 @@ html, body, ul, ol, p{
 
 body{
   min-width: 320px;
-  background: #222d32;
+  background: #ecf0f5;
+  .content-wrapper{
+    min-height: e("calc(100vh - 100px)");
+  }
 }
 
+/* scrollbar reset */
+::-webkit-scrollbar{
+  width: 6px;
+  background: #ffffff;
+}
+
+::-webkit-scrollbar-thumb {
+  height: 100px;
+  background-color: lightblue;
+}
+
+/* datepicker reset */
 .daterangepicker{
   box-shadow: 1px 1px 5px #888888;
 }
 
+/* form-group reset */
+app-collapse-box{
+  .col-xs-12{
+    margin: 5px 0;
+  }
+  .form-group-sm, .input-group-sm{
+    label{
+      min-width: 60px;
+      line-height: 30px;
+      margin-bottom: 0;
+      margin-right: 5px;
+    }
+  }
+}
 
 /* select2 style reset */
 div.input-group.input-group-sm .select2-container--default,div.input-group.input-group-sm .select2-container{

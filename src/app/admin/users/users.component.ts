@@ -17,6 +17,15 @@ export class UsersComponent implements OnInit {
   roles: object;
   roleList: Array<any> = [{id: 1, text: 12}];
   newPassword: {id: string, password: string, rePassword: string};
+  userCreatedFilterTime: {
+    start: number;
+    end: number;
+  };
+  rolesList: object[];
+  userFilterName: string;
+  userFilterUserName: string;
+  userFilterUserPhone: string;
+  userFilterUserRoleId: string;
   constructor(
     private adminService: AdminService,
     private roleService: RoleService
@@ -27,6 +36,7 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.rolesList = this.roleService.roleList;
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
       {name: '用户列表页', icon: 'fa-users'}
@@ -39,6 +49,14 @@ export class UsersComponent implements OnInit {
     this.curUsr = new User();
     this.newPassword = {id: '', password: '', rePassword: ''};
     this.fetchUserList();
+    this.userCreatedFilterTime = {
+      start: new Date(new Date().getFullYear() + '-01-01').getTime(),
+      end: Infinity
+    };
+    this.userFilterName = '';
+    this.userFilterUserName = '';
+    this.userFilterUserPhone = '';
+    this.userFilterUserRoleId = '';
   }
   findUsrById(id): User {
     return this.users.find( user => {
@@ -84,5 +102,17 @@ export class UsersComponent implements OnInit {
     this.adminService.fetchUserList().then( users => {
       this.users = users;
     } );
+  }
+
+  handleTimeRangeChange($event){
+    this.userCreatedFilterTime = {
+      start: $event.start,
+      end: $event.end,
+    };
+    this.userCreatedFilterTime = {...this.userCreatedFilterTime};
+  }
+
+  switchFilterRoleId($event){
+    this.userFilterUserRoleId = $event.value == '全部' ? '' :$event.value;
   }
 }
