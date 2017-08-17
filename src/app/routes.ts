@@ -1,15 +1,15 @@
 import {Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
-import {AuditComponent} from './audit/audit.component';
-import {PermissionComponent} from './permission/permission.component';
-import {EmployeeComponent} from './employee/employee.component';
-import {StudentComponent} from './student/student.component';
-import {UserComponent} from './user/user.component';
-import {RoleComponent} from './role/role.component';
 import {AdminComponent} from './admin/admin.component';
 import {UsersComponent} from './admin/users/users.component';
 import {SchoolsComponent} from './admin/schools/schools.component';
+import {CounselorComponent} from './counselor/counselor.component';
+import {StudentsComponent} from './counselor/students/students.component';
+import {StudentsAssetComponent} from './counselor/students-asset/students-asset.component';
+import {ConsultantMainComponent} from './consultant-main/consultant-main.component';
+import {UnallocatedStudentsComponent} from './consultant-main/unallocated-students/unallocated-students.component';
+import {ConsultationRecordComponent} from './consultant-main/consultation-record/consultation-record.component';
 
 export const routes: Routes = [
   {
@@ -37,32 +37,46 @@ export const routes: Routes = [
           {
             path: 'schools',
             component: SchoolsComponent
-          },
-          {
-            path: 'employees',
-            component: EmployeeComponent
-          },
-          {
-            path: 'students',
-            component: StudentComponent
-          },
-          {
-            path: 'users',
-            component: UserComponent
-          },
-          {
-            path: 'roles',
-            component: RoleComponent
           }
         ]
       },
       {
-        path: 'audit',
-        component: AuditComponent
+        path: 'consultant-main',
+        component: ConsultantMainComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'unallocated-students',
+            pathMatch: 'full'
+          },
+          {
+            path: 'unallocated-students',
+            component: UnallocatedStudentsComponent
+          },
+          {
+            path: 'consultation-record',
+            component: ConsultationRecordComponent
+          }
+        ]
       },
       {
-        path: 'permission',
-        component: PermissionComponent
+        path: 'counselor',
+        component: CounselorComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'students',
+            pathMatch: 'full'
+          },
+          {
+            path: 'students-asset',
+            component: StudentsAssetComponent
+          },
+          {
+            path: 'students',
+            component: StudentsComponent
+          },
+        ]
       }
     ]
   },

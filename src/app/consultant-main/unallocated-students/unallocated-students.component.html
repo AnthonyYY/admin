@@ -1,0 +1,65 @@
+<app-content-header
+  [title]="'用户列表'" [menus]="contentHeader"></app-content-header>
+<div class="content">
+  <div class="box box-info">
+    <div class="box-header">
+      <h3 class="box-title">学生列表页</h3>
+      <div class="box-tools">
+        <div class="btn-group btn-group-sm">
+          <button class="btn btn-primary"
+          (click)="resetCurUnallocatedStudent();
+          studentModal.showModal({
+              modalSize: 'lg',
+              title: '添加学生'
+          })">
+            <i class="fa fa-plus">创建学生</i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal #studentModal>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="col-xs-5">
+        <div class="form-group clearfix">
+          <label for="name" class="control-label col-xs-2">姓名</label>
+          <div class="col-xs-10">
+            <input class="form-control" id="name" name="name" placeholder="学生姓名" [(ngModel)]="curUnallocatedStudent.name">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="gender" class="control-label col-xs-2">性别</label>
+          <div class="col-xs-10">
+            <select2 id="gender"
+                     [value]="curUnallocatedStudent.sex"
+                     [cssImport]="false"
+                     [width]="'100%'"
+                     (valueChanged)="switchGender($event)"
+                     [options]="{minimumResultsForSearch: -1, placeholder: '请选择性别'}"
+                     [data]="[{id: 'MALE', text: '男'}, {id: 'FEMALE', text: '女'}]"></select2>
+          </div>
+        </div>
+
+        <div class="form-group clearfix">
+          <label for="phone" class="control-label col-xs-2">电话</label>
+          <div class="col-xs-10">
+            <input type="tel" class="form-control" id="phone" name="phone" placeholder="电话姓名" [(ngModel)]="curUnallocatedStudent.phone">
+          </div>
+        </div>
+
+        <div class="form-group clearfix">
+          <label for="grade" class="control-label col-xs-2">年级</label>
+          <div class="col-xs-10">
+            <input type="tel" class="form-control" id="grade" name="grade" placeholder="学生年级" [(ngModel)]="curUnallocatedStudent.grade">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-7 "></div>
+    </div>
+  </div>
+</app-modal>

@@ -42,10 +42,7 @@ export class UsersComponent implements OnInit {
       {name: '用户列表页', icon: 'fa-users'}
     ];
     this.roles = this.roleService.roles;
-    setTimeout(() => {
-      this.roleList = this.roleService.roleList;
-      console.log(this.roleList);
-    }, 1000);
+    this.roleList = this.roleService.roleList;
     this.curUsr = new User();
     this.newPassword = {id: '', password: '', rePassword: ''};
     this.fetchUserList();
@@ -112,7 +109,7 @@ export class UsersComponent implements OnInit {
     this.userCreatedFilterTime = {...this.userCreatedFilterTime};
   }
 
-  switchFilterRoleId($event){
-    this.userFilterUserRoleId = $event.value == '全部' ? '' :$event.value;
+  switchFilterRoleId($event): void {
+    this.userFilterUserRoleId = $event.value === '全部' ?  '' : $event.value;
   }
 }

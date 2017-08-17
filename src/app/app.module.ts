@@ -16,7 +16,6 @@ import { AuditComponent } from './audit/audit.component';
 import { PermissionComponent } from './permission/permission.component';
 import { SyllabusComponent } from './syllabus/syllabus.component';
 import { EmployeeComponent } from './employee/employee.component';
-import { StudentComponent } from './student/student.component';
 import { UserComponent } from './user/user.component';
 import { RoleComponent } from './role/role.component';
 import {HttpModule} from '@angular/http';
@@ -31,18 +30,25 @@ import {ConfirmService} from './confirm/confirm.service';
 import {AlertService} from './alert/alert.service';
 import { CollapseBoxComponent } from './collapse-box/collapse-box.component';
 import { DateRangerPickerComponent } from './date-ranger-picker/date-ranger-picker.component';
-import {EmployeeService} from './employee/employee.service';
-import {StudentService} from './student/student.service';
+import { EmployeeService } from './employee/employee.service';
 import { AdminComponent } from './admin/admin.component';
-import {RoleService} from './common/role.service';
-import {SchoolService} from './common/school.service';
+import { RoleService } from './common/role.service';
+import { SchoolService } from './common/school.service';
 import { ContentHeaderComponent } from './content-header/content-header.component';
 import { UsersComponent } from './admin/users/users.component';
 import { SchoolsComponent } from './admin/schools/schools.component';
-import {AdminService} from './admin/admin.service';
+import { AdminService } from './admin/admin.service';
 import { PaginationComponent } from './pagination/pagination.component';
 import { TimeRangePipe } from './common/time-range.pipe';
 import { MatchItemPipe } from './common/match-item.pipe';
+import { CounselorComponent } from './counselor/counselor.component';
+import { StudentsAssetComponent } from './counselor/students-asset/students-asset.component';
+import { StudentsComponent } from './counselor/students/students.component';
+import {CounselorService} from './counselor/counselor.service';
+import { ConsultantMainComponent } from './consultant-main/consultant-main.component';
+import { UnallocatedStudentsComponent } from './consultant-main/unallocated-students/unallocated-students.component';
+import { ConsultationRecordComponent } from './consultant-main/consultation-record/consultation-record.component';
+import {ConsultantMainService} from './consultant-main/consultant-main.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +63,6 @@ import { MatchItemPipe } from './common/match-item.pipe';
     PermissionComponent,
     SyllabusComponent,
     EmployeeComponent,
-    StudentComponent,
     UserComponent,
     RoleComponent,
     AlertComponent,
@@ -71,7 +76,13 @@ import { MatchItemPipe } from './common/match-item.pipe';
     SchoolsComponent,
     PaginationComponent,
     TimeRangePipe,
-    MatchItemPipe
+    MatchItemPipe,
+    CounselorComponent,
+    StudentsAssetComponent,
+    StudentsComponent,
+    ConsultantMainComponent,
+    UnallocatedStudentsComponent,
+    ConsultationRecordComponent
   ],
   imports: [
     Select2Module,
@@ -88,10 +99,11 @@ import { MatchItemPipe } from './common/match-item.pipe';
     ConfirmService,
     AlertService,
     EmployeeService,
-    StudentService,
     RoleService,
     SchoolService,
-    AdminService
+    AdminService,
+    CounselorService,
+    ConsultantMainService
   ],
   bootstrap: [AppComponent]
 })

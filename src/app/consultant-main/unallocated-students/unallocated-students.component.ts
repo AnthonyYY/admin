@@ -1,0 +1,41 @@
+import { Component, OnInit } from '@angular/core';
+import {ConsultantMainService} from '../consultant-main.service';
+import {UnallocatedStudent} from '../unallocated-student';
+import {Sidebar} from '../../sidebar/sidebar';
+
+@Component({
+  selector: 'app-unallocated-students',
+  templateUrl: './unallocated-students.component.html',
+  styleUrls: ['./unallocated-students.component.less']
+})
+export class UnallocatedStudentsComponent implements OnInit {
+
+  unAllocatedStudents: UnallocatedStudent[];
+  curUnallocatedStudent: UnallocatedStudent;
+  contentHeader: Sidebar[];
+  constructor(
+    private consultantService: ConsultantMainService
+  ) { }
+
+  ngOnInit() {
+    this.fetchUnallocatedStudents();
+    this.curUnallocatedStudent = new UnallocatedStudent();
+    this.contentHeader = [
+      {name: '主页', icon: 'fa-dashboard'},
+      {name: '学生列表页', icon: 'fa-users'}
+    ];
+  }
+
+  resetCurUnallocatedStudent(): void {
+    this.curUnallocatedStudent = new UnallocatedStudent();
+  }
+
+  fetchUnallocatedStudents(): void {
+    this.consultantService.fetchUnallocatedStudents().then( data => {
+      this.unAllocatedStudents = data;
+    } );
+  }
+  switchGender($event): void {
+    console.log($event);
+  }
+}

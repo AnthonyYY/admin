@@ -36,12 +36,19 @@ export class RoleService {
         this.router.navigate(['dashboard/admin']);
         break;
       case 'CONSULTANT':
+        this.router.navigate(['dashboard/counselor']);
         break;
       case 'FINANCE':
+        this.router.navigate(['dashboard/finance']);
         break;
       case 'STUDENTMANAGER':
+        this.router.navigate(['dashboard/studentmanager']);
         break;
       case 'TEACHER':
+        this.router.navigate(['dashboard/teacher']);
+        break;
+      case 'CONSULTANT_MAIN':
+        this.router.navigate(['dashboard/consultant-main']);
         break;
       default:
         this.alertService.alert({title: '提示', content: '角色异常', type: 'danger'});

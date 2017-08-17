@@ -1,0 +1,96 @@
+<app-content-header
+  [title]="'学生列表'" [menus]="contentHeader"></app-content-header>
+<div class="content">
+  <app-collapse-box [collapse]="false" [icon]="'filter'" [boxTitle]="'学生过滤'">
+    <div class="col-xs-12 col-md-4 input-group-sm">
+      <label class="pull-left">
+        创建时间:
+      </label>
+      <app-date-ranger-picker
+        [startTime]="studentCreatedFilterTime.start"
+        (dateRangeSetEvent)="handleTimeRangeChange($event)"
+        class="pull-left"></app-date-ranger-picker>
+    </div>
+
+    <div class="col-xs-12 col-md-4 input-group-sm">
+      <label class="pull-left">
+        学生姓名:
+      </label>
+      <div class="input-group input-group-sm" style="width: 148px;">
+        <input class="form-control input-sm" [(ngModel)]="studentFilterName" placeholder="输入用户名称">
+        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-4 input-group-sm">
+      <label class="pull-left">
+        性别筛选:
+      </label>
+      <div class="input-group input-group-sm" style="width: 148px;">
+        <select2 (valueChanged)="switchFilterGender($event)" [cssImport]="false" [options]="{minimumResultsForSearch: -1}" [data]="[{id:'',text:'全部'}, {id:'MALE',text:'男'}, {id:'FEMALE',text:'女'}]" [width]="'148px'"></select2>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-4 input-group-sm">
+      <label class="pull-left">
+        年级筛选:
+      </label>
+      <div class="input-group input-group-sm" style="width: 148px;">
+        <input class="form-control input-sm" [(ngModel)]="userFilterUserGrade" placeholder="输入年级">
+        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+      </div>
+    </div>
+  </app-collapse-box>
+
+  <div class="box box-info">
+    <div class="box-header">
+      <h3 class="box-title">学生列表</h3>
+      <div class="box-tools">
+        <div class="btn-group btn-group-sm">
+          <button class="btn btn-info" (click)="studentModal.showModal({
+
+          })">
+            <i class="fa fa-plus"></i>
+            添加学生
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<app-modal #studentModal [modalSize]="'md'">
+  <div class="row">
+    <div class="col-md-5">
+      <div class="form-group clearfix">
+        <label for="studentName" class="control-label col-xs-4">姓名:</label>
+        <div class="col-xs-8">
+          <input id="studentName" name="studentName" [(ngModel)]="curStudent.name">
+        </div>
+      </div>
+
+      <div class="form-group clearfix">
+        <label for="studentGender" class="control-label col-xs-4">性别:</label>
+        <div class="col-xs-8">
+          <input id="studentGender" name="studentGender" [(ngModel)]="curStudent.sex">
+        </div>
+      </div>
+
+      <div class="form-group clearfix">
+        <label for="studentPhone" class="control-label col-xs-4">电话:</label>
+        <div class="col-xs-8">
+          <input id="studentPhone" name="studentPhone" [(ngModel)]="curStudent.phone">
+        </div>
+      </div>
+
+      <div class="form-group clearfix">
+        <label for="studentBirthday" class="control-label col-xs-4">生日:</label>
+        <div class="col-xs-8">
+          <input id="studentBirthday" name="studentBirthday" [(ngModel)]="curStudent.birthday">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-7"></div>
+  </div>
+</app-modal>

@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.user = new Usr('', '');
     if (UserService.getAccessToken()) {
-      this.userService.getCurUserInfo().then( success => success && this.router.navigate(["dashboard"]));
+      this.userService.getCurUserInfo().then( success => success && this.router.navigate(['dashboard']));
     }
   }
 
