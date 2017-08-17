@@ -64,4 +64,23 @@ export class AdminService {
     } );
   }
 
+  updateSchoolInfo(body: object): Promise<any> {
+    return this.http.put('admin/school/', body).then( data => {
+      if (data.success) {
+        this.alertService.alert({
+          title: '提示',
+          content: '校区信息已更新',
+          type: 'success'
+        });
+        return data.data;
+      } else {
+        this.alertService.alert({
+          title: '提示',
+          content: '更新校区信息失败',
+          type: 'danger'
+        });
+        throw Error('更新校区信息失败');
+      }
+    } );
+  }
 }

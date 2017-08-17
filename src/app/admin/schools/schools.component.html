@@ -24,7 +24,8 @@
                 <h4 class="box-title">{{ school.name }}</h4>
                 <div class="box-tools">
                   <button class="btn btn-box-tool" (click)="setCurSchool(school);schoolModal.showModal({
-                    title: '编辑校区信息'
+                    title: '编辑校区信息',
+                    confirm: updateSchoolInfo
                   })">
                     <i class="fa fa-sliders"></i>
                   </button>
