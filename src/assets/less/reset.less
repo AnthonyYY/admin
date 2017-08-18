@@ -29,6 +29,16 @@ body{
 }
 
 /* form-group reset */
+
+.form-group, .input-group{
+  label.necessary{
+    &::after{
+      content: '*';
+      color: red
+    }
+  }
+}
+
 app-collapse-box{
   .col-xs-12{
     margin: 5px 0;
@@ -42,6 +52,7 @@ app-collapse-box{
     }
   }
 }
+
 
 /* select2 style reset */
 div.input-group.input-group-sm .select2-container--default,div.input-group.input-group-sm .select2-container{

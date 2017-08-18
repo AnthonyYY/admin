@@ -34,6 +34,7 @@ export class UnallocatedStudentsComponent implements OnInit {
 
   resetCurUnallocatedStudent(): void {
     this.curUnallocatedStudent = new UnallocatedStudent();
+    this.curUnallocatedStudent.sex = 'FEMALE';
   }
 
   fetchUnallocatedStudents(): void {
@@ -51,5 +52,9 @@ export class UnallocatedStudentsComponent implements OnInit {
 
   switchGender($event): void {
     console.log($event);
+  }
+
+  switchParentGender(): void {
+
   }
 }

@@ -22,18 +22,18 @@
 </div>
 
 <app-modal #studentModal>
-  <div class="row">
+  <form class="form clearfix">
     <div class="col-xs-12">
       <div class="col-sm-5 col-xs-12">
         <div class="form-group clearfix">
-          <label for="name" class="control-label col-xs-2">姓名</label>
+          <label for="name" class="control-label necessary col-xs-2">姓名</label>
           <div class="col-xs-10">
             <input class="form-control" id="name" name="name" placeholder="学生姓名" [(ngModel)]="curStudent.name">
           </div>
         </div>
 
         <div class="form-group clearfix">
-          <label for="gender" class="control-label col-xs-2">性别</label>
+          <label for="gender" class="control-label necessary col-xs-2">性别</label>
           <div class="col-xs-10">
             <select2 id="gender"
                      [value]="curStudent.sex"
@@ -46,28 +46,21 @@
         </div>
 
         <div class="form-group clearfix">
-          <label for="phone" class="control-label col-xs-2">电话</label>
+          <label for="phone" class="control-label necessary col-xs-2">电话</label>
           <div class="col-xs-10">
             <input type="tel" class="form-control" id="phone" name="phone" placeholder="请输入电话号码" [(ngModel)]="curStudent.phone">
           </div>
         </div>
 
         <div class="form-group clearfix">
-          <label for="birthday" class="control-label col-xs-2">生日</label>
-          <div class="col-xs-10">
-            <app-datepicker id="birthday" [(birthday)]="curStudent.birthday" [placeholder]="'请填写出生日期'"></app-datepicker>
-          </div>
-        </div>
-
-        <div class="form-group clearfix">
-          <label for="idCard" class="control-label col-xs-2">身份证</label>
+          <label for="idCard" class="control-label necessary col-xs-2">身份证</label>
           <div class="col-xs-10">
             <input class="form-control" id="idCard" name="idCard" placeholder="请输入学科" [(ngModel)]="curStudent.idCard">
           </div>
         </div>
 
         <div class="form-group clearfix">
-          <label for="grade" class="control-label col-xs-2">年级</label>
+          <label for="grade" class="control-label necessary col-xs-2">年级</label>
           <div class="col-xs-10">
             <input class="form-control" id="grade" name="grade" placeholder="请输入年级" [(ngModel)]="curStudent.grade">
           </div>
@@ -90,14 +83,14 @@
 
       <div class="col-sm-7 col-xs-12">
         <div class="form-group clearfix">
-          <label for="address" class="control-label col-xs-3 col-md-2">家庭地址</label>
+          <label for="address" class="control-label col-xs-3 necessary col-md-2">家庭地址</label>
           <div class="col-xs-9 col-md-10">
             <input class="form-control" id="address" name="address" placeholder="请输入家庭地址" [(ngModel)]="curStudent.address">
           </div>
         </div>
 
         <div class="form-group clearfix">
-          <label for="source" class="control-label col-xs-3 col-md-2">学生来源</label>
+          <label for="source" class="control-label col-xs-3 necessary col-md-2">学生来源</label>
           <div class="col-xs-9 col-md-10">
             <input class="form-control" id="source" name="source" placeholder="请输入学生来源" [(ngModel)]="curStudent.source">
           </div>
@@ -111,13 +104,6 @@
         </div>
 
         <div class="form-group clearfix">
-          <label for="parentPhone" class="control-label col-xs-3 col-md-2">家长电话</label>
-          <div class="col-xs-9 col-md-10">
-            <input type="tel" class="form-control" id="parentPhone" name="parentPhone" placeholder="请输入家长电话" [(ngModel)]="curStudent.parentPhone">
-          </div>
-        </div>
-
-        <div class="form-group clearfix">
           <label for="parentIdCard" class="control-label col-xs-3 col-md-2">家长身份证</label>
           <div class="col-xs-9 col-md-10">
             <input class="form-control" id="parentIdCard" name="parentIdCard" placeholder="请输入家长身份证" [(ngModel)]="curStudent.parentIdCard">
@@ -125,19 +111,32 @@
         </div>
 
         <div class="form-group clearfix">
-          <label for="parentSex" class="control-label col-xs-3 col-md-2">家长性别</label>
+          <label for="parentPhone" class="control-label col-xs-3 col-md-2">家长电话</label>
           <div class="col-xs-9 col-md-10">
-            <input type="tel" class="form-control" id="parentSex" name="parentSex" placeholder="请输入家长性别" [(ngModel)]="curStudent.parentSex">
+            <input type="tel" class="form-control" id="parentPhone" name="parentPhone" placeholder="请输入家长电话" [(ngModel)]="curStudent.parentPhone">
+          </div>
+        </div>
+
+        <div class="form-group clearfix">
+          <label for="gender" class="control-label col-xs-2">家长性别</label>
+          <div class="col-xs-10">
+            <select2
+                     [value]="curStudent.parentSex"
+                     [cssImport]="false"
+                     [width]="'100%'"
+                     (valueChanged)="switchParentGender($event)"
+                     [options]="{minimumResultsForSearch: -1, placeholder: '请输入家长性别'}"
+                     [data]="[{id: 'MALE', text: '男'}, {id: 'FEMALE', text: '女'}]"></select2>
           </div>
         </div>
 
         <div class="form-group clearfix">
           <label for="remark" class="control-label col-xs-3 col-md-2">备注信息</label>
           <div class="col-xs-9 col-md-10">
-            <textarea class="form-control" id="remark" rows="2" name="remark" placeholder="请填写备注信息" [(ngModel)]="curStudent.remark"></textarea>
+            <textarea class="form-control" id="remark" rows="1" name="remark" placeholder="请填写备注信息" [(ngModel)]="curStudent.remark"></textarea>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </app-modal>
