@@ -49,6 +49,7 @@ import { ConsultantMainComponent } from './consultant-main/consultant-main.compo
 import { UnallocatedStudentsComponent } from './consultant-main/unallocated-students/unallocated-students.component';
 import { ConsultationRecordComponent } from './consultant-main/consultation-record/consultation-record.component';
 import {ConsultantMainService} from './consultant-main/consultant-main.service';
+import { DatepickerComponent } from './datepicker/datepicker.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import {ConsultantMainService} from './consultant-main/consultant-main.service';
     StudentsComponent,
     ConsultantMainComponent,
     UnallocatedStudentsComponent,
-    ConsultationRecordComponent
+    ConsultationRecordComponent,
+    DatepickerComponent
   ],
   imports: [
     Select2Module,

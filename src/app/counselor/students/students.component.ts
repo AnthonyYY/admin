@@ -40,7 +40,7 @@ export class StudentsComponent implements OnInit {
     this.userFilterUserGender = '';
     this.userFilterUserGrade = '';
     this.userFilterUserPhone = '';
-    this.fetchStudents();
+    // this.fetchStudents();
   }
 
   fetchStudents(): void {

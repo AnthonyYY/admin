@@ -28,7 +28,6 @@ export class UserService {
       }
     } ).catch( err => {
       console.log(err);
-      return null;
     } );
   }
   emptyUsrInfo(): void {
