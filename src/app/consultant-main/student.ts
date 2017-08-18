@@ -1,6 +1,6 @@
 export class Student {
   address: string;
-  birthday: number;
+  birthday: any;
   grade: string;
   idCard: string;
   name: string;
@@ -14,4 +14,5 @@ export class Student {
   sex: string;
   source: string;
   subject: string;
+  id?: string
 }

@@ -33,7 +33,7 @@ export class HttpService {
 
   private _handle401(status): void {
     if ( status === 401 ) {
-      this.confirmService.confirmEventSubject.next({
+      this.confirmService.confirm({
         confirm: () => {
           this.router.navigate(['login']);
           UserService.removeAccessToken();

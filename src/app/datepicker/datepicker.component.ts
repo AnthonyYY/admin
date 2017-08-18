@@ -11,23 +11,24 @@ export class DatepickerComponent implements OnInit {
   @Input()
   placeholder: string;
   @Input()
-  birthday: any;
+  birthday: number;
   @Output()
   birthdayChange = new EventEmitter<any>();
 
   constructor() { }
 
   ngOnInit() {
+    let that = this;
     setTimeout( () => {
       (<any>$)('#datepicker')
         .datepicker({
+          language: 'zh-CN',
           format: 'yyyy-MM-dd',
           startDate: moment(this.birthday).format('yyyy-MM-dd')
         })
         .on('changeDate', function(e) {
-          console.log(e);
-          this.birthdayChange.emit(e)
-        });
+          that.birthdayChange.emit(e)
+        })
     } );
   }
 }

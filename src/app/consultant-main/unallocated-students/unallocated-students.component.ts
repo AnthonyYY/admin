@@ -17,10 +17,13 @@ export class UnallocatedStudentsComponent implements OnInit {
   contentHeader: Sidebar[];
   constructor(
     private consultantService: ConsultantMainService
-  ) { }
+  ) {
+    this.addStudent = this.addStudent.bind(this);
+  }
 
   ngOnInit() {
     this.fetchUnallocatedStudents();
+    this.unAllocatedStudents = [];
     this.curUnallocatedStudent = new UnallocatedStudent();
     this.curStudent = new Student();
     this.contentHeader = [
@@ -38,6 +41,14 @@ export class UnallocatedStudentsComponent implements OnInit {
       this.unAllocatedStudents = data;
     } );
   }
+
+  addStudent(){
+    this.consultantService.addStudent(this.curStudent).then( data => {
+      this.curStudent.id = data.id;
+      this.unAllocatedStudents.push();
+    } )
+  }
+
   switchGender($event): void {
     console.log($event);
   }
