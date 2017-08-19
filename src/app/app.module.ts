@@ -1,24 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { HttpModule } from '@angular/http';
+
 import { Select2Module } from 'ng2-select2';
 
 import { AppComponent } from './app.component';
-import { RouterModule } from '@angular/router';
-import { routes } from './routes';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FooterComponent } from './footer/footer.component';
-import {FormsModule} from '@angular/forms';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { BasicInfoComponent } from './basic-info/basic-info.component';
-import { AuditComponent } from './audit/audit.component';
-import { PermissionComponent } from './permission/permission.component';
 import { SyllabusComponent } from './syllabus/syllabus.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { UserComponent } from './user/user.component';
 import { RoleComponent } from './role/role.component';
-import {HttpModule} from '@angular/http';
 import {HttpService} from './service/http.service';
 import { AlertComponent } from './alert/alert.component';
 import {UserService} from './common/user.service';
@@ -50,6 +48,14 @@ import { UnallocatedStudentsComponent } from './consultant-main/unallocated-stud
 import { ConsultationRecordComponent } from './consultant-main/consultation-record/consultation-record.component';
 import {ConsultantMainService} from './consultant-main/consultant-main.service';
 import { DatepickerComponent } from './datepicker/datepicker.component';
+import { StmanagerComponent } from './stmanager/stmanager.component';
+import { CourseComponent } from './stmanager/course/course.component';
+import { StudentScheduleComponent } from './stmanager/student-schedule/student-schedule.component';
+import { StudentClassPeriodComponent } from './stmanager/student-class-period/student-class-period.component';
+import { StStudentsComponent } from './stmanager/students/ststudents.component';
+
+import { routes } from './routes';
+import {StmanagerService} from './stmanager/stmanager.service';
 
 @NgModule({
   declarations: [
@@ -60,8 +66,6 @@ import { DatepickerComponent } from './datepicker/datepicker.component';
     HeaderComponent,
     SidebarComponent,
     BasicInfoComponent,
-    AuditComponent,
-    PermissionComponent,
     SyllabusComponent,
     EmployeeComponent,
     UserComponent,
@@ -84,7 +88,12 @@ import { DatepickerComponent } from './datepicker/datepicker.component';
     ConsultantMainComponent,
     UnallocatedStudentsComponent,
     ConsultationRecordComponent,
-    DatepickerComponent
+    DatepickerComponent,
+    StmanagerComponent,
+    CourseComponent,
+    StudentScheduleComponent,
+    StudentClassPeriodComponent,
+    StStudentsComponent,
   ],
   imports: [
     Select2Module,
@@ -105,7 +114,8 @@ import { DatepickerComponent } from './datepicker/datepicker.component';
     SchoolService,
     AdminService,
     CounselorService,
-    ConsultantMainService
+    ConsultantMainService,
+    StmanagerService
   ],
   bootstrap: [AppComponent]
 })

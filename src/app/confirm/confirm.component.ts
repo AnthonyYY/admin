@@ -9,7 +9,7 @@ import {ConfirmService} from './confirm.service';
   templateUrl: './confirm.component.html',
   styleUrls: ['./confirm.component.less']
 })
-export class ConfirmComponent extends ModalComponent implements OnInit{
+export class ConfirmComponent extends ModalComponent implements OnInit {
   constructor(
     modalService: ModalService,
     private confirmService: ConfirmService
@@ -23,10 +23,8 @@ export class ConfirmComponent extends ModalComponent implements OnInit{
     this.init();
     this.confirmEventsSubscriber = this.confirmService.confirmEventSubject
     .asObservable()
-    .debounceTime(100)
     .subscribe({
       next: (modalConfig: ModalArgs) => { this.showModal( modalConfig ); }
     });
   }
-
 }

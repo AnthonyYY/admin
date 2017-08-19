@@ -14,5 +14,5 @@ export class Student {
   sex: string;
   source: string;
   subject: string;
-  id?: string
+  id?: string;
 }

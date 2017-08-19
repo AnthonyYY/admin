@@ -26,13 +26,11 @@ export class HeaderComponent implements OnInit {
     if (!UserService.getAccessToken()) {
       return this.router.navigate(['login']);
     }
-    if ( !this.userService.user.name ) {
-      this.userService.getCurUserInfo()
-        .then( user => {
-          this.user = user;
-          this.roleService.navigateByRole(user.roleId);
-        } );
-    }
+    this.userService.getCurUserInfo()
+      .then( user => {
+        this.user = user;
+        this.roleService.navigateByRole(user.roleId);
+      } );
   }
 
   signOut() {

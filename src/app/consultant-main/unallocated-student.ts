@@ -8,5 +8,7 @@ export class UnallocatedStudent {
   remark: string;
   schoolName: string;
   sex: string;
+  address: string;
   subject: string;
+  selected?: boolean;
 }

@@ -10,12 +10,21 @@ import {StudentsAssetComponent} from './counselor/students-asset/students-asset.
 import {ConsultantMainComponent} from './consultant-main/consultant-main.component';
 import {UnallocatedStudentsComponent} from './consultant-main/unallocated-students/unallocated-students.component';
 import {ConsultationRecordComponent} from './consultant-main/consultation-record/consultation-record.component';
+import {StmanagerComponent} from './stmanager/stmanager.component';
+import {CourseComponent} from './stmanager/course/course.component';
+import {StudentClassPeriodComponent} from './stmanager/student-class-period/student-class-period.component';
+import {StudentScheduleComponent} from './stmanager/student-schedule/student-schedule.component';
+import {StStudentsComponent} from './stmanager/students/ststudents.component';
 
 export const routes: Routes = [
   {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   },
   {
     path: 'dashboard',
@@ -77,11 +86,34 @@ export const routes: Routes = [
             component: StudentsComponent
           },
         ]
+      },
+      {
+        path: 'studentmanager',
+        component: StmanagerComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'schedule',
+            pathMatch: 'full'
+          },
+          {
+            path: 'schedule',
+            component: CourseComponent,
+          },
+          {
+            path: 'students',
+            component: StStudentsComponent,
+          },
+          {
+            path: 'student-schedule',
+            component: StudentScheduleComponent,
+          },
+          {
+            path: 'stu-class-period',
+            component: StudentClassPeriodComponent
+          }
+        ]
       }
     ]
   },
-  {
-    path: 'login',
-    component: LoginComponent
-  }
 ];

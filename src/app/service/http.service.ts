@@ -33,12 +33,13 @@ export class HttpService {
 
   private _handle401(status): void {
     if ( status === 401 ) {
+      this.http.get('auth/logout');
       this.confirmService.confirm({
         confirm: () => {
           this.router.navigate(['login']);
           UserService.removeAccessToken();
         },
-        content: '登陆超时，请重新登陆',
+        content: '登录超时，请重新登陆',
         modalType: 'danger',
         closeBtn: false,
         cancelBtn: false

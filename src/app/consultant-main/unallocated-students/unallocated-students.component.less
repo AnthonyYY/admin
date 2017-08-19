@@ -5,3 +5,38 @@
     white-space: nowrap;
   }
 }
+
+.counselor-info{
+  dt, dd{
+    line-height: 30px;
+    margin-right: 5px;
+  }
+  dd {
+    margin-right: 10px;
+  }
+}
+
+.table-add{
+  background: #ecf0f5;
+  border: 1px solid #9e9e9e;
+  border-radius: 4px;
+  thead, tbody{
+    tr{
+      th, td{
+        border-bottom: 1px solid #9e9e9e;
+      }
+      th:not(:last-of-type), td:not(:last-of-type){
+        border-right: 1px solid #9e9e9e;
+      }
+    }
+  }
+}
+
+table.dataTable{
+  cursor: pointer;
+}
+
+.table-container{
+  max-height: 320px;
+  overflow: scroll;
+}
