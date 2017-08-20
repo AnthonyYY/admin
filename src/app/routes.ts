@@ -74,7 +74,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'students',
+            redirectTo: 'students-asset',
             pathMatch: 'full'
           },
           {

@@ -51,19 +51,6 @@
             })">
             <i class="fa fa-plus"> 添加学生</i>
           </button>
-
-          <button class="btn btn-primary"
-            [disabled]="!unAllocatedStudents.length"
-            (click)="unSelectStudents();
-            studentAssignModal.showModal({
-              modalSize: 'lg',
-              title: '分配学生',
-              modalConfirmText: '确认分配学生',
-              modalCancelText: '取消分配',
-              confirm: assignStudentToCounselor
-            })">
-            <i class="fa fa-sliders">分配学生</i>
-          </button>
         </div>
       </div>
     </div>
@@ -234,77 +221,3 @@
   </form>
 </app-modal>
 
-<app-modal #studentAssignModal [disabledAcceptBtn]="!assignedCounselor || !ifAnyStudentChosen()">
-  <div class="row">
-    <div class="col-md-3 col-sm-6">
-      <div class="form-group clearfix">
-        <label for="school" class="control-label col-xs-3">校区: </label>
-        <div class="col-xs-9">
-          <div class="input-group input-group-sm">
-            <select2 id="school"
-                     [cssImport]="false"
-                     [data]="schools"
-                     (valueChanged)="switchAssignedSchool($event)"
-                     [width]="'140px'"></select2>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3 col-sm-6">
-      <div class="form-group clearfix">
-        <label for="teacher" class="control-label col-xs-3">咨询师: </label>
-        <div class="col-xs-9">
-          <div class="input-group input-group-sm">
-            <select2 id="teacher"
-                     [options]="{minimumResultsForSearch: (counselors && counselors.length > 3) ? 1 : -1}"
-                     [cssImport]="false"
-                     [data]="counselors"
-                     (valueChanged)="switchAssignedCounselor($event)"
-                     [width]="'120px'"></select2>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xs-12 col-md-6" *ngIf="assignedCounselorInfo && assignedCounselor">
-      <dl class="counselor-info">
-        <dt class="pull-left">已分配学生个数:</dt>
-        <dd class="pull-left">{{ assignedCounselorInfo.totalStudentNum }}</dd>
-        <dt class="pull-left">签约人数:</dt>
-        <dd class="pull-left">{{ assignedCounselorInfo.signNum }}</dd>
-        <dt class="pull-left">签约总金额:</dt>
-        <dd class="pull-left">{{ assignedCounselorInfo.totalMoney }}</dd>
-      </dl>
-    </div>
-
-    <div class="col-xs-12 table-container">
-      <form class="form">
-        <table class="table table-add">
-          <thead>
-          <tr>
-            <th></th>
-            <th>姓名</th>
-            <th>性别</th>
-            <th>电话</th>
-            <th>地址</th>
-            <th>学校</th>
-            <th>学科</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let student of unAllocatedStudents">
-            <td class="text-center">
-              <input type="checkbox" (change)="student.selected = !student.selected" [checked]="student.selected">
-            </td>
-            <td>{{ student.name }}</td>
-            <td>{{ student.sex == 'MALE' ? '男' : '女' }}</td>
-            <td>{{ student.phone }}</td>
-            <td>{{ student.address }}</td>
-            <td>{{ student.orignSchool }}</td>
-            <td>{{ student.subject }}</td>
-          </tr>
-          </tbody>
-        </table>
-      </form>
-    </div>
-  </div>
-</app-modal>

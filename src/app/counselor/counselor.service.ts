@@ -22,4 +22,18 @@ export class CounselorService {
       }
     } );
   }
+
+  fetchStuAsset(): Promise<any> {
+    return this.http.get( 'counselor/assets' ).then( data => {
+      if (data.success) {
+        return data.data;
+      } else {
+        this.alertService.alert({
+          title: '提示',
+          content: '获取学生资产信息失败',
+          type: 'danger'
+        });
+      }
+    } );
+  }
 }

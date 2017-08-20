@@ -41,7 +41,9 @@
             data-toggle="tooltip">
         </p>
 
-        <button class="btn btn-primary btn-block" [disabled]="!(user.username.length >= 5 && user.password.length >= 5)" (click)="login()">登录</button>
+        <button class="btn btn-primary btn-block"
+                [disabled]="!(user.username.length >= 5 && user.password.length >= 5)"
+                (click)="login();" onclick="$('input').tooltip('hide')">登录</button>
       </form>
     </div>
   </div>

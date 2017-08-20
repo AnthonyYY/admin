@@ -67,7 +67,7 @@
   </div>
 </div>
 
-<app-modal #schoolModal [disabledAcceptBtn]="">
+<app-modal #schoolModal [disabledAcceptBtn]="!(curSchool.name && curSchool.name)">
   <div class="form-group clearfix">
     <label for="schoolName" class="control-label col-xs-3">学校名称:</label>
     <div class="col-xs-9">

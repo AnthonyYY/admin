@@ -1,3 +1,72 @@
-<p>
-  students-asset works!
-</p>
+<app-content-header [title]="'咨询师签约列表'" [menus]="contentHeader"></app-content-header>
+
+<div class="content">
+  <app-collapse-box [collapse]="false" [icon]="'filter'" [boxTitle]="'签约列表过滤'">
+    <div class="col-xs-12 col-md-4 input-group-sm">
+      <label class="pull-left">
+        姓名筛选:
+      </label>
+      <div class="input-group input-group-sm" style="width: 148px;">
+        <input class="form-control input-sm" placeholder="输入咨学生姓名" [(ngModel)]="filterStuName">
+        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+      </div>
+    </div>
+  </app-collapse-box>
+
+  <div class="box box-info">
+    <div class="box-header">
+      <h3 class="box-title">
+        学生资产列表
+      </h3>
+    </div>
+    <div class="box-body" style="border-top: 1px solid #ecf0f5;">
+      <div class="dataTables_wrapper form-inline dt-bootstrap">
+        <div class="row">
+          <div class="col-xs-12">
+            <table class="table table-bordered table-hover dataTable">
+              <thead>
+              <tr role="row">
+                <th>姓名</th>
+                <th>电话</th>
+                <th>性别</th>
+                <th>身份证</th>
+                <th>缴费总金额</th>
+                <th>已使用金额</th>
+                <th>退费金额</th>
+                <th>总课时</th>
+                <th>已使用课时</th>
+                <th class="text-center">操作</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let asset of allStuAsset | matchItem: filterStuName : 'name'">
+                <td>{{ asset.name }}</td>
+                <td>{{ asset.phone }}</td>
+                <td>{{ asset.sex === 'MALE' ? '男': '女' }}</td>
+                <td>{{ asset.idCard }}</td>
+                <td>{{ asset.hasPay }}</td>
+                <td>{{ asset.hasUsed }}</td>
+                <td>{{ asset.hasBack }}</td>
+                <td>{{ asset.totalHour }}</td>
+                <td>{{ asset.usedHour }}</td>
+                <td class="text-center">
+                  <div class="btn-group btn-group-xs">
+                    <button *ngIf="asset.hasPay > (asset.hasUsed + asset.hasBack)" class="btn btn-xs btn-success"><i class="fa fa-shopping-cart"></i> 购买课程</button>
+                    <span class="text-danger" *ngIf="asset.hasPay <= (asset.hasUsed + asset.hasBack)">
+                      <i class="fa fa-exclamation-triangle"></i>
+                      余额不足
+                    </span>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="!allStuAsset.length">
+                <td colspan="10" class="text-center">暂无学生资产信息</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
