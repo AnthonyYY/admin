@@ -2,6 +2,7 @@
   [title]="'学生列表'" [menus]="contentHeader"></app-content-header>
 <div class="content">
   <app-collapse-box [collapse]="false" [icon]="'filter'" [boxTitle]="'学生过滤'">
+<!--
     <div class="col-xs-12 col-md-4 input-group-sm">
       <label class="pull-left">
         创建时间:
@@ -11,6 +12,7 @@
         (dateRangeSetEvent)="handleTimeRangeChange($event)"
         class="pull-left"></app-date-ranger-picker>
     </div>
+-->
 
     <div class="col-xs-12 col-md-4 input-group-sm">
       <label class="pull-left">
@@ -24,20 +26,20 @@
 
     <div class="col-xs-12 col-md-4 input-group-sm">
       <label class="pull-left">
-        性别筛选:
+        年级筛选:
       </label>
       <div class="input-group input-group-sm" style="width: 148px;">
-        <select2 (valueChanged)="switchFilterGender($event)" [cssImport]="false" [options]="{minimumResultsForSearch: -1}" [data]="[{id:'',text:'全部'}, {id:'MALE',text:'男'}, {id:'FEMALE',text:'女'}]" [width]="'148px'"></select2>
+        <input class="form-control input-sm" [(ngModel)]="userFilterGrade" placeholder="输入年级">
+        <span class="input-group-addon"><i class="fa fa-search"></i></span>
       </div>
     </div>
 
     <div class="col-xs-12 col-md-4 input-group-sm">
       <label class="pull-left">
-        年级筛选:
+        性别筛选:
       </label>
       <div class="input-group input-group-sm" style="width: 148px;">
-        <input class="form-control input-sm" [(ngModel)]="userFilterUserGrade" placeholder="输入年级">
-        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+        <select2 (valueChanged)="switchFilterGender($event)" [cssImport]="false" [options]="{minimumResultsForSearch: -1}" [data]="genders" [width]="'148px'"></select2>
       </div>
     </div>
   </app-collapse-box>
@@ -48,7 +50,8 @@
       <div class="box-tools">
         <div class="btn-group btn-group-sm">
           <button class="btn btn-info" (click)="studentModal.showModal({
-
+            modalSize: 'lg',
+            title: '添加学生'
           })">
             <i class="fa fa-plus"></i>
             添加学生
@@ -56,41 +59,161 @@
         </div>
       </div>
     </div>
+    <div class="box-body" style="border-top: 1px solid #ecf0f5;">
+      <div class="dataTables_wrapper form-inline dt-bootstrap">
+        <div class="row">
+          <div class="col-xs-12">
+            <table class="table table-bordered table-hover dataTable">
+              <thead>
+              <tr role="row">
+                <th>姓名</th>
+                <th>性别</th>
+                <th>电话号码</th>
+                <th>年级</th>
+                <th>就读学校</th>
+                <th>学科</th>
+                <th>备注</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let student of students | matchItem: studentFilterName: 'name' | matchItem: userFilterGender: 'sex':'exact'  | matchItem: userFilterPhone: 'phone'" >
+                <td>{{ student.name }}</td>
+                <td>{{ student.sex === 'MALE' ? '男': '女' }}</td>
+                <td>{{ student.phone }}</td>
+                <td>{{ student.grade || '-' }}</td>
+                <td>{{ student.orignSchool || '-' }}</td>
+                <td>{{ student.subject || '-' }}</td>
+                <td>{{ student.remark || '-' }}</td>
+              </tr>
+              <tr *ngIf="!students.length">
+                <td colspan="7" class="text-center">暂无学生信息</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>
 
-<app-modal #studentModal [modalSize]="'md'">
-  <div class="row">
-    <div class="col-md-5">
-      <div class="form-group clearfix">
-        <label for="studentName" class="control-label col-xs-4">姓名:</label>
-        <div class="col-xs-8">
-          <input id="studentName" name="studentName" [(ngModel)]="curStudent.name">
+<app-modal #studentModal [disabledAcceptBtn]=!stuForm.form.valid>
+  <form class="form clearfix" autocomplete="off" #stuForm="ngForm">
+    <div class="col-xs-12">
+      <div class="col-sm-5 col-xs-12">
+        <div class="form-group clearfix">
+          <label for="name" class="control-label necessary col-xs-2">姓名</label>
+          <div class="col-xs-10">
+            <input class="form-control {{ (name.invalid && name.dirty) && 'error' }}" #name="ngModel" id="name" name="name" placeholder="学生姓名" [(ngModel)]="curStudent.name" [required]="true">
+          </div>
+        </div>
+
+        <div class="form-group clearfix">
+          <label for="gender" class="control-label necessary col-xs-2">性别</label>
+          <div class="col-xs-10">
+            <select2 id="gender"
+                     [value]="curStudent.sex"
+                     [cssImport]="false"
+                     [width]="'100%'"
+                     (valueChanged)="switchGender($event)"
+                     [options]="{minimumResultsForSearch: -1, placeholder: '请选择性别'}"
+                     [data]="[{id: 'MALE', text: '男'}, {id: 'FEMALE', text: '女'}]"></select2>
+          </div>
+        </div>
+
+        <div class="form-group clearfix">
+          <label for="phone" class="control-label necessary col-xs-2">电话</label>
+          <div class="col-xs-10">
+            <input #phone="ngModel" type="tel" class="form-control {{ (phone.dirty && phone.invalid) && 'error' }}" id="phone" name="phone" placeholder="请输入电话号码" [(ngModel)]="curStudent.phone" pattern="^\d{11}$" [required]="true">
+          </div>
+        </div>
+
+        <div class="form-group clearfix">
+          <label for="idCard" class="control-label necessary col-xs-2">身份证</label>
+          <div class="col-xs-10">
+            <input #idCard="ngModel" class="form-control {{ idCard.dirty && idCard.invalid && 'error' }}" id="idCard" name="idCard" placeholder="请输入身份证号码" [(ngModel)]="curStudent.idCard" pattern="^\d{18}$" [required]="true">
+          </div>
+        </div>
+
+        <div class="form-group clearfix">
+          <label for="grade" class="control-label necessary col-xs-2">年级</label>
+          <div class="col-xs-10">
+            <input #grade="ngModel" class="form-control {{ grade.invalid && grade.dirty && 'error' }}" id="grade" name="grade" placeholder="请输入年级" [(ngModel)]="curStudent.grade" [required]="true">
+          </div>
+        </div>
+
+        <div class="form-group clearfix">
+          <label for="subject" class="control-label col-xs-2">学科</label>
+          <div class="col-xs-10">
+            <input class="form-control" id="subject" name="subject" placeholder="请输入学科" [(ngModel)]="curStudent.subject">
+          </div>
+        </div>
+
+        <div class="form-group clearfix">
+          <label for="orignSchool" class="control-label col-xs-2">学校</label>
+          <div class="col-xs-10">
+            <input class="form-control" id="orignSchool" name="orignSchool" placeholder="请输入就读学校" [(ngModel)]="curStudent.orignSchool">
+          </div>
         </div>
       </div>
 
-      <div class="form-group clearfix">
-        <label for="studentGender" class="control-label col-xs-4">性别:</label>
-        <div class="col-xs-8">
-          <input id="studentGender" name="studentGender" [(ngModel)]="curStudent.sex">
+      <div class="col-sm-7 col-xs-12">
+        <div class="form-group clearfix">
+          <label for="address" class="control-label col-xs-3 necessary col-md-2">家庭地址</label>
+          <div class="col-xs-9 col-md-10">
+            <input #address="ngModel" class="form-control {{ address.invalid && address.dirty && 'error' }}" id="address" name="address" placeholder="请输入家庭地址" [(ngModel)]="curStudent.address" [required]="true">
+          </div>
         </div>
-      </div>
 
-      <div class="form-group clearfix">
-        <label for="studentPhone" class="control-label col-xs-4">电话:</label>
-        <div class="col-xs-8">
-          <input id="studentPhone" name="studentPhone" [(ngModel)]="curStudent.phone">
+        <div class="form-group clearfix">
+          <label for="source" class="control-label col-xs-3 necessary col-md-2">学生来源</label>
+          <div class="col-xs-9 col-md-10">
+            <input #source="ngModel" class="form-control {{ source.invalid && source.dirty && 'error' }}" id="source" name="source" placeholder="请输入学生来源" [(ngModel)]="curStudent.source" [required]="true">
+          </div>
         </div>
-      </div>
 
-      <div class="form-group clearfix">
-        <label for="studentBirthday" class="control-label col-xs-4">生日:</label>
-        <div class="col-xs-8">
-          <input id="studentBirthday" name="studentBirthday" [(ngModel)]="curStudent.birthday">
+        <div class="form-group clearfix">
+          <label for="parentName" class="control-label col-xs-3 col-md-2">家长姓名</label>
+          <div class="col-xs-9 col-md-10">
+            <input class="form-control" id="parentName" name="parentName" placeholder="请输入家长姓名" [(ngModel)]="curStudent.parentName">
+          </div>
+        </div>
+
+        <div class="form-group clearfix">
+          <label for="parentIdCard" class="control-label col-xs-3 col-md-2">家长身份证</label>
+          <div class="col-xs-9 col-md-10">
+            <input class="form-control" id="parentIdCard" name="parentIdCard" placeholder="请输入家长身份证" [(ngModel)]="curStudent.parentIdCard">
+          </div>
+        </div>
+
+        <div class="form-group clearfix">
+          <label for="parentPhone" class="control-label col-xs-3 col-md-2">家长电话</label>
+          <div class="col-xs-9 col-md-10">
+            <input type="tel" class="form-control" id="parentPhone" name="parentPhone" placeholder="请输入家长电话" [(ngModel)]="curStudent.parentPhone">
+          </div>
+        </div>
+
+        <div class="form-group clearfix">
+          <label for="gender" class="control-label col-xs-2">家长性别</label>
+          <div class="col-xs-10">
+            <select2
+              [value]="curStudent.parentSex"
+              [cssImport]="false"
+              [width]="'100%'"
+              (valueChanged)="switchParentGender($event)"
+              [options]="{minimumResultsForSearch: -1, placeholder: '请输入家长性别'}"
+              [data]="[{id: 'MALE', text: '男'}, {id: 'FEMALE', text: '女'}]"></select2>
+          </div>
+        </div>
+
+        <div class="form-group clearfix">
+          <label for="remark" class="control-label col-xs-3 col-md-2">备注信息</label>
+          <div class="col-xs-9 col-md-10">
+            <textarea class="form-control" id="remark" rows="1" name="remark" placeholder="请填写备注信息" [(ngModel)]="curStudent.remark"></textarea>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-md-7"></div>
-  </div>
+  </form>
 </app-modal>

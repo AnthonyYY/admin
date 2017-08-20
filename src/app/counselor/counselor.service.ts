@@ -10,7 +10,7 @@ export class CounselorService {
     private alertService: AlertService,
   ) { }
   fetchStudents(): Promise<any> {
-    return this.http.get('counselor/students').then( data => {
+    return this.http.get('counselor/student').then( data => {
       if ( data.success ) {
         return data.data;
       } else {

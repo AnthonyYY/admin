@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Sidebar} from '../../sidebar/sidebar';
 import {CounselorService} from '../counselor.service';
 import {Student} from '../students';
+import {genders} from '../../common/gender';
 
 @Component({
   selector: 'app-students',
@@ -10,6 +11,7 @@ import {Student} from '../students';
 })
 export class StudentsComponent implements OnInit {
 
+  genders = genders;
   contentHeader: Sidebar[];
   students: Array<any>;
   curStudent: Student;
@@ -18,9 +20,9 @@ export class StudentsComponent implements OnInit {
     end: number;
   };
   studentFilterName: string;
-  userFilterUserGender: string;
-  userFilterUserGrade: string;
-  userFilterUserPhone: string;
+  userFilterGender: string;
+  userFilterGrade: string;
+  userFilterPhone: string;
   constructor(
     private counselorService: CounselorService
   ) { }
@@ -37,20 +39,22 @@ export class StudentsComponent implements OnInit {
       end: Infinity
     };
     this.studentFilterName = '';
-    this.userFilterUserGender = '';
-    this.userFilterUserGrade = '';
-    this.userFilterUserPhone = '';
-    // this.fetchStudents();
+    this.userFilterGender = '';
+    this.userFilterGrade = '';
+    this.userFilterPhone = '';
+    this.fetchStudents();
   }
 
   fetchStudents(): void {
     this.counselorService.fetchStudents().then( students => {
+      console.log(students);
       this.students = students;
     } );
   }
 
   switchFilterGender($event): void {
-    this.userFilterUserGender = $event.value === '全部' ?  '' : $event.value;
+    this.userFilterGender = $event.value === 'ALL' ?  '' : $event.value;
+    console.log(this.userFilterGender);
   }
 
   handleTimeRangeChange($event): void {
@@ -59,5 +63,13 @@ export class StudentsComponent implements OnInit {
       end: $event.end,
     };
     this.studentCreatedFilterTime = {...this.studentCreatedFilterTime};
+  }
+
+  switchParentGender($event) {
+
+  }
+
+  switchGender($event) {
+
   }
 }
