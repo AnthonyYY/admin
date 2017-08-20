@@ -84,9 +84,18 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let student of unAllocatedStudents | matchItem: filterStuName: 'name' | matchItem: filterGender: 'sex'  | matchItem: filterPhone: 'phone'" >
+                <tr *ngFor="let student of unAllocatedStudents |
+                  matchItem: filterStuName: 'name' |
+                  matchItem: filterGender: 'sex' : 'exact'  |
+                  matchItem: filterPhone: 'phone'"
+                  (click)="resetCurStudent(student.id);
+                  studentModal.showModal({
+                    modalSize: 'lg',
+                    title: '编辑学生',
+                    confirm: updateStuInfo
+                   })">
                   <td>{{ student.name }}</td>
-                  <td>{{ student.sex }}</td>
+                  <td>{{ student.sex === 'MALE' ? '男' : '女' }}</td>
                   <td>{{ student.phone }}</td>
                   <td>{{ student.grade || '-' }}</td>
                   <td>{{ student.orignSchool || '-' }}</td>
@@ -224,6 +233,7 @@
     </div>
   </form>
 </app-modal>
+
 <app-modal #studentAssignModal [disabledAcceptBtn]="!assignedCounselor || !ifAnyStudentChosen()">
   <div class="row">
     <div class="col-md-3 col-sm-6">
@@ -298,4 +308,3 @@
     </div>
   </div>
 </app-modal>
-

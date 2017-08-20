@@ -88,4 +88,38 @@ export class ConsultantMainService {
       return result.success;
     } );
   }
+
+  fetchStuInfoById(stuId: string): Promise<any> {
+    return this.http.get( `common/student/${stuId}` ).then( stuInfo => {
+      console.log(stuInfo);
+      if (stuInfo.success) {
+        return stuInfo.data;
+      } else {
+        this.alertService.alert({
+          title: '提示',
+          content: '获取学生信息失败',
+          type: 'danger'
+        });
+      }
+    } );
+  }
+
+  updateStuInfo(body): Promise<any> {
+    return this.http.put('counselor/student', body).then( result => {
+      if (result.success) {
+        this.alertService.alert({
+          title: '提示',
+          content: '学生信息已更新',
+          type: 'success'
+        });
+        return result.success;
+      } else {
+        this.alertService.alert({
+          title: '提示',
+          content: '更新学生信息失败',
+          type: 'danger'
+        });
+      }
+    } );
+  }
 }

@@ -16,7 +16,6 @@ export class UnallocatedStudentsComponent implements OnInit {
 
   genders: Array<object>;
   unAllocatedStudents: any[];
-  curUnallocatedStudent: UnallocatedStudent;
   curStudent: any;
   contentHeader: Sidebar[];
   schools: School[];
@@ -33,13 +32,13 @@ export class UnallocatedStudentsComponent implements OnInit {
   ) {
     this.addStudent = this.addStudent.bind(this);
     this.assignStudentToCounselor = this.assignStudentToCounselor.bind(this);
+    this.updateStuInfo = this.updateStuInfo.bind(this);
   }
 
   ngOnInit() {
     this.fetchUnallocatedStudents();
     this.fetchSchoolList();
     this.unAllocatedStudents = [];
-    this.curUnallocatedStudent = new UnallocatedStudent();
     this.curStudent = new Student();
     this.assignedCounselorInfo = {totalStudentNum: '', signNum: '', totalMoney: ''};
     this.genders = genders;
@@ -50,6 +49,7 @@ export class UnallocatedStudentsComponent implements OnInit {
 
     this.filterStuName = '';
     this.filterGender = '';
+    this.filterPhone = '';
   }
 
   fetchSchoolList(): void {
@@ -92,14 +92,15 @@ export class UnallocatedStudentsComponent implements OnInit {
     } );
   }
 
-  resetCurUnallocatedStudent(): void {
-    this.curUnallocatedStudent = new UnallocatedStudent();
-    this.curUnallocatedStudent.sex = 'MALE';
-  }
-
-  resetCurStudent(): void {
-    this.curStudent = new Student();
-    this.curStudent.sex = 'MALE';
+  resetCurStudent(stuId): void {
+    if (stuId) {
+      this.consultantService.fetchStuInfoById(stuId).then( info => {
+        this.curStudent = info;
+      } );
+    } else {
+      this.curStudent = new Student();
+      this.curStudent.sex = 'MALE';
+    }
   }
 
   fetchUnallocatedStudents(): void {
@@ -158,14 +159,27 @@ export class UnallocatedStudentsComponent implements OnInit {
   }
 
   switchGender($event): void {
-
+    this.curStudent.sex = $event.value;
   }
 
-  switchParentGender(): void {
-
+  switchParentGender($event): void {
+    this.curStudent.parentSex = $event.value;
   }
 
   switchFilterGender($event): void {
     this.filterGender = $event.value === 'ALL' ? '' : $event.value;
+  }
+
+  updateStuInfo(): void {
+    this.consultantService.updateStuInfo(this.curStudent).then( (result) => {
+      if (result === true) {
+        const toUpdateStuIndex = this.unAllocatedStudents.indexOf(this.findStuById(this.curStudent.id));
+        this.unAllocatedStudents[toUpdateStuIndex] = {...this.curStudent};
+      }
+    } );
+  }
+
+  findStuById(id: string): Student {
+    return this.unAllocatedStudents.find( stu => stu.id === id );
   }
 }
