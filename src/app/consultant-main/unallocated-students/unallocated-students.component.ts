@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {ConsultantMainService} from '../consultant-main.service';
-import {UnallocatedStudent} from '../unallocated-student';
 import {Sidebar} from '../../sidebar/sidebar';
 import {Student} from '../student';
 import {SchoolService} from '../../common/school.service';

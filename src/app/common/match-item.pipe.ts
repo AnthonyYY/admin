@@ -15,7 +15,7 @@ export class MatchItemPipe implements PipeTransform {
       } );
     } else {
       return value.filter( val => {
-        return val[field].indexOf(filter) > -1;
+        return (val[field] || '').indexOf(filter) > -1;
       } );
     }
   }

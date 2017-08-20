@@ -14,14 +14,14 @@ export class ConsultantMainComponent implements OnInit {
   ngOnInit() {
     this.sidebarMenu = [
       {
+        name: '咨询师签约统计',
+        routerLink: ['consultation-record'],
+        icon: 'fa-files-o'
+      },
+      {
         name: '学生列表',
         routerLink: ['unallocated-students'],
         icon: 'fa-graduation-cap'
-      },
-      {
-        name: '咨询记录',
-        routerLink: ['consultation-record'],
-        icon: 'fa-files-o'
       },
     ];
   }

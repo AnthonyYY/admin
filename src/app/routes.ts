@@ -55,7 +55,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'unallocated-students',
+            redirectTo: 'consultation-record',
             pathMatch: 'full'
           },
           {
