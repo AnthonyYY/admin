@@ -51,7 +51,15 @@
                 <td>{{ asset.usedHour }}</td>
                 <td class="text-center">
                   <div class="btn-group btn-group-xs">
-                    <button *ngIf="asset.hasPay > (asset.hasUsed + asset.hasBack)" class="btn btn-xs btn-success"><i class="fa fa-shopping-cart"></i> 购买课程</button>
+                    <button *ngIf="asset.hasPay > (asset.hasUsed + asset.hasBack)"
+                      (click)="setCurStuAsset(asset);buyCourseModal.showModal({
+                        modalSize: 'lg',
+                        title: '购买课程',
+                        confirm: buyCourse
+                      })"
+                      class="btn btn-xs btn-success">
+                      <i class="fa fa-shopping-cart"></i> 购买课程
+                    </button>
                     <span class="text-danger" *ngIf="asset.hasPay <= (asset.hasUsed + asset.hasBack)">
                       <i class="fa fa-exclamation-triangle"></i>
                       余额不足
@@ -70,3 +78,30 @@
     </div>
   </div>
 </div>
+
+<app-modal #buyCourseModal>
+  <div class="row">
+    <div class="col-xs-12 counselor-info">
+      <dl class=clearfix>
+        <dt class="pull-left">学生姓名: </dt>
+        <dd class="pull-left">{{ curStuAsset.name }}</dd>
+      </dl>
+      <dl class=clearfix>
+        <dt class="pull-left">身份证号: </dt>
+        <dd class="pull-left">{{ curStuAsset.idCard }}</dd>
+      </dl>
+      <dl class=clearfix>
+        <dt class="pull-left">总共缴费: </dt>
+        <dd class="pull-left">{{ curStuAsset.hasPay }}</dd>
+      </dl>
+      <dl class=clearfix>
+        <dt class="pull-left">已经使用: </dt>
+        <dd class="pull-left">{{ curStuAsset.hasUsed }}</dd>
+      </dl>
+      <dl class=clearfix>
+        <dt class="pull-left">退费: </dt>
+        <dd class="pull-left">{{ curStuAsset.hasBack }}</dd>
+      </dl>
+    </div>
+  </div>
+</app-modal>

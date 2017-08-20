@@ -11,6 +11,7 @@ export class StudentsAssetComponent implements OnInit {
 
   contentHeader: Sidebar[];
   allStuAsset: any[];
+  curStuAsset: any;
   filterStuName: string;
   constructor(
     private counselorService: CounselorService
@@ -22,6 +23,7 @@ export class StudentsAssetComponent implements OnInit {
       {name: '学生资产信息页', icon: 'fa-graduation-cap'}
     ];
     this.allStuAsset = [];
+    this.curStuAsset = {};
     this.filterStuName = '';
     this.fetchStuAsset();
   }
@@ -30,6 +32,10 @@ export class StudentsAssetComponent implements OnInit {
     this.counselorService.fetchStuAsset().then( data => {
       this.allStuAsset = data;
     } );
+  }
+
+  setCurStuAsset(asset): void {
+    this.curStuAsset = asset;
   }
 
 }
