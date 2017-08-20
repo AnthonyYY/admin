@@ -2,44 +2,23 @@
   [title]="'学生列表'" [menus]="contentHeader"></app-content-header>
 <div class="content">
   <app-collapse-box [collapse]="false" [icon]="'filter'" [boxTitle]="'学生过滤'">
-<!--
-    <div class="col-xs-12 col-md-4 input-group-sm">
-      <label class="pull-left">
-        创建时间:
-      </label>
-      <app-date-ranger-picker
-        [startTime]="studentCreatedFilterTime.start"
-        (dateRangeSetEvent)="handleTimeRangeChange($event)"
-        class="pull-left"></app-date-ranger-picker>
-    </div>
--->
 
     <div class="col-xs-12 col-md-4 input-group-sm">
       <label class="pull-left">
-        学生姓名:
+        姓名:
       </label>
       <div class="input-group input-group-sm" style="width: 148px;">
-        <input class="form-control input-sm" [(ngModel)]="studentFilterName" placeholder="输入用户名称">
+        <input class="form-control input-sm" [(ngModel)]="studentFilterName" placeholder="输入学生名称">
         <span class="input-group-addon"><i class="fa fa-search"></i></span>
       </div>
     </div>
 
     <div class="col-xs-12 col-md-4 input-group-sm">
       <label class="pull-left">
-        年级筛选:
+        跟进状态:
       </label>
       <div class="input-group input-group-sm" style="width: 148px;">
-        <input class="form-control input-sm" [(ngModel)]="userFilterGrade" placeholder="输入年级">
-        <span class="input-group-addon"><i class="fa fa-search"></i></span>
-      </div>
-    </div>
-
-    <div class="col-xs-12 col-md-4 input-group-sm">
-      <label class="pull-left">
-        性别筛选:
-      </label>
-      <div class="input-group input-group-sm" style="width: 148px;">
-        <select2 (valueChanged)="switchFilterGender($event)" [cssImport]="false" [options]="{minimumResultsForSearch: -1}" [data]="genders" [width]="'148px'"></select2>
+        <select2 (valueChanged)="switchFilterState($event)" [cssImport]="false" [options]="{minimumResultsForSearch: -1}" [data]="[]" [width]="'148px'"></select2>
       </div>
     </div>
   </app-collapse-box>
@@ -73,6 +52,8 @@
                 <th>就读学校</th>
                 <th>学科</th>
                 <th>备注</th>
+                <th>跟进状态</th>
+                <th>操作</th>
               </tr>
               </thead>
               <tbody>
@@ -84,9 +65,18 @@
                 <td>{{ student.orignSchool || '-' }}</td>
                 <td>{{ student.subject || '-' }}</td>
                 <td>{{ student.remark || '-' }}</td>
+                <td>{{ states[student.status]}}</td>
+                <td class="text-center">
+                  <div *ngIf="student.status === 'CONNECTION_NO'" class="btn-group btn-group-xs">
+                    <button class="btn btn-success btn-xs">
+                      <i class="fa fa-exchange"></i>
+                      已联系
+                    </button>
+                  </div>
+                </td>
               </tr>
               <tr *ngIf="!students.length">
-                <td colspan="7" class="text-center">暂无学生信息</td>
+                <td colspan="9" class="text-center">暂无学生信息</td>
               </tr>
               </tbody>
             </table>

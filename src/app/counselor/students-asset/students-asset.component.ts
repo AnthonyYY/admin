@@ -28,7 +28,6 @@ export class StudentsAssetComponent implements OnInit {
 
   fetchStuAsset(): void {
     this.counselorService.fetchStuAsset().then( data => {
-      console.log(data);
       this.allStuAsset = data;
     } );
   }
