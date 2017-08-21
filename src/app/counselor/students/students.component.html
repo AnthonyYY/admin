@@ -18,7 +18,20 @@
         跟进状态:
       </label>
       <div class="input-group input-group-sm" style="width: 148px;">
-        <select2 (valueChanged)="switchFilterState($event)" [cssImport]="false" [options]="{minimumResultsForSearch: -1}" [data]="[]" [width]="'148px'"></select2>
+        <select2 (valueChanged)="switchFilterState($event)"
+                 [cssImport]="false"
+                 [options]="{minimumResultsForSearch: -1}"
+                 [data]="[{id: 'ALL', text: '全部'}].concat(stateList)"
+                 [width]="'148px'"></select2>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-4 input-group-sm">
+      <label class="pull-left">
+        学校:
+      </label>
+      <div class="input-group input-group-sm" style="width: 148px;">
+        <input name="filterSchool" class="form-control" [(ngModel)]="userFilterShool" placeholder="请输入学校名称">
       </div>
     </div>
   </app-collapse-box>
@@ -53,11 +66,14 @@
                 <th>学科</th>
                 <th>备注</th>
                 <th>跟进状态</th>
-                <th>操作</th>
+                <th class="text-center">操作</th>
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let student of students | matchItem: studentFilterName: 'name' | matchItem: userFilterGender: 'sex':'exact'  | matchItem: userFilterPhone: 'phone'" >
+              <tr *ngFor="let student of students |
+                matchItem: studentFilterName: 'name' |
+                matchItem: userFilterState: 'status' : 'exact' |
+                matchItem: userFilterShool: 'orignSchool'">
                 <td>{{ student.name }}</td>
                 <td>{{ student.sex === 'MALE' ? '男': '女' }}</td>
                 <td>{{ student.phone }}</td>
@@ -67,8 +83,13 @@
                 <td>{{ student.remark || '-' }}</td>
                 <td>{{ states[student.status]}}</td>
                 <td class="text-center">
+                  <span *ngIf="student.status !== 'CONNECTION_NO'">--</span>
                   <div *ngIf="student.status === 'CONNECTION_NO'" class="btn-group btn-group-xs">
-                    <button class="btn btn-success btn-xs">
+                    <button class="btn btn-success btn-xs" (click)="curStudent = student;confirm.showModal({
+                         title: '提示',
+                         content: '是否确认将该学生的跟进状态改为已联系？',
+                         confirm: switchState
+                      })">
                       <i class="fa fa-exchange"></i>
                       已联系
                     </button>
@@ -207,3 +228,5 @@
     </div>
   </form>
 </app-modal>
+
+<app-confirm #confirm></app-confirm>

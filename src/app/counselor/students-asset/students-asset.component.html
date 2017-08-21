@@ -81,27 +81,60 @@
 
 <app-modal #buyCourseModal>
   <div class="row">
-    <div class="col-xs-12 counselor-info">
-      <dl class=clearfix>
+    <div class="col-xs-12 counselor-info text-center">
+      <dl>
         <dt class="pull-left">学生姓名: </dt>
         <dd class="pull-left">{{ curStuAsset.name }}</dd>
       </dl>
-      <dl class=clearfix>
+      <dl class="id-card">
         <dt class="pull-left">身份证号: </dt>
         <dd class="pull-left">{{ curStuAsset.idCard }}</dd>
       </dl>
-      <dl class=clearfix>
+      <dl>
         <dt class="pull-left">总共缴费: </dt>
         <dd class="pull-left">{{ curStuAsset.hasPay }}</dd>
       </dl>
-      <dl class=clearfix>
+      <dl>
         <dt class="pull-left">已经使用: </dt>
         <dd class="pull-left">{{ curStuAsset.hasUsed }}</dd>
       </dl>
-      <dl class=clearfix>
+      <dl>
         <dt class="pull-left">退费: </dt>
         <dd class="pull-left">{{ curStuAsset.hasBack }}</dd>
       </dl>
     </div>
+  </div>
+
+  <div class="col-xs-12 filter">
+
+    <div class="col-md-4 input-group-sm">
+      <label class="pull-left">
+        课程名称:
+      </label>
+      <div class="input-group input-group-sm" style="width: 148px;">
+        <input class="form-control input-sm" placeholder="输入课程名称" name="filterCourseName" [(ngModel)]="filterCourseName">
+        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+      </div>
+    </div>
+
+    <div class="col-md-4 input-group-sm">
+      <label class="pull-left">
+        班组:
+      </label>
+      <div class="input-group input-group-sm" style="width: 148px;">
+        <input class="form-control input-sm" placeholder="输入班组" name="filterGrade" [(ngModel)]="filterGrade">
+        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+      </div>
+    </div>
+
+    <div class="col-md-4 input-group-sm">
+      <label class="pull-left">
+        课程类型:
+      </label>
+      <div class="input-group input-group-sm" style="width: 148px;">
+        <select2 [cssImport]="false" [options]="{minimumResultsForSearch: -1}" [data]="[{id:'ALL',text:'全部'}].concat(syllabusTypes)" [width]="'148px'"></select2>
+      </div>
+    </div>
+
   </div>
 </app-modal>

@@ -3,6 +3,7 @@ import {Sidebar} from '../../sidebar/sidebar';
 import {CounselorService} from '../counselor.service';
 import {Student} from '../students';
 import {state} from '../../common/state';
+import {states} from '../../common/state';
 
 @Component({
   selector: 'app-students',
@@ -20,10 +21,14 @@ export class StudentsComponent implements OnInit {
   };
   studentFilterName: string;
   userFilterState: string;
+  userFilterShool: string;
   states: any;
+  stateList: any;
   constructor(
     private counselorService: CounselorService
-  ) { }
+  ) {
+    this.switchState = this.switchState.bind(this);
+  }
 
   ngOnInit() {
     this.contentHeader = [
@@ -38,7 +43,9 @@ export class StudentsComponent implements OnInit {
     };
     this.studentFilterName = '';
     this.userFilterState = '';
+    this.userFilterShool = '';
     this.states = state;
+    this.stateList = states;
     this.fetchStudents();
   }
 
@@ -51,6 +58,14 @@ export class StudentsComponent implements OnInit {
 
   switchFilterState($event): void {
     this.userFilterState = $event.value === 'ALL' ?  '' : $event.value;
+  }
+
+  switchState(): void {
+    this.counselorService.switchState(this.curStudent.id).then( success => {
+      if (success) {
+        this.curStudent.status = 'CONNECTION';
+      }
+    } );
   }
 
   switchParentGender($event) {

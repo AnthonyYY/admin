@@ -13,6 +13,8 @@ export class StudentsAssetComponent implements OnInit {
   allStuAsset: any[];
   curStuAsset: any;
   filterStuName: string;
+  filterCourseName: string;
+  filterGrade: string;
   constructor(
     private counselorService: CounselorService
   ) { }
@@ -25,6 +27,8 @@ export class StudentsAssetComponent implements OnInit {
     this.allStuAsset = [];
     this.curStuAsset = {};
     this.filterStuName = '';
+    this.filterCourseName = '';
+    this.filterGrade = '';
     this.fetchStuAsset();
   }
 

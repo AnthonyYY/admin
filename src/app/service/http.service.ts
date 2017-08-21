@@ -77,7 +77,7 @@ export class HttpService {
         return {success: false, data: null};
       } );
   }
-  post(url: string, body, options?: any): Promise<any> {
+  post(url: string, body?, options?: any): Promise<any> {
     options = HttpService._createSpecOptions(options);
     return this.http.post( AppSettings.API_ENDPOINT + url, body, options)
       .toPromise()

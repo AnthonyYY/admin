@@ -36,4 +36,19 @@ export class CounselorService {
       }
     } );
   }
+
+  switchState(studentId: string): Promise<any> {
+    return this.http.post( `counselor/counselor/student/${studentId}` ).then( data => {
+      console.log(data);
+      if (data.success) {
+        return data.success;
+      } else {
+        this.alertService.alert({
+          title: '提示',
+          content: '更改学生跟进状态失败',
+          type: 'danger'
+        });
+      }
+    } );
+  }
 }
