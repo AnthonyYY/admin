@@ -51,4 +51,8 @@ export class CounselorService {
       }
     } );
   }
+
+  fetchCourses(): Promise<any>{
+    return this.http.get('')
+  }
 }

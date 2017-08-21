@@ -115,7 +115,7 @@ import {StmanagerService} from './stmanager/stmanager.service';
     AdminService,
     CounselorService,
     ConsultantMainService,
-    StmanagerService
+    StmanagerService,
   ],
   bootstrap: [AppComponent]
 })

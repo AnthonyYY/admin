@@ -55,6 +55,7 @@
                       (click)="setCurStuAsset(asset);buyCourseModal.showModal({
                         modalSize: 'lg',
                         title: '购买课程',
+                        modalConfirmText: '确认购买',
                         confirm: buyCourse
                       })"
                       class="btn btn-xs btn-success">
@@ -79,8 +80,13 @@
   </div>
 </div>
 
-<app-modal #buyCourseModal>
+<app-modal #buyCourseModal class="bugModal">
   <div class="row">
+    <div class="col-xs-12">
+      <table class="table">
+        <caption>购课学生</caption>
+      </table>
+    </div>
     <div class="col-xs-12 counselor-info text-center">
       <dl>
         <dt class="pull-left">学生姓名: </dt>
@@ -105,36 +111,145 @@
     </div>
   </div>
 
-  <div class="col-xs-12 filter">
+  <div class="row">
+    <div class="col-xs-12 input-group-sm filter">
+      <table class="table">
+        <caption>课程列表</caption>
+      </table>
+      <div class="filter-wrap clearfix">
+        <h4>课程搜索</h4>
+        <div class="input-group input-group-sm pull-left" style="width: 148px;">
+          <input class="form-control input-sm" placeholder="搜索课程名称" name="filterCourseName" [(ngModel)]="filterCourseName">
+          <span class="input-group-addon"><i class="fa fa-search"></i></span>
+        </div>
 
-    <div class="col-md-4 input-group-sm">
-      <label class="pull-left">
-        课程名称:
-      </label>
-      <div class="input-group input-group-sm" style="width: 148px;">
-        <input class="form-control input-sm" placeholder="输入课程名称" name="filterCourseName" [(ngModel)]="filterCourseName">
-        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+        <div class="input-group input-group-sm pull-left" style="width: 148px;">
+          <input class="form-control input-sm" placeholder="搜索班组" name="filterGrade" [(ngModel)]="filterGrade">
+          <span class="input-group-addon"><i class="fa fa-search"></i></span>
+        </div>
+
+        <div class="input-group input-group-sm pull-left" style="width: 148px;">
+          <select2 [cssImport]="false"
+           [options]="{minimumResultsForSearch: -1, placeholder: '全部课程类型'}"
+           [data]="[{id:'ALL',text:'全部课程类型'}].concat(courseTypeList)"
+           [width]="'148px'"
+           [value]="filterCourseType"
+           (valueChanged)="switchCourseType($event)"
+           ></select2>
+        </div>
       </div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>课程名称</th>
+            <th>所属班组</th>
+            <th>课程类型</th>
+            <th>单价</th>
+            <th>总课时</th>
+            <th>学生人数</th>
+            <th>选择人数</th>
+            <th class="text-center">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let course of courses | matchItem: filterCourseName: 'name' | matchItem: filterCourseType: 'type' | matchItem: filterGrade : 'gradeName';">
+            <td>{{ course.name }}</td>
+            <td>{{ course.gradeId }}</td>
+            <td>{{ courseTypeMap[course.type] }}</td>
+            <td>{{ course.price }}</td>
+            <td>{{ course.studyHour || 0 }}</td>
+            <td>{{ course.studentNum }}</td>
+            <td class="text-center">{{ course.selectedNum }}</td>
+            <td class="text-center">
+              <div class="btn-group btn-group-xs">
+                <button  class="btn btn-success btn-xs" (click)="setCurChosenCourse(course);courseHourSetter.showModal({
+                    modalSize: 'sm',
+                    title: '请选择购买课时',
+                    modalConfirmText: '确认',
+                    confirm: addChosenCourse
+                })">
+                  <i class="fa fa-hand-o-right"></i>购买课程
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="!(courses | matchItem: filterCourseName: 'name' | matchItem: filterCourseType: 'type' | matchItem: filterGrade : 'gradeName').length;">
+            <td colspan="8">
+              <p class="text-center text-info">无相应课程信息</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
-    <div class="col-md-4 input-group-sm">
-      <label class="pull-left">
-        班组:
-      </label>
-      <div class="input-group input-group-sm" style="width: 148px;">
-        <input class="form-control input-sm" placeholder="输入班组" name="filterGrade" [(ngModel)]="filterGrade">
-        <span class="input-group-addon"><i class="fa fa-search"></i></span>
-      </div>
-    </div>
-
-    <div class="col-md-4 input-group-sm">
-      <label class="pull-left">
-        课程类型:
-      </label>
-      <div class="input-group input-group-sm" style="width: 148px;">
-        <select2 [cssImport]="false" [options]="{minimumResultsForSearch: -1}" [data]="[{id:'ALL',text:'全部'}].concat(syllabusTypes)" [width]="'148px'"></select2>
-      </div>
-    </div>
-
   </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <table class="table table-bordered chosen-course-header">
+        <caption>
+          已选课程
+        </caption>
+        <thead>
+          <tr>
+            <th>课程名称</th>
+            <th>所属班组</th>
+            <th>课程类型</th>
+            <th>购买课时</th>
+            <th>总价</th>
+            <th class="text-center">操作</th>
+          </tr>
+        </thead>
+      </table>
+      <div class="chosen-course-table" style="width: calc( 100% + 6px );">
+        <table class="table table-bordered chosen-course-body">
+          <tbody>
+            <tr *ngFor="let course of chosenCourse">
+              <td>{{ course.name }}</td>
+              <td>{{ course.grade }}</td>
+              <td>{{ courseTypeMap[course.type] }}</td>
+              <td>{{ course.buyHour }}</td>
+              <td>{{ course.buyHour * course.price }}</td>
+              <td class="text-center">
+                <div class="btn-group btn-group-xs">
+                  <button class="btn btn-xs btn-danger" (click)="rmChosenCourse(course);">
+                    <i class="fa fa-trash"></i>删除课程
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="!chosenCourse.length">
+              <td colspan="6">
+                <p class="text-info text-center">请选择要购买的课程吧</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</app-modal>
+
+<app-modal #courseHourSetter class="courseHourSetter clearfix" [disabledAcceptBtn]="!curChosenCourse.buyHour">
+  <form action="" class="form-inline text-center">
+    <div class="form-group">
+      <label for="name" class="control-label">课程名称:</label>
+      <input id="name" class="input-sm form-control" [value]="curChosenCourse.name" readonly>
+    </div>
+    <div class="form-group">
+      <label for="gradeName" class="control-label">年级:</label>
+      <input id="gradeName" class="input-sm form-control" [value]="curChosenCourse.graderName || '-'" readonly>
+    </div>
+    <div class="form-group">
+      <label for="studyHour" class="control-label">总课时:</label>
+      <input id="studyHour" class="input-sm form-control" [value]="curChosenCourse.studyHour || 0" readonly>
+    </div>
+    <div class="form-group">
+      <label for="price" class="control-label">单价:</label>
+      <input id="price" class="input-sm form-control" [value]="curChosenCourse.price" readonly>
+    </div>
+    <div class="form-group">
+      <label for="" class="control-label">购买课时:</label>
+      <input min="1" max="{{ curChosenCourse.studyHour || 20 }}" type="number" class="input-sm form-control" name="studyHour" [(ngModel)]="curChosenCourse.buyHour">
+    </div>
+  </form>
 </app-modal>
