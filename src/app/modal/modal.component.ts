@@ -20,6 +20,8 @@ export class ModalComponent implements OnInit {
   @Input()
   public modalType: string;
   @Input()
+  closeAfterConfirmClicked: boolean;
+  @Input()
   public modalSize: 'lg' | 'md' | 'sm' | '';
   public modalConfirmText: string;
   public hasFooter: boolean;
@@ -41,6 +43,7 @@ export class ModalComponent implements OnInit {
     this.animated = true;
     this.cancelBtn = true;
     this.closeBtn = true;
+    this.closeAfterConfirmClicked = true;
     this.modalType = this.modalType ||  'default';
     this.modalConfirmText = '确定';
     this.modalCancelText = '取消';
@@ -57,6 +60,6 @@ export class ModalComponent implements OnInit {
   }
 
   hideModal(): void {
-    this.ngOnInit();
+    this.init();
   }
 }

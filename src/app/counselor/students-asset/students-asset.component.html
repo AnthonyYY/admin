@@ -52,11 +52,13 @@
                 <td class="text-center">
                   <div class="btn-group btn-group-xs">
                     <button *ngIf="asset.hasPay > (asset.hasUsed + asset.hasBack)"
-                      (click)="setCurStuAsset(asset);buyCourseModal.showModal({
+                      (click)="chosenCourse=[];
+                      setCurStuAsset(asset);
+                      buyCourseModal.showModal({
                         modalSize: 'lg',
                         title: '购买课程',
                         modalConfirmText: '确认购买',
-                        confirm: buyCourse
+                        confirm: buyCourses
                       })"
                       class="btn btn-xs btn-success">
                       <i class="fa fa-shopping-cart"></i> 购买课程
@@ -80,7 +82,7 @@
   </div>
 </div>
 
-<app-modal #buyCourseModal class="bugModal">
+<app-modal #buyCourseModal class="buyModal" [disabledAcceptBtn]="!chosenCourse.length" [closeAfterConfirmClicked]="false">
   <div class="row">
     <div class="col-xs-12">
       <table class="table">
@@ -162,7 +164,8 @@
             <td class="text-center">{{ course.selectedNum }}</td>
             <td class="text-center">
               <div class="btn-group btn-group-xs">
-                <button  class="btn btn-success btn-xs" (click)="setCurChosenCourse(course);courseHourSetter.showModal({
+                <button  class="btn btn-success btn-xs" (click)="curChosenCourse.buyHour = 0;setCurChosenCourse(course);
+                courseHourSetter.showModal({
                     modalSize: 'sm',
                     title: '请选择购买课时',
                     modalConfirmText: '确认',

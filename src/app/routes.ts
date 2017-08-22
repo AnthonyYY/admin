@@ -15,6 +15,7 @@ import {CourseComponent} from './stmanager/course/course.component';
 import {StudentClassPeriodComponent} from './stmanager/student-class-period/student-class-period.component';
 import {StudentScheduleComponent} from './stmanager/student-schedule/student-schedule.component';
 import {StStudentsComponent} from './stmanager/students/ststudents.component';
+import {ConsultRecordComponent} from './consultant-main/consult-record/consult-record.component';
 
 export const routes: Routes = [
   {
@@ -55,7 +56,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'consultation-record',
+            redirectTo: 'consult-record',
             pathMatch: 'full'
           },
           {
@@ -65,6 +66,10 @@ export const routes: Routes = [
           {
             path: 'consultation-record',
             component: ConsultationRecordComponent
+          },
+          {
+            path: 'consult-record',
+            component: ConsultRecordComponent
           }
         ]
       },

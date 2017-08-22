@@ -68,6 +68,7 @@
                   <th>就读学校</th>
                   <th>学科</th>
                   <th>备注</th>
+                  <th class="text-center">操作</th>
                 </tr>
               </thead>
               <tbody>
@@ -88,6 +89,22 @@
                   <td>{{ student.orignSchool || '-' }}</td>
                   <td>{{ student.subject || '-' }}</td>
                   <td>{{ student.remark || '-' }}</td>
+                  <td class="text-center">
+                    <div class="btn-group btn-group-xs">
+                      <button class="btn btn-xs btn-danger" (click)="$event.stopPropagation();
+                      resetCurStudent(student.id);
+                      confirmDelete.showModal({
+                        title: '提示',
+                        modalType: 'danger',
+                        content: '确认删除该学生?',
+                        hasCancelBtn: true,
+                        confirm: removeStu
+                      });">
+                        <i class="fa fa-trash"></i>
+                        删除学生
+                      </button>
+                    </div>
+                  </td>
                 </tr>
                 <tr *ngIf="!unAllocatedStudents.length">
                   <td colspan="7" class="text-center">暂无学生信息</td>
@@ -221,3 +238,4 @@
   </form>
 </app-modal>
 
+<app-confirm #confirmDelete></app-confirm>

@@ -29,6 +29,7 @@ export class StudentsAssetComponent implements OnInit {
     private schoolService: SchoolService
   ) {
     this.addChosenCourse = this.addChosenCourse.bind(this);
+    this.buyCourses = this.buyCourses.bind(this);
   }
 
   ngOnInit() {
@@ -65,11 +66,11 @@ export class StudentsAssetComponent implements OnInit {
     this.curStuAsset = asset;
   }
 
-  switchCourseType($event): void{
+  switchCourseType($event): void {
     this.filterCourseType = $event.value === 'ALL' ? '' : $event.value;
   }
 
-  setCurChosenCourse(course):void {
+  setCurChosenCourse(course): void {
     this.curChosenCourse = course;
   }
 
@@ -80,5 +81,17 @@ export class StudentsAssetComponent implements OnInit {
   rmChosenCourse(course): void {
     const toRemoveIdx = this.chosenCourse.indexOf(course);
     this.chosenCourse.splice(toRemoveIdx, 1);
+  }
+
+  buyCourses(): void {
+    const body = {
+      studentId: this.curStuAsset.id,
+      courseList: []
+    };
+    this.chosenCourse.forEach( course => body.courseList.push({
+      courseId: course.id,
+      buyHour: course.buyHour
+    }) );
+    this.counselorService.buyCourses(body).then( success => {} );
   }
 }

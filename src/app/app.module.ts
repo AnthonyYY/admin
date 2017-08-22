@@ -56,6 +56,7 @@ import { StStudentsComponent } from './stmanager/students/ststudents.component';
 
 import { routes } from './routes';
 import {StmanagerService} from './stmanager/stmanager.service';
+import { ConsultRecordComponent } from './consultant-main/consult-record/consult-record.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import {StmanagerService} from './stmanager/stmanager.service';
     StudentScheduleComponent,
     StudentClassPeriodComponent,
     StStudentsComponent,
+    ConsultRecordComponent,
   ],
   imports: [
     Select2Module,

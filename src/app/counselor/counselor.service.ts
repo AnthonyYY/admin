@@ -52,7 +52,16 @@ export class CounselorService {
     } );
   }
 
-  fetchCourses(): Promise<any>{
-    return this.http.get('')
+  buyCourses(body): Promise <any> {
+    return this.http.post('counselor/course', body).then( data => {
+      if (data.success) {
+        this.alertService.alert({
+          title: '提示',
+          content: '已购买该课程',
+          type: 'success'
+        });
+        return data.success;
+      }
+    } );
   }
 }

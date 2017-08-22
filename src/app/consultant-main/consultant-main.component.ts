@@ -19,11 +19,17 @@ export class ConsultantMainComponent implements OnInit {
         icon: 'fa-files-o'
       },
       {
-        name: '学生列表',
+        name: '咨询师咨询记录',
+        routerLink: ['consult-record'],
+        icon: 'fa-file-excel-o'
+      },
+      {
+        name: '未分配学生管理',
         routerLink: ['unallocated-students'],
         icon: 'fa-graduation-cap'
       },
     ];
   }
+
 
 }

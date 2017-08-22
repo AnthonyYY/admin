@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {ConsultantMainService} from '../consultant-main.service';
 import {Sidebar} from '../../sidebar/sidebar';
 import {Student} from '../student';
-import {SchoolService} from '../../common/school.service';
-import {School} from '../../common/school';
 import {genders} from '../../common/gender';
+import {states} from '../../common/state';
+import {state} from '../../common/state';
 
 @Component({
   selector: 'app-unallocated-students',
@@ -17,6 +17,7 @@ export class UnallocatedStudentsComponent implements OnInit {
   unAllocatedStudents: any[];
   curStudent: any;
   contentHeader: Sidebar[];
+  states: any;
   filterStuName: string;
   filterGender: string;
   filterPhone: string;
@@ -25,6 +26,7 @@ export class UnallocatedStudentsComponent implements OnInit {
   ) {
     this.addStudent = this.addStudent.bind(this);
     this.updateStuInfo = this.updateStuInfo.bind(this);
+    this.removeStu = this.removeStu.bind(this);
   }
 
   ngOnInit() {
@@ -89,5 +91,15 @@ export class UnallocatedStudentsComponent implements OnInit {
 
   findStuById(id: string): Student {
     return this.unAllocatedStudents.find( stu => stu.id === id );
+  }
+
+  removeStu(): void {
+    this.consultantService.removeStu(this.curStudent.id).then( success => {
+      if (success) {
+        const toRemoveStu = this.findStuById(this.curStudent.id);
+        const index = this.unAllocatedStudents.indexOf(toRemoveStu);
+        this.unAllocatedStudents.splice(index, 1);
+      }
+    } );
   }
 }

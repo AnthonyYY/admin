@@ -6,6 +6,7 @@ import {UserService} from '../common/user.service';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/switchMap';
 import {ConfirmService} from '../confirm/confirm.service';
+import {AlertService} from '../alert/alert.service';
 
 @Injectable()
 export class HttpService {
@@ -13,7 +14,8 @@ export class HttpService {
   constructor(
     private http: Http,
     private router: Router,
-    private confirmService: ConfirmService
+    private confirmService: ConfirmService,
+    private alertService: AlertService
   ) {}
 
   static _createSpecOptions(options: RequestOptionsArgs) {
@@ -47,6 +49,16 @@ export class HttpService {
     }
   }
 
+  private _handle500(status, msg): void {
+    if ( status === 500 ) {
+      this.alertService.alert({
+        title: '警告',
+        content: msg,
+        type: 'danger'
+      });
+    }
+  }
+
   get(url: string, options?: RequestOptionsArgs): Promise<any> {
     options = HttpService._createSpecOptions(options);
     return this.http.get( AppSettings.API_ENDPOINT + url, options)
@@ -54,16 +66,18 @@ export class HttpService {
       .then( HttpService._successHandle )
       .catch( err => {
         this._handle401(err.status);
+        this._handle500(err.status, err.data);
         return {success: false, data: null};
       } );
   }
   put(url: string, body, options?: any): Promise<any> {
     options = HttpService._createSpecOptions(options);
-    return this.http.put( AppSettings.API_ENDPOINT + url, body ,options)
+    return this.http.put( AppSettings.API_ENDPOINT + url, body , options)
       .toPromise()
       .then( HttpService._successHandle )
       .catch( err => {
         this._handle401(err.status);
+        this._handle500(err.status, err.data);
         return {success: false, data: null};
       } );
   }
@@ -74,6 +88,7 @@ export class HttpService {
       .then( HttpService._successHandle )
       .catch( err => {
         this._handle401(err.status);
+        this._handle500(err.status, err.data);
         return {success: false, data: null};
       } );
   }
@@ -83,7 +98,10 @@ export class HttpService {
       .toPromise()
       .then( HttpService._successHandle )
       .catch( err => {
+        err = err.json();
+        console.log(err);
         this._handle401(err.status);
+        this._handle500(err.status === false ? 500 : err.status, err.data);
         return {success: false, data: null};
       } );
   }

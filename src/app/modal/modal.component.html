@@ -13,7 +13,7 @@
       </div>
       <div class="modal-footer" *ngIf="hasFooter">
         <button type="button" class="btn {{modalType == 'default'?'btn-default':'btn-outline'}}" (click)="hideModal()" [style.display]="cancelBtn?'inline-block':'none'">{{ modalCancelText }}</button>
-        <button type="button" class="btn {{modalType == 'default'?'btn-primary':'btn-outline'}} pull-right" [disabled]="disabledAcceptBtn" (click)="confirm();hideModal()">{{ modalConfirmText }}</button>
+        <button type="button" class="btn {{modalType == 'default'?'btn-primary':'btn-outline'}} pull-right" [disabled]="disabledAcceptBtn" (click)="confirm();(closeAfterConfirmClicked && hideModal())">{{ modalConfirmText }}</button>
       </div>
     </div>
   </div>

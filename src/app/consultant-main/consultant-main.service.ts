@@ -123,4 +123,32 @@ export class ConsultantMainService {
     } );
   }
 
+  fetchConsultRecord(): Promise<any> {
+    return this.http.get( 'counselor/record' ).then( result => {
+      if (result.success) {
+        console.log(result.data);
+        return result.data;
+      } else {
+        this.alertService.alert({
+          title: '提示',
+          content: '获取签约记录失败失败',
+          type: 'danger'
+        });
+      }
+    } );
+  }
+
+  removeStu(studentId): Promise<any> {
+    return this.http.remove(`counselor/student/${studentId}`).then( result => {
+      if (result.success) {
+        return result.success;
+      } else {
+        this.alertService.alert({
+          title: '提示',
+          content: '删除学生失败',
+          type: 'danger'
+        });
+      }
+    } );
+  }
 }
