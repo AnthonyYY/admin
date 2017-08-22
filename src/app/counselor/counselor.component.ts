@@ -19,7 +19,7 @@ export class CounselorComponent implements OnInit {
         icon: 'fa-file'
       },
       {
-        name: '学生列表',
+        name: '学生列表管理',
         routerLink: ['students'],
         icon: 'fa-graduation-cap'
       },

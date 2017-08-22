@@ -3,8 +3,6 @@ import {ConsultantMainService} from '../consultant-main.service';
 import {Sidebar} from '../../sidebar/sidebar';
 import {Student} from '../student';
 import {genders} from '../../common/gender';
-import {states} from '../../common/state';
-import {state} from '../../common/state';
 
 @Component({
   selector: 'app-unallocated-students',
@@ -17,7 +15,6 @@ export class UnallocatedStudentsComponent implements OnInit {
   unAllocatedStudents: any[];
   curStudent: any;
   contentHeader: Sidebar[];
-  states: any;
   filterStuName: string;
   filterGender: string;
   filterPhone: string;
@@ -62,12 +59,6 @@ export class UnallocatedStudentsComponent implements OnInit {
     } );
   }
 
-  addStudent() {
-    this.consultantService.addStudent(this.curStudent).then( data => {
-      this.curStudent.id = data.id;
-      this.unAllocatedStudents.push(this.curStudent);
-    } );
-  }
   switchGender($event): void {
     this.curStudent.sex = $event.value;
   }
@@ -100,6 +91,13 @@ export class UnallocatedStudentsComponent implements OnInit {
         const index = this.unAllocatedStudents.indexOf(toRemoveStu);
         this.unAllocatedStudents.splice(index, 1);
       }
+    } );
+  }
+
+  addStudent() {
+    this.consultantService.addStudent(this.curStudent).then( data => {
+      this.curStudent.id = data.id;
+      this.unAllocatedStudents.unshift(this.curStudent);
     } );
   }
 }

@@ -1,38 +1,93 @@
 <app-content-header
   [title]="'咨询记录'" [menus]="contentHeader"></app-content-header>
-<div class="content"></div>
 
-<app-collapse-box [collapse]="false" [icon]="'filter'" [boxTitle]="'学生过滤'">
-  <div class="col-xs-12 col-md-4 input-group-sm">
-    <label class="pull-left">
-      姓名筛选:
-    </label>
-    <div class="input-group input-group-sm" style="width: 148px;">
-      <input type="text" class="form-control input-sm" placeholder="输入学生姓名" [(ngModel)]="filterStuName">
-      <span class="input-group-addon"><i class="fa fa-search"></i></span>
+<div class="content">
+  <app-collapse-box [collapse]="false" [icon]="'filter'" [boxTitle]="'咨询记录过滤'">
+    <div class="col-xs-12 col-md-4 input-group-sm">
+      <label class="pull-left">
+        咨询师姓名:
+      </label>
+      <div class="input-group input-group-sm" style="width: 148px;">
+        <input type="text" class="form-control input-sm" placeholder="咨询师姓名" [(ngModel)]="filterEmployeeName">
+        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-4 input-group-sm">
+      <label class="pull-left">
+        学生姓名:
+      </label>
+      <div class="input-group input-group-sm" style="width: 148px;">
+        <input type="text" class="form-control input-sm" placeholder="输入学生姓名搜索" [(ngModel)]="filterStuName">
+        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-4 input-group-sm">
+      <label class="pull-left">
+        跟进状态:
+      </label>
+      <div class="input-group input-group-sm" style="width: 148px;">
+        <select2 [cssImport]="false"
+                 [options]="{minimumResultsForSearch: -1, placeholder:'全部状态'}"
+                 [data]="[{id: 'ALL', text: '全部状态'}].concat(stateList)"
+                 [value]="filterState"
+                 (valueChanged)="switchFilterState($event)"
+                 [width]="'148px'"></select2>
+      </div>
+    </div>
+  </app-collapse-box>
+
+  <div class="box box-info">
+    <div class="box-header">
+      <div class="box-title">咨询记录</div>
+    </div>
+    <div class="box-body">
+      <div class="row">
+        <div class="col-xs-12">
+          <table class="table table-bordered table-hover dataTable">
+            <thead>
+            <tr>
+              <th>咨询师姓名</th>
+              <th>电话号码</th>
+              <th>学生姓名</th>
+              <th>学生手机号</th>
+              <th>跟进状态</th>
+              <!--<th class="text-center">操作</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let record of consultRecords |
+             matchItem: filterStuName : 'studentName' |
+             matchItem: filterEmployeeName : 'employeeName' |
+             matchItem: filterState:'status':'exact'">
+              <td>{{record.employeeName}}</td>
+              <td>{{record.employeePhone}}</td>
+              <td>{{record.studentName}}</td>
+              <td>{{record.studentPhone}}</td>
+              <td>{{states[record.status]}}</td>
+              <!--<td class="text-center">
+                <span *ngIf="record.status !== 'CONNECTION_NO'">&#45;&#45;</span>
+                <div *ngIf="record.status == 'CONNECTION_NO'" class="btn-group btn-group-xs">
+                  <button class="btn btn-success btn-xs"
+                  (click)="curRecord = record;
+                  confirm.showModal({
+                         title: '提示',
+                         content: '是否确认将该学生的跟进状态改为已联系？',
+                         confirm: switchState
+                      })">
+                    <i class="fa fa-exchange"></i>
+                    已联系
+                  </button>
+                </div>
+              </td>-->
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
+</div>
 
-  <div class="col-xs-12 col-md-4 input-group-sm">
-    <label class="pull-left">
-      跟进状态:
-    </label>
-    <div class="input-group input-group-sm" style="width: 148px;">
-      <select2 [cssImport]="false"
-               [options]="{minimumResultsForSearch: -1}"
-               [data]="states"
-               (valueChanged)="switchFilterState($event)"
-               [width]="'148px'"></select2>
-    </div>
-  </div>
-
-  <div class="col-xs-12 col-md-4 input-group-sm">
-    <label class="pull-left">
-      电话筛选:
-    </label>
-    <div class="input-group input-group-sm" style="width: 148px;">
-      <input type="text" class="form-control input-sm" placeholder="输入电话号码" [(ngModel)]="filterPhone">
-      <span class="input-group-addon"><i class="fa fa-search"></i></span>
-    </div>
-  </div>
-</app-collapse-box>
+<app-confirm #confirm></app-confirm>

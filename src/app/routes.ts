@@ -79,7 +79,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'students-asset',
+            redirectTo: 'students',
             pathMatch: 'full'
           },
           {

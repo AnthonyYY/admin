@@ -41,9 +41,11 @@
       <h3 class="box-title">学生列表</h3>
       <div class="box-tools">
         <div class="btn-group btn-group-sm">
-          <button class="btn btn-info" (click)="studentModal.showModal({
+          <button class="btn btn-info" (click)="resetCurStudent();
+          studentModal.showModal({
             modalSize: 'lg',
-            title: '添加学生'
+            title: '添加学生',
+            confirm: addStudent
           })">
             <i class="fa fa-plus"></i>
             添加学生
@@ -73,7 +75,13 @@
               <tr *ngFor="let student of students |
                 matchItem: studentFilterName: 'name' |
                 matchItem: userFilterState: 'status' : 'exact' |
-                matchItem: userFilterShool: 'orignSchool'">
+                matchItem: userFilterShool: 'orignSchool'"
+                (click)="resetCurStudent(student.id);
+                studentModal.showModal({
+                  modalSize: 'lg',
+                  title: '编辑学生信息',
+                  confirm: updateStuInfo
+                })">
                 <td>{{ student.name }}</td>
                 <td>{{ student.sex === 'MALE' ? '男': '女' }}</td>
                 <td>{{ student.phone }}</td>
@@ -85,7 +93,9 @@
                 <td class="text-center">
                   <span *ngIf="student.status !== 'CONNECTION_NO'">--</span>
                   <div *ngIf="student.status === 'CONNECTION_NO'" class="btn-group btn-group-xs">
-                    <button class="btn btn-success btn-xs" (click)="curStudent = student;confirm.showModal({
+                    <button class="btn btn-success btn-xs" (click)="curStudent = student;
+                      $event.stopPropagation();
+                      confirm.showModal({
                          title: '提示',
                          content: '是否确认将该学生的跟进状态改为已联系？',
                          confirm: switchState

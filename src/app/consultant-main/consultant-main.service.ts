@@ -35,7 +35,6 @@ export class ConsultantMainService {
           content: '创建学生失败',
           type: 'danger'
         });
-        return [];
       }
     } );
   }
