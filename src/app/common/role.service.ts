@@ -32,10 +32,15 @@ export class RoleService {
 
   navigateByRole(roleId): void {
     switch (roleId) {
+      /*超级管理员*/
       case 'SUPER_ADMIN':
         this.router.navigate(['dashboard/admin']);
         break;
+      /*咨询师*/
       case 'CONSULTANT':
+        this.router.navigate(['dashboard/counselor']);
+        break;
+      case 'CONSULTANT_BOSS':
         this.router.navigate(['dashboard/counselor']);
         break;
       case 'FINANCE':

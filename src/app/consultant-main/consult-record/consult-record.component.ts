@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ConsultantMainService} from '../consultant-main.service';
 import {Sidebar} from '../../sidebar/sidebar';
-import {states} from '../../common/state'
-import {state} from '../../common/state'
+import {states} from '../../common/enum'
+import {state} from '../../common/enum'
 import {CounselorService} from '../../counselor/counselor.service';
 
 @Component({

@@ -3,8 +3,7 @@ import {Sidebar} from '../../sidebar/sidebar';
 import {CounselorService} from '../counselor.service';
 import {Student} from '../students';
 import {ConsultantMainService} from '../../consultant-main/consultant-main.service';
-import {state} from '../../common/state';
-import {states} from '../../common/state';
+import {state, states} from '../../common/enum';
 
 @Component({
   selector: 'app-students',

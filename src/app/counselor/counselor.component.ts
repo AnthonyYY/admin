@@ -23,6 +23,11 @@ export class CounselorComponent implements OnInit {
         routerLink: ['students'],
         icon: 'fa-graduation-cap'
       },
+      {
+        name: '签约详情记录',
+        routerLink: ['sign-record'],
+        icon: 'fa-file-excel-o'
+      }
     ];
   }
 

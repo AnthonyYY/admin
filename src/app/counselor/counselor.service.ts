@@ -64,4 +64,18 @@ export class CounselorService {
       }
     } );
   }
+
+  fetchSignRecord(): Promise<any> {
+    return this.http.get('counselor/student/stat').then( data => {
+      if(data.success){
+        return data.data;
+      }else{
+        this.alertService.alert({
+          title: '提示',
+          content: '获取签约记录失败',
+          type: 'danger'
+        });
+      }
+    } )
+  }
 }
