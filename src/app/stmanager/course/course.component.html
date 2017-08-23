@@ -46,7 +46,10 @@
       <i class="fa fa-table"></i><h3 class="box-title">课表</h3>
       <div class="box-tools">
         <div class="btn-group btn-group-sm">
-          <button class="btn btn-primary">
+          <button class="btn btn-primary" (click)="courseCreator.showModal({
+              title: '创建新课表',
+              modalSize: 'lg'
+          })">
             <i class="fa fa-plus"></i>
             创建课表
           </button>
@@ -90,3 +93,31 @@
     </div>
   </div>
 </div>
+
+<app-modal #courseCreator>
+  <div class="row">
+    <div class="col-xs-12">
+        <div class="form-group">
+          <label for="schedule" class="control-label">选择课程: </label>
+          <select2
+            id="schedule"
+            [cssImport]="false"
+            [data]="courses"
+            [width]="150"
+            [options]="{minimumResultsForSearch: 3}"
+            (valueChanged)="handleCourseSwitch($event)"></select2>
+        </div>
+
+      <div class="form-group">
+        <label for="teacher" class="control-label">选择老师: </label>
+        <select2
+          id="teacher"
+          [cssImport]="false"
+          [data]="teachers"
+          [width]="150"
+          [options]="{minimumResultsForSearch: 3}"
+          (valueChanged)="handleCourseSwitch($event)"></select2>
+      </div>
+    </div>
+  </div>
+</app-modal>

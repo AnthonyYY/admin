@@ -29,7 +29,7 @@ export class SchoolService {
   fetchCourses(): Promise<any>{
     return this.http.get('common/course').then( data => {
       if (data.success) {
-        console.log(data.success);
+        data.data.forEach( course => course.text = course.name);
         return data.data;
       }else{
         this.alertService.alert({

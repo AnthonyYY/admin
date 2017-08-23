@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {StmanagerService} from '../stmanager.service';
 import {Schedule} from './schedule';
 import {Sidebar} from '../../sidebar/sidebar';
+import {SchoolService} from '../../common/school.service';
 
 @Component({
   selector: 'app-course',
@@ -11,6 +12,8 @@ import {Sidebar} from '../../sidebar/sidebar';
 export class CourseComponent implements OnInit {
 
   schedule: Schedule[];
+  courses: any[];
+  teachers: any[];
   contentHeader: Sidebar[];
   filterTeacherName: string;
   filterCourseName: string;
@@ -19,8 +22,10 @@ export class CourseComponent implements OnInit {
     start: number,
     end: number
   };
+  scheduleEvent: any;
   constructor(
-    private stmanagerService: StmanagerService
+    private stmanagerService: StmanagerService,
+    private schoolService: SchoolService
   ) { }
 
   ngOnInit() {
@@ -37,12 +42,13 @@ export class CourseComponent implements OnInit {
     this.filterScheduleState = '';
     this.schedule = [];
     this.fetchSchedule();
+    this.fetchCourse();
+    this.initCurSchedule();
   }
 
   /*课表查看功能*/
   fetchSchedule(): void {
     this.stmanagerService.fetchSchedule().then( schedule => {
-      console.log(schedule);
       this.schedule = schedule;
     } );
   }
@@ -60,4 +66,36 @@ export class CourseComponent implements OnInit {
   }
 
   /*课表创建功能*/
+  // 获取课程列表
+  fetchCourse(): void {
+    this.schoolService.fetchCourses().then( course => {
+      this.courses = course;
+      let curCourseId = course[0]['id'];
+      this.scheduleEvent.courseId = curCourseId;
+      console.log(curCourseId);
+      this.fetchTeachersByCourseId(curCourseId);
+    } )
+  }
+  fetchTeachersByCourseId(courseId): void {
+    this.stmanagerService.fetchTeachersByCourseId(courseId).then( teachers => {
+      this.teachers = teachers;
+    } )
+  }
+  // 初始化新课表
+  initCurSchedule(): void{
+    this.scheduleEvent = {
+      courseId: '',
+      employeeId: '',
+      endTime: '',
+      startTime: '',
+      studyTime: '',
+      studentIds: [],
+    };
+  }
+  // 创建课表是切换课表处理函数
+  handleCourseSwitch($event): void {
+    this.scheduleEvent.courseId = $event.value;
+    this.fetchTeachersByCourseId($event.value);
+  }
+
 }
