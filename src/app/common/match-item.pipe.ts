@@ -11,7 +11,7 @@ export class MatchItemPipe implements PipeTransform {
     }
     if (accuracy === 'exact' ) {
       return value.filter( val => {
-        return val[field] === filter;
+        return val[field].toString() === filter;
       } );
     } else {
       return value.filter( val => {
