@@ -10,7 +10,9 @@ export class StmanagerService {
     private alertService: AlertService
   ) { }
 
-  /* 获取课程列表 */
+  /* 课表列表相关服务 */
+
+  //  获取课程列表
   fetchSchedule(): Promise<any> {
     return this.http.get('stmanager/course/schedule').then( data => {
       if (data.success) {
@@ -24,7 +26,7 @@ export class StmanagerService {
       }
     } );
   }
-  /*根据课程ID获取教师列表*/
+  // 根据课程ID获取教师列表
   fetchTeachersByCourseId(courseId: string): Promise<any> {
     return this.http.get( `stmanager/course/teacher/${courseId}`).then( result => {
       if ( result.success ) {
@@ -40,7 +42,7 @@ export class StmanagerService {
       return [];
     } );
   }
-  /* 根据课程ID获取学生列表 */
+  //  根据课程ID获取学生列表
   fetchStudents(courseId): Promise<any> {
     return this.http.get(`stmanager/course/student/${courseId}`).then( res => {
       if (res.success) {
@@ -54,10 +56,15 @@ export class StmanagerService {
       }
     } );
   }
-  /* 创建课表 */
+  //  创建课表
   createSchedule(body): Promise<any> {
     return this.http.post('stmanager/course/schedule', body).then( result => {
       if (result.success) {
+        this.alertService.alert({
+          type: 'success',
+          title: '提示',
+          content: '新课表已成功创建'
+        });
         return result.data;
       }else{
         this.alertService.alert({
@@ -67,5 +74,86 @@ export class StmanagerService {
         });
       }
     } );
+  }
+  //  更新课表
+  updateSchedule( body ): Promise<any> {
+    return this.http.put('stmanager/course/schedule', body).then( result => {
+      if (result.success) {
+        this.alertService.alert({
+          type: 'success',
+          title: '提示',
+          content: '课表信息已更新'
+        });
+      } else {
+        this.alertService.alert({
+          type: 'danger',
+          title: '提示',
+          content: '更新课表信息失败'
+        });
+      }
+      return result.success
+    } );
+  }
+
+  /* 学生课表相关服务 */
+  fetchStuSchedule(): Promise<any>{
+    return this.http.get('stmanager/student/schedule').then( result => {
+      console.log(result);
+      if (result.success) {
+       return result.data;
+      } else {
+        this.alertService.alert({
+          type: 'danger',
+          title: '提示',
+          content: '获取学生课表失败'
+        });
+      }
+    } )
+  }
+
+  // 结束学生课表
+  finishSchedule(id: string): Promise<any> {
+    return this.http.get(`/stmanager/student/finish/${id}`).then( result => {
+      if( result.success ){
+        this.alertService.alert({
+          type: 'success',
+          title: '提示',
+          content: '已更新'
+        })
+      } else {
+        this.alertService.alert({
+          type: 'danger',
+          title: '提示',
+          content: '操作失败'
+        })
+      }
+      return result.success;
+    } )
+  }
+
+  //取消课程
+  cancelRegisterSchedule(courseScheduleId, studentId){
+    return this.http.get(`stmanager/student/schedule/cancel/${courseScheduleId}/${studentId}`).then( result => {
+      if(result.success){
+        this.alertService.alert({
+          type: 'success',
+          title: '提示',
+          content: '课程已取消'
+        });
+        return result.success
+      }else{
+        this.alertService.alert({
+          type: 'danger',
+          title: '提示',
+          content: '操作失败'
+        })
+      }
+    } );
+  }
+  /* 学生列表 */
+  fetchAllocatedStudents(): Promise<any> {
+    return this.http.get('stmanager/student').then( result => {
+      return result.data
+    } )
   }
 }

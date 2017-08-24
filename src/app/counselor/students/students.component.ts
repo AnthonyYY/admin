@@ -21,7 +21,7 @@ export class StudentsComponent implements OnInit {
   };
   studentFilterName: string;
   userFilterState: string;
-  userFilterShool: string;
+  userFilterSchool: string;
   states: any;
   stateList: any;
   constructor(
@@ -46,7 +46,7 @@ export class StudentsComponent implements OnInit {
     };
     this.studentFilterName = '';
     this.userFilterState = '';
-    this.userFilterShool = '';
+    this.userFilterSchool = '';
     this.states = state;
     this.stateList = states;
     this.fetchStudents();

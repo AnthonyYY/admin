@@ -103,7 +103,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'schedule',
+            redirectTo: 'students',
             pathMatch: 'full'
           },
           {

@@ -47,9 +47,12 @@
       <i class="fa fa-table"></i><h3 class="box-title">课表</h3>
       <div class="box-tools">
         <div class="btn-group btn-group-sm">
-          <button class="btn btn-primary" (click)="courseCreator.showModal({
+          <button class="btn btn-primary" (click)="initCurSchedule();
+          courseCreator.showModal({
               title: '创建新课表',
               modalSize: 'lg',
+              confirmBtnText: '确认分配',
+              cancelBtnText: '取消分配',
               confirm: createSchedule
           })">
             <i class="fa fa-plus"></i>
@@ -79,7 +82,11 @@
                 matchItem: filterScheduleState: 'finish' : 'exact' |
                 timeRange: filterTimeRange : 'startTime'|
                 timeRange: filterTimeRange : 'endTime';
-                let i = index">
+                let i = index" (click)="scheduleEvent = course;courseCreator.showModal({
+                modalSize: 'lg',
+                  title: '编辑课表',
+                  confirm: updateSchedule
+                })">
                   <td>{{ course.courseName }}</td>
                   <td>{{ course.teacherName }}</td>
                   <td>{{ course.startTime | date: 'yyyy-MM-dd HH:mm' }}</td>
@@ -96,7 +103,7 @@
   </div>
 </div>
 
-<app-modal #courseCreator [disabledAcceptBtn]="">
+<app-modal #courseCreator [disabledAcceptBtn]="ifZeroStuChosen() || !scheduleEvent.studyTime">
   <div class="row">
     <div class="col-xs-12">
       <div class="col-xs-4">
@@ -128,18 +135,6 @@
 
       <div class="col-xs-4">
         <div class="form-group clearfix">
-          <label for="scheduleTime" class="control-label pull-left">上课时间: </label>
-          <app-date-ranger-picker
-            id="scheduleTime"
-            class="pull-left"
-            [timePicker]="true"
-            (dateRangeSetEvent)="setScheduleTime($event)"
-          ></app-date-ranger-picker>
-        </div>
-      </div>
-
-      <div class="col-xs-4">
-        <div class="form-group">
           <label for="studyHour" class="control-label pull-left">课程课时:</label>
           <div class="pull-left">
             <div class="input-group input-group-sm">
@@ -154,9 +149,21 @@
           </div>
         </div>
       </div>
+
+      <div class="col-xs-4">
+        <div class="form-group clearfix">
+          <label for="scheduleTime" class="control-label pull-left">上课时间: </label>
+          <app-date-ranger-picker
+            id="scheduleTime"
+            class="pull-left"
+            [timePicker]="true"
+            (dateRangeSetEvent)="setScheduleTime($event)"
+          ></app-date-ranger-picker>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row" [hidden]="scheduleEvent.courseScheduleId">
     <div class="col-xs-12 table-container">
       <table class="table table-bordered table-hover table-strip">
         <thead>

@@ -38,7 +38,7 @@ export class DateRangerPickerComponent implements OnInit {
           '前30天': [moment().subtract(29, 'days'), moment()]
         },
         startDate: this.startTime ? moment(this.startTime).format('YYYY-MM-DD') : Date.now(),
-        minDate: '2000-01-01'
+        minDate: '1950-01-01'
       }, (start, end) => {
         this.dateRangeSetEvent.emit({ start: start.valueOf(), end: end.valueOf() });
       });

@@ -31,7 +31,7 @@
         学校:
       </label>
       <div class="input-group input-group-sm" style="width: 148px;">
-        <input name="filterSchool" class="form-control" [(ngModel)]="userFilterShool" placeholder="请输入学校名称">
+        <input name="filterSchool" class="form-control" [(ngModel)]="userFilterSchool" placeholder="请输入学校名称">
       </div>
     </div>
   </app-collapse-box>
@@ -75,7 +75,7 @@
               <tr *ngFor="let student of students |
                 matchItem: studentFilterName: 'name' |
                 matchItem: userFilterState: 'status' : 'exact' |
-                matchItem: userFilterShool: 'orignSchool'"
+                matchItem: userFilterSchool: 'orignSchool'"
                 (click)="resetCurStudent(student.id);
                 studentModal.showModal({
                   modalSize: 'lg',

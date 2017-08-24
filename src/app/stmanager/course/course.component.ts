@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {StmanagerService} from '../stmanager.service';
-import {Schedule} from './schedule';
 import {Sidebar} from '../../sidebar/sidebar';
 import {SchoolService} from '../../common/school.service';
 
@@ -29,12 +28,13 @@ export class CourseComponent implements OnInit {
     private schoolService: SchoolService
   ) {
     this.createSchedule = this.createSchedule.bind(this);
+    this.updateSchedule = this.updateSchedule.bind(this);
   }
 
   ngOnInit() {
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
-      {name: '课表页', icon: 'fa-users'}
+      {name: '教学课表管理页', icon: 'fa-users'}
     ];
     this.filterTimeRange = {
       start: new Date(new Date().getFullYear() + '-01-01').getTime(),
@@ -44,6 +44,8 @@ export class CourseComponent implements OnInit {
     this.filterCourseName = '';
     this.filterScheduleState = '';
     this.schedule = [];
+    this.teachers = [];
+    this.students = [];
     this.fetchSchedule();
     this.fetchCourse();
     this.initCurSchedule();
@@ -90,6 +92,9 @@ export class CourseComponent implements OnInit {
     this.scheduleEvent = {
       courseId: '',
       employeeId: '',
+      teacherName: '',
+      courseName: '',
+      finish: false,
       endTime: new Date(new Date().getTime() + 1000 * 60 * 60 * 24).getTime(),
       startTime: Date.now(),
       studyTime: 0,
@@ -100,9 +105,22 @@ export class CourseComponent implements OnInit {
   handleCourseSwitch($event): void {
     this.scheduleEvent.courseId = $event.value;
     this.fetchTeachersByCourseId($event.value);
+    const curCourse = this.findCourseById($event.value);
+    this.scheduleEvent.courseName = curCourse.name;
   }
+  // 切换教师事设定新的教师ID
   handleTeacherSwitch($event): void {
     this.scheduleEvent.employeeId = $event.value;
+    const curTeacher = this.findTeacherById($event.value);
+    this.scheduleEvent.teacherName = curTeacher.name;
+  }
+  // 通过教师ID搜索教师
+  findTeacherById(teacherId): any {
+    return this.teachers.find( teacher => teacher.id === teacherId );
+  }
+  // 通过课程ID搜索课程系你先
+  findCourseById(courseId): any {
+    return this.courses.find( course => course.id === courseId );
   }
   // 设定创建课程的上课时间
   setScheduleTime($event): void {
@@ -115,6 +133,11 @@ export class CourseComponent implements OnInit {
       this.students = students;
     } );
   }
+  // 分配学生的时候
+  // 创建课表分配学生的时候是否未选中任何学生
+  ifZeroStuChosen(): boolean {
+    return this.students.every( stu => !stu.selected );
+  }
   // 创建课表
   createSchedule(): void {
     this.students.forEach( stu => {
@@ -123,7 +146,15 @@ export class CourseComponent implements OnInit {
       }
     } );
     this.stmanagerService.createSchedule(this.scheduleEvent).then( result => {
-      this.schedule.unshift({id: result.id});
+      this.scheduleEvent.courseScheduleId = result.id;
+      this.schedule.unshift(this.scheduleEvent);
+      console.log(this.schedule);
     } );
+  }
+
+  updateSchedule(): void {
+    this.stmanagerService.updateSchedule(this.scheduleEvent).then( success => {
+
+    } )
   }
 }
