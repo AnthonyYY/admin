@@ -11,9 +11,10 @@ import {SchoolService} from '../../common/school.service';
 })
 export class CourseComponent implements OnInit {
 
-  schedule: Schedule[];
+  schedule: any[];
   courses: any[];
   teachers: any[];
+  students: any[];
   contentHeader: Sidebar[];
   filterTeacherName: string;
   filterCourseName: string;
@@ -26,7 +27,9 @@ export class CourseComponent implements OnInit {
   constructor(
     private stmanagerService: StmanagerService,
     private schoolService: SchoolService
-  ) { }
+  ) {
+    this.createSchedule = this.createSchedule.bind(this);
+  }
 
   ngOnInit() {
     this.contentHeader = [
@@ -70,32 +73,57 @@ export class CourseComponent implements OnInit {
   fetchCourse(): void {
     this.schoolService.fetchCourses().then( course => {
       this.courses = course;
-      let curCourseId = course[0]['id'];
+      const curCourseId = course[0]['id'];
       this.scheduleEvent.courseId = curCourseId;
-      console.log(curCourseId);
       this.fetchTeachersByCourseId(curCourseId);
-    } )
+      this.fetchScheduleStu(curCourseId);
+    } );
   }
+  // 获取对应课程的授课教师
   fetchTeachersByCourseId(courseId): void {
     this.stmanagerService.fetchTeachersByCourseId(courseId).then( teachers => {
       this.teachers = teachers;
-    } )
+    } );
   }
   // 初始化新课表
-  initCurSchedule(): void{
+  initCurSchedule(): void {
     this.scheduleEvent = {
       courseId: '',
       employeeId: '',
-      endTime: '',
-      startTime: '',
-      studyTime: '',
-      studentIds: [],
+      endTime: new Date(new Date().getTime() + 1000 * 60 * 60 * 24).getTime(),
+      startTime: Date.now(),
+      studyTime: 0,
+      studentIds:   [],
     };
   }
-  // 创建课表是切换课表处理函数
+  // 创建课表时切换课表处理函数
   handleCourseSwitch($event): void {
     this.scheduleEvent.courseId = $event.value;
     this.fetchTeachersByCourseId($event.value);
   }
-
+  handleTeacherSwitch($event): void {
+    this.scheduleEvent.employeeId = $event.value;
+  }
+  // 设定创建课程的上课时间
+  setScheduleTime($event): void {
+    this.scheduleEvent.startTime = $event.start;
+    this.scheduleEvent.endTime = $event.end;
+  }
+  // 获取报名该课程的学生
+  fetchScheduleStu(courseId): void {
+    this.stmanagerService.fetchStudents(courseId).then( students => {
+      this.students = students;
+    } );
+  }
+  // 创建课表
+  createSchedule(): void {
+    this.students.forEach( stu => {
+      if (stu.selected) {
+        this.scheduleEvent.studentIds.push(stu.id);
+      }
+    } );
+    this.stmanagerService.createSchedule(this.scheduleEvent).then( result => {
+      this.schedule.unshift({id: result.id});
+    } );
+  }
 }
