@@ -11,6 +11,7 @@ export class StudentClassPeriodComponent implements OnInit {
 
   contentHeader: Sidebar[];
   stuCourseHourStats: any[];
+  curStatScore: any;
   curStat: any;
   filterCourseName: string;
   filterStudentName: string;
@@ -30,6 +31,7 @@ export class StudentClassPeriodComponent implements OnInit {
       {name: '学生课时管理', icon: 'fa-users'}
     ];
     this.curStat = {};
+    this.curStatScore = '';
     this.filterCourseName = '';
     this.filterStudentName = '';
     this.buyTimeRange = {
@@ -53,8 +55,11 @@ export class StudentClassPeriodComponent implements OnInit {
   }
 
   updateStuScore(): void {
-    this.stManagerService.updateSchedule(this.curStat).then( result => {
-      console.log(result);
+    const courseId = this.curStat.courseId;
+    const score = this.curStatScore;
+    const studentId = this.curStat.studentId;
+    this.stManagerService.updateStuScore(courseId, score, studentId).then( result => {
+      this.curStat.score = this.curStatScore;
     } );
   }
 }

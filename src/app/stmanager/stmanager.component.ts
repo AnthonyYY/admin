@@ -33,6 +33,11 @@ export class StmanagerComponent implements OnInit {
         routerLink: ['stu-class-period'],
         icon: 'fa-clock-o'
       },
+      {
+        name: '续费/退费管理',
+        routerLink: ['renews-returns'],
+        icon: 'fa-credit-card'
+      }
     ];
   }
 }

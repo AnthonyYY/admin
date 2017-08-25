@@ -17,6 +17,10 @@ import {StudentScheduleComponent} from './stmanager/student-schedule/student-sch
 import {StStudentsComponent} from './stmanager/students/ststudents.component';
 import {ConsultRecordComponent} from './consultant-main/consult-record/consult-record.component';
 import {SignRecordComponent} from './counselor/sign-record/sign-record.component';
+import {RenewsReturnsComponent} from './stmanager/renews-returns/renews-returns.component';
+import {GradeComponent} from './tc-director/grade/grade.component';
+import {OriginCourseComponent} from './tc-director/origin-course/origin-course.component';
+import {TcDirectorComponent} from './tc-director/tc-director.component';
 
 export const routes: Routes = [
   {
@@ -121,6 +125,29 @@ export const routes: Routes = [
           {
             path: 'stu-class-period',
             component: StudentClassPeriodComponent
+          },
+          {
+            path: 'renews-returns',
+            component: RenewsReturnsComponent
+          }
+        ]
+      },
+      {
+        path: 'teacher-director',
+        component: TcDirectorComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'course',
+            pathMatch: 'full'
+          },
+          {
+            path: 'course',
+            component: OriginCourseComponent,
+          },
+          {
+            path: 'grade',
+            component: GradeComponent,
           }
         ]
       }

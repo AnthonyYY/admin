@@ -58,6 +58,11 @@ import { routes } from './routes';
 import {StmanagerService} from './stmanager/stmanager.service';
 import { ConsultRecordComponent } from './consultant-main/consult-record/consult-record.component';
 import { SignRecordComponent } from './counselor/sign-record/sign-record.component';
+import { RenewsReturnsComponent } from './stmanager/renews-returns/renews-returns.component';
+import { TcDirectorComponent } from './tc-director/tc-director.component';
+import { GradeComponent } from './tc-director/grade/grade.component';
+import { OriginCourseComponent } from './tc-director/origin-course/origin-course.component';
+import {TeacherDirectorService} from './tc-director/teacher-director.service';
 
 @NgModule({
   declarations: [
@@ -98,6 +103,10 @@ import { SignRecordComponent } from './counselor/sign-record/sign-record.compone
     StStudentsComponent,
     ConsultRecordComponent,
     SignRecordComponent,
+    RenewsReturnsComponent,
+    TcDirectorComponent,
+    GradeComponent,
+    OriginCourseComponent,
   ],
   imports: [
     Select2Module,
@@ -120,6 +129,7 @@ import { SignRecordComponent } from './counselor/sign-record/sign-record.compone
     CounselorService,
     ConsultantMainService,
     StmanagerService,
+    TeacherDirectorService
   ],
   bootstrap: [AppComponent]
 })

@@ -48,7 +48,7 @@ export class CourseComponent implements OnInit {
     this.students = [];
     this.fetchSchedule();
     this.fetchCourse();
-    this.initCurSchedule();
+    this.setCurSchedule();
   }
 
   /*课表查看功能*/
@@ -71,6 +71,7 @@ export class CourseComponent implements OnInit {
   }
 
   /*课表创建功能*/
+
   // 获取课程列表
   fetchCourse(): void {
     this.schoolService.fetchCourses().then( course => {
@@ -78,7 +79,6 @@ export class CourseComponent implements OnInit {
       const curCourseId = course[0]['id'];
       this.scheduleEvent.courseId = curCourseId;
       this.fetchTeachersByCourseId(curCourseId);
-      this.fetchScheduleStu(curCourseId);
     } );
   }
   // 获取对应课程的授课教师
@@ -89,12 +89,12 @@ export class CourseComponent implements OnInit {
     } );
   }
   // 初始化新课表
-  initCurSchedule(): void {
+  setCurSchedule(): void {
     this.scheduleEvent = {
       courseId: '',
+      courseName: '',
       employeeId: '',
       teacherName: '',
-      courseName: '',
       finish: false,
       endTime: new Date(new Date().getTime() + 1000 * 60 * 60 * 24).getTime(),
       startTime: Date.now(),
@@ -109,13 +109,13 @@ export class CourseComponent implements OnInit {
     const curCourse = this.findCourseById($event.value);
     this.scheduleEvent.courseName = curCourse.name;
   }
-  // 切换教师事设定新的教师ID
+  // 切换教师时设定新的教师ID
   handleTeacherSwitch($event): void {
     this.scheduleEvent.employeeId = $event.value;
     const curTeacher = this.findTeacherById($event.value);
     this.scheduleEvent.teacherName = curTeacher.name;
   }
-  // 通过教师ID搜索教师
+  // 通过课程ID搜索教师
   findTeacherById(teacherId): any {
     return this.teachers.find( teacher => teacher.id === teacherId );
   }
@@ -128,7 +128,7 @@ export class CourseComponent implements OnInit {
     this.scheduleEvent.startTime = $event.start;
     this.scheduleEvent.endTime = $event.end;
   }
-  // 获取报名该课程的学生
+  // 根据课程ID获取报名该课程的学生
   fetchScheduleStu(courseId): void {
     this.stmanagerService.fetchStudents(courseId).then( students => {
       this.students = students;
@@ -137,12 +137,12 @@ export class CourseComponent implements OnInit {
   // 分配学生的时候
   // 创建课表分配学生的时候是否未选中任何学生
   ifZeroStuChosen(): boolean {
-    return this.students.every( stu => !stu.selected );
+    return this.students.every( stu => !stu.inCourse );
   }
   // 创建课表
   createSchedule(): void {
     this.students.forEach( stu => {
-      if (stu.selected) {
+      if (stu.inCourse) {
         this.scheduleEvent.studentIds.push(stu.id);
       }
     } );

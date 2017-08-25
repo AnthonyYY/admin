@@ -40,4 +40,18 @@ export class SchoolService {
       }
     } )
   }
+
+  fetchGrades(): Promise<any> {
+    return this.http.get('common/grade').then( data => {
+      if (data.success) {
+        return data.data;
+      }else{
+        this.alertService.alert({
+          title: '提示',
+          content: '获取班组列表失败',
+          type: 'danger'
+        })
+      }
+    } )
+  }
 }

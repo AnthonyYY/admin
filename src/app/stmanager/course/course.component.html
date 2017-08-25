@@ -162,7 +162,7 @@
       </div>
     </div>
   </div>
-  <div class="row" [hidden]="scheduleEvent.courseScheduleId">
+  <div class="row">
     <div class="col-xs-12 table-container">
       <table class="table table-bordered table-hover table-strip">
         <thead>
@@ -180,8 +180,8 @@
           <tr *ngFor="let student of students">
             <td class="text-center">
               <input type="checkbox"
-                     [(ngModel)]="student.selected"
-                     (change)="student.select = !student.select">
+                     [(ngModel)]="student.inCourse"
+                     (change)="student.inCourse = !student.inCourse">
             </td>
             <td>{{ student.name }}</td>
             <td>{{ student.sex === 'MALE' ? '男': '女' }}</td>

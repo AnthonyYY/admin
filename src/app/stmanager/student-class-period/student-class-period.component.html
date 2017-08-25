@@ -64,7 +64,9 @@
                 <td>{{ stat.buyTime | date: 'yyyy-MM-dd: HH:mm:ss' }}</td>
                 <td class="text-center">
                   <div class="btn-group btn-group-xs">
-                    <button class="btn btn-success btn-xs" (click)="curStat = stat;markInputModal.showModal({
+                    <button class="btn btn-success btn-xs" (click)="curStatScore = stat.score;
+                  curStat = stat;
+                  markInputModal.showModal({
                       title: '请输入' + curStat.studentName + '学生成绩',
                       confirm: updateStuScore
                     })">
@@ -89,7 +91,7 @@
     <label for="mark" class="control-label col-xs-2 col-xs-offset-2" style="margin-bottom: 0;">成绩:</label>
     <div class="col-xs-5">
       <div class="input-group input-group-sm">
-        <input type="number" min="0" class="form-control" name="mark" id="mark" [(ngModel)]="curStat.score">
+        <input type="number" min="0" class="form-control" name="mark" id="mark" [(ngModel)]="curStatScore">
         <span class="input-group-addon">分</span>
       </div>
     </div>

@@ -27,8 +27,10 @@ export class StmanagerService {
     } );
   }
   // 根据课程ID获取教师列表
-  fetchTeachersByCourseId(courseId: string): Promise<any> {
-    return this.http.get( `stmanager/course/teacher/${courseId}`).then( result => {
+  fetchTeachersByCourseId(courseId: string, courseScheduleId?: string): Promise<any> {
+    let url = `stmanager/course/teacher/${courseId}`;
+    if(courseScheduleId) { url += `?courseScheduleId=${courseScheduleId}`}
+    return this.http.get( url).then( result => {
       if ( result.success ) {
         (result.data || []).forEach( teacher => teacher.text = teacher.name );
         return result.data;
@@ -175,13 +177,19 @@ export class StmanagerService {
   updateStuScore(courseId, score, studentId): Promise<any> {
     return this.http.put(`stmanager/score/${courseId}/${score}/${studentId}`, {}).then( result => {
       if (result.success) {
+        this.alertService.alert({
+          type: 'success',
+          title: '提示',
+          content: '成绩已录入'
+        });
         return result.data;
       } else {
         this.alertService.alert({
           type: 'danger',
           title: '提示',
-          content: '操作失败'
+          content: '成绩录入失败'
         });
+        throw Error(result);
       }
     }) ;
   }
