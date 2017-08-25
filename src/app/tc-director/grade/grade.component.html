@@ -1,0 +1,99 @@
+<app-content-header
+  [title]="'班组列表'" [menus]="contentHeader"></app-content-header>
+
+<div class="content">
+  <app-collapse-box [collapse]="false" [icon]="'filter'" [boxTitle]="'班组过滤'">
+    <div class="col-xs-12 col-md-4 input-group-sm">
+      <label class="pull-left">班组:</label>
+      <div class="input-group input-group-sm" style="width: 148px;">
+        <input class="form-control" [(ngModel)]="filterGradeName" placeholder="请输入班组">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+      </div>
+    </div>
+  </app-collapse-box>
+
+  <div class="box box-info">
+    <div class="box-header">
+      <h3 class="box-title">班组列表</h3>
+      <div class="box-tools">
+        <button class="btn btn-info btn-sm" (click)="setCurGrade();
+        gradeCreatorOrUpdator.showModal({
+          modalSize: 'sm',
+          title: '创建新的班组',
+          confirmBtnText: '创建',
+          confirm: createGrade
+        })">
+          <i class="fa fa-plus"></i>
+          创建班组
+        </button>
+      </div>
+    </div>
+    <div class="box-body" style="border-top: 1px solid #ecf0f5;">
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>班组</th>
+            <th>价格</th>
+            <th>备注</th>
+            <th class="text-center">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let grade of grades |
+             matchItem: filterGradeName : 'name'"
+            (click)="setCurGrade(grade);
+            gradeCreatorOrUpdator.showModal({
+              modalSize: 'sm',
+              title: '编辑班组' + curGrade.name,
+              confirm: updateGrade
+            })">
+            <td>{{ grade.name }}</td>
+            <td>{{ grade.price }}</td>
+            <td>{{ grade.remark }}</td>
+            <td class="text-center">
+              <div class="form-group form-group-xs">
+                <button class="btn btn-xs btn-danger"
+                (click)="setCurGrade(grade);
+                $event.stopPropagation();
+                deleteGradeConfirm.showModal({
+                  title: '提示',
+                  content: '确定删除该班组吗',
+                  confirm: deleteGrade
+                })">
+                  <i class="fa fa-trash"></i> 删除班组
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<app-modal #gradeCreatorOrUpdator [disabledAcceptBtn]="!(curGrade.name && curGrade.price && curGrade.remark)">
+  <form class="form">
+    <div class="form-group clearfix">
+      <label for="name" class="control-label col-xs-3">班组名称</label>
+      <div class="col-xs-9">
+        <input id="name" name="name" [(ngModel)]="curGrade.name" class="form-control" placeholder="请输入班组名称">
+      </div>
+    </div>
+
+    <div class="form-group clearfix">
+      <label for="price" class="control-label col-xs-3">班组价格</label>
+      <div class="col-xs-9">
+        <input type="number" id="price" name="price" [(ngModel)]="curGrade.price" class="form-control" placeholder="请输入班组价格">
+      </div>
+    </div>
+
+    <div class="form-group clearfix">
+      <label for="remark" class="control-label col-xs-3">备注</label>
+      <div class="col-xs-9">
+        <input id="remark" name="remark" [(ngModel)]="curGrade.remark" class="form-control" placeholder="请输入班组的备注信息">
+      </div>
+    </div>
+  </form>
+</app-modal>
+
+<app-modal #deleteGradeConfirm></app-modal>
