@@ -85,6 +85,7 @@ export class CourseComponent implements OnInit {
   fetchTeachersByCourseId(courseId): void {
     this.stmanagerService.fetchTeachersByCourseId(courseId).then( teachers => {
       this.teachers = teachers;
+      this.scheduleEvent.employeeId = this.teachers[0].id;
     } );
   }
   // 初始化新课表
@@ -155,6 +156,6 @@ export class CourseComponent implements OnInit {
   updateSchedule(): void {
     this.stmanagerService.updateSchedule(this.scheduleEvent).then( success => {
 
-    } )
+    } );
   }
 }

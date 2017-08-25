@@ -96,7 +96,7 @@ export class StmanagerService {
   }
 
   /* 学生课表相关服务 */
-  fetchStuSchedule(): Promise<any>{
+  fetchStuSchedule(): Promise<any> {
     return this.http.get('stmanager/student/schedule').then( result => {
       console.log(result);
       if (result.success) {
@@ -108,7 +108,7 @@ export class StmanagerService {
           content: '获取学生课表失败'
         });
       }
-    } )
+    } );
   }
 
   // 结束学生课表
@@ -125,35 +125,64 @@ export class StmanagerService {
           type: 'danger',
           title: '提示',
           content: '操作失败'
-        })
+        });
       }
       return result.success;
-    } )
+    } );
   }
 
-  //取消课程
-  cancelRegisterSchedule(courseScheduleId, studentId){
+  // 取消课程
+  cancelRegisterSchedule(courseScheduleId, studentId) {
     return this.http.get(`stmanager/student/schedule/cancel/${courseScheduleId}/${studentId}`).then( result => {
-      if(result.success){
+      if (result.success) {
         this.alertService.alert({
           type: 'success',
           title: '提示',
           content: '课程已取消'
         });
-        return result.success
-      }else{
+        return result.success;
+      } else {
         this.alertService.alert({
           type: 'danger',
           title: '提示',
           content: '操作失败'
-        })
+        });
       }
     } );
   }
   /* 学生列表 */
   fetchAllocatedStudents(): Promise<any> {
     return this.http.get('stmanager/student').then( result => {
-      return result.data
-    } )
+      return result.data;
+    } );
+  }
+
+  /* 学生课时信息 */
+  fetchStudentStat(): Promise<any> {
+    return this.http.get('stmanager/student/stat').then( result => {
+      if ( result.success ) {
+        return result.data;
+      } else {
+        this.alertService.alert({
+          type: 'danger',
+          title: '提示',
+          content: '操作失败'
+        });
+      }
+    } );
+  }
+  /* 更新学生课时信息的成绩 */
+  updateStuScore(courseId, score, studentId): Promise<any> {
+    return this.http.put(`stmanager/score/${courseId}/${score}/${studentId}`, {}).then( result => {
+      if (result.success) {
+        return result.data;
+      } else {
+        this.alertService.alert({
+          type: 'danger',
+          title: '提示',
+          content: '操作失败'
+        });
+      }
+    }) ;
   }
 }

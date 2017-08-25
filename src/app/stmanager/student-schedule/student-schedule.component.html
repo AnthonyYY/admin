@@ -94,6 +94,11 @@
                   <span *ngIf="record.finish">--</span>
                 </td>
               </tr>
+              <tr *ngIf="!schedule.length">
+                <td colspan="7">
+                  <p class="text-center">暂无学生课表信息</p>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>

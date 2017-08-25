@@ -1,3 +1,97 @@
-<p>
-  student-class-period works!
-</p>
+<app-content-header
+  [title]="'学生课时管理'" [menus]="contentHeader"></app-content-header>
+
+<div class="content">
+
+  <app-collapse-box [collapse]="false" [boxTitle]="'学生课时列表筛选'">
+    <div class="col-xs-12 col-md-4 input-group-sm">
+      <label class="pull-left">学生姓名:</label>
+      <div class="input-group input-group-sm" style="width: 148px;">
+        <input class="form-control" [(ngModel)]="filterStudentName" placeholder="请输入学生名称">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-4 input-group-sm">
+      <label class="pull-left">购买时间:</label>
+      <app-date-ranger-picker
+        [timePicker]="false"
+        [startTime]="buyTimeRange.start"
+        (dateRangeSetEvent)="handleTimeRangeChange($event)">
+      </app-date-ranger-picker>
+    </div>
+
+    <div class="col-xs-12 col-md-4 input-group-sm">
+      <label class="pull-left">课程名称:</label>
+      <div class="input-group input-group-sm" style="width: 148px;">
+        <input class="form-control" [(ngModel)]="filterCourseName" placeholder="请输入课程名称">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+      </div>
+    </div>
+  </app-collapse-box>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box box-info">
+        <div class="box-header">
+          <h3 class="box-title">
+            学生课时列表
+          </h3>
+        </div>
+        <div class="box-body" style="border-top: 1px solid #ecf0f5;">
+          <table class="table table-hover table-bordered">
+            <thead>
+              <tr>
+                <th>学生姓名</th>
+                <th>课程名称</th>
+                <th>总课时</th>
+                <th>已用课时</th>
+                <th>成绩</th>
+                <th>购买时间</th>
+                <th class="text-center">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let stat of stuCourseHourStats |
+                matchItem: filterStudentName:'studentName' |
+                matchItem: filterCourseName: 'courseName' |
+                timeRange: buyTimeRange : 'buyTime'">
+                <td>{{ stat.studentName }}</td>
+                <td>{{ stat.courseName }}</td>
+                <td>{{ stat.buyHour }}</td>
+                <td>{{ stat.usedHour }}</td>
+                <td>{{ stat.score || '未录入' }}</td>
+                <td>{{ stat.buyTime | date: 'yyyy-MM-dd: HH:mm:ss' }}</td>
+                <td class="text-center">
+                  <div class="btn-group btn-group-xs">
+                    <button class="btn btn-success btn-xs" (click)="curStat = stat;markInputModal.showModal({
+                      title: '请输入' + curStat.studentName + '学生成绩',
+                      confirm: updateStuScore
+                    })">
+                      录入成绩
+                    </button>
+                    <button class="btn btn-warning btn-xs">
+                      退费申请
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal #markInputModal>
+  <div class="form-group clearfix" style="margin-bottom: 0;">
+    <label for="mark" class="control-label col-xs-2 col-xs-offset-2" style="margin-bottom: 0;">成绩:</label>
+    <div class="col-xs-5">
+      <div class="input-group input-group-sm">
+        <input type="number" min="0" class="form-control" name="mark" id="mark" [(ngModel)]="curStat.score">
+        <span class="input-group-addon">分</span>
+      </div>
+    </div>
+  </div>
+</app-modal>
