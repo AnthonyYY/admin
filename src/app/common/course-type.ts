@@ -1,7 +1,7 @@
 export const courseTypeMap = {
-  NORMALGROUP:'常规班',
-  ONETOONE:'一对一课程',
-  BOUTIQUEGROUP:'精品小组'
+  NORMALGROUP: '常规班',
+  ONETOONE: '一对一课程',
+  BOUTIQUEGROUP: '精品小组'
 };
 
 export const courseTypeList = [

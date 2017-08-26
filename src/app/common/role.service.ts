@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpService} from '../service/http.service';
 import {Router} from '@angular/router';
 import {AlertService} from '../alert/alert.service';
+import {roles} from './enum';
 
 @Injectable()
 export class RoleService {
@@ -33,33 +34,34 @@ export class RoleService {
   navigateByRole(roleId): void {
     switch (roleId) {
       /*超级管理员*/
-      case 'SUPER_ADMIN':
+      case roles['super_admin']:
         this.router.navigate(['dashboard/admin']);
         break;
       /*咨询师*/
-      case 'CONSULTANT':
+      case roles['consultant']:
         this.router.navigate(['dashboard/counselor']);
         break;
-      case 'CONSULTANT_BOSS':
+      case roles['consultant_boss']:
         this.router.navigate(['dashboard/counselor']);
         break;
-      case 'FINANCE':
+      case roles['finance']:
         this.router.navigate(['dashboard/finance']);
         break;
-      case 'STUDENTMANAGER':
+      case roles['studentmanager']:
         this.router.navigate(['dashboard/studentmanager']);
         break;
-      case 'TEACHER':
+      case roles['teacher']:
         this.router.navigate(['dashboard/teacher']);
         break;
-      case 'CONSULTANT_MAIN':
+      case roles['consultant_main']:
         this.router.navigate(['dashboard/consultant-main']);
         break;
-      case 'TEACHER_DIRECTOR':
+      case roles['teacher_director']:
         this.router.navigate(['dashboard/teacher-director']);
         break;
       default:
         this.alertService.alert({title: '提示', content: '角色异常', type: 'danger'});
+        // this.router.navigate(['login']);
         return;
     }
   }

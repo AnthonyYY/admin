@@ -25,9 +25,9 @@ export const payTypeList = [
 ];
 
 export const courseTypeMap = {
-  NORMALGROUP:'常规班',
-  ONETOONE:'一对一课程',
-  BOUTIQUEGROUP:'精品小组'
+  NORMALGROUP:  '常规班',
+  ONETOONE: '一对一课程',
+  BOUTIQUEGROUP:  '精品小组'
 };
 
 export const courseTypeList = [
@@ -35,3 +35,14 @@ export const courseTypeList = [
   {id: 'ONETOONE', text: '一对一课程'},
   {id: 'BOUTIQUEGROUP', text: '精品小组'}
 ];
+
+export const roles = {
+  'super_admin': 'SUPER_ADMIN',
+  'consultant': 'CONSULTANT',
+  'consultant_boss': 'CONSULTANT_BOSS',
+  'finance': 'FINANCE',
+  'studentmanager': 'STUDENTMANAGER',
+  'teacher': 'TEACHER',
+  'consultant_main': 'CONSULTANT_MAIN',
+  'teacher_director': 'TEACHER_DIRECTOR',
+};
