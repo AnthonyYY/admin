@@ -63,6 +63,9 @@ import { TcDirectorComponent } from './tc-director/tc-director.component';
 import { GradeComponent } from './tc-director/grade/grade.component';
 import { OriginCourseComponent } from './tc-director/origin-course/origin-course.component';
 import {TeacherDirectorService} from './tc-director/teacher-director.service';
+import { PresidentComponent } from './president/president.component';
+import { TransferComponent } from './president/transfer/transfer.component';
+import { RefundComponent } from './president/refund/refund.component';
 
 @NgModule({
   declarations: [
@@ -107,6 +110,9 @@ import {TeacherDirectorService} from './tc-director/teacher-director.service';
     TcDirectorComponent,
     GradeComponent,
     OriginCourseComponent,
+    PresidentComponent,
+    TransferComponent,
+    RefundComponent
   ],
   imports: [
     Select2Module,

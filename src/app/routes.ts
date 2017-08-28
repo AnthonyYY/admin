@@ -21,6 +21,9 @@ import {RenewsReturnsComponent} from './stmanager/renews-returns/renews-returns.
 import {GradeComponent} from './tc-director/grade/grade.component';
 import {OriginCourseComponent} from './tc-director/origin-course/origin-course.component';
 import {TcDirectorComponent} from './tc-director/tc-director.component';
+import {TransferComponent} from './president/transfer/transfer.component';
+import {RefundComponent} from './president/refund/refund.component';
+import {PresidentComponent} from './president/president.component';
 
 export const routes: Routes = [
   {
@@ -107,7 +110,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'stu-class-period',
+            redirectTo: 'schedule',
             pathMatch: 'full'
           },
           {
@@ -148,6 +151,25 @@ export const routes: Routes = [
           {
             path: 'grade',
             component: GradeComponent,
+          }
+        ]
+      },
+      {
+        path: 'president-master',
+        component: PresidentComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'refund',
+            pathMatch: 'full'
+          },
+          {
+            path: 'refund',
+            component: RefundComponent,
+          },
+          {
+            path: 'transfer',
+            component: TransferComponent
           }
         ]
       }

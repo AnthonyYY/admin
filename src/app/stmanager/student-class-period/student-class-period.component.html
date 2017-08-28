@@ -39,7 +39,7 @@
           </h3>
         </div>
         <div class="box-body" style="border-top: 1px solid #ecf0f5;">
-          <table class="table table-hover table-bordered">
+          <table class="table table-hover table-bordered text-center">
             <thead>
               <tr>
                 <th>学生姓名</th>
@@ -64,16 +64,25 @@
                 <td>{{ stat.buyTime | date: 'yyyy-MM-dd: HH:mm:ss' }}</td>
                 <td class="text-center">
                   <div class="btn-group btn-group-xs">
-                    <button class="btn btn-success btn-xs" (click)="curStatScore = stat.score;
-                  curStat = stat;
-                  markInputModal.showModal({
+                    <button class="btn btn-success btn-xs"
+                    (click)="curStatScore = stat.score;
+                    curStat = stat;
+                    markInputModal.showModal({
                       title: '请输入' + curStat.studentName + '学生成绩',
                       confirm: updateStuScore
                     })">
                       录入成绩
                     </button>
-                    <button class="btn btn-warning btn-xs">
-                      退费申请
+                    <button class="btn btn-warning btn-xs"
+                    (click)="curStat = stat;
+                    cancelPurchaseHour = 0;
+                    returnCoursePurchaseModal.showModal({
+                      title: '退购课时',
+                      type: 'default',
+                      modalConfirmText: '确定退购',
+                      confirm: cancelCoursePurchase
+                    })">
+                      退课申请
                     </button>
                   </div>
                 </td>
@@ -94,6 +103,26 @@
         <input type="number" min="0" class="form-control" name="mark" id="mark" [(ngModel)]="curStatScore">
         <span class="input-group-addon">分</span>
       </div>
+    </div>
+  </div>
+</app-modal>
+
+<app-modal #returnCoursePurchaseModal>
+  <div class="col-xs-12 purchase-info">
+    <p class="text-muted">已购课时{{ curStat.buyHour }}</p>
+    <p class="text-muted">已用课时{{ curStat.usedHour }}</p>
+    <p class="text-muted">可退课时{{ curStat.buyHour - curStat.usedHour }}</p>
+  </div>
+  <div class="form-group form-group-sm clearfix">
+    <label for="cancelHour" class="control-label col-xs-3">退选课时数:</label>
+    <div class="col-xs-9">
+      <input id="cancelHour"
+             class="form-control"
+             type="number"
+             placeholder="请输入要退课的课时数"
+             [(ngModel)]="cancelPurchaseHour"
+             min="0"
+             max="{{ curStat.buyHour - curStat.usedHour }}">
     </div>
   </div>
 </app-modal>

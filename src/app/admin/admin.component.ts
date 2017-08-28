@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Sidebar} from '../sidebar/sidebar';
 import {School} from '../common/school';
-import {SchoolService} from '../common/school.service';
-import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-admin',

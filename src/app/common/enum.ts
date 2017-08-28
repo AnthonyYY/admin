@@ -45,4 +45,5 @@ export const roles = {
   'teacher': 'TEACHER',
   'consultant_main': 'CONSULTANT_MAIN',
   'teacher_director': 'TEACHER_DIRECTOR',
+  'schoolmaster': 'SCHOOLMASTER',
 };

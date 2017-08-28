@@ -9,6 +9,7 @@ import {StmanagerService} from '../stmanager.service';
 })
 export class StudentClassPeriodComponent implements OnInit {
 
+  cancelPurchaseHour: number;
   contentHeader: Sidebar[];
   stuCourseHourStats: any[];
   curStatScore: any;
@@ -23,6 +24,7 @@ export class StudentClassPeriodComponent implements OnInit {
     private stManagerService: StmanagerService
   ) {
     this.updateStuScore = this.updateStuScore.bind(this);
+    this.cancelCoursePurchase = this.cancelCoursePurchase.bind(this);
   }
 
   ngOnInit() {
@@ -30,6 +32,7 @@ export class StudentClassPeriodComponent implements OnInit {
       {name: '主页', icon: 'fa-dashboard'},
       {name: '学生课时管理', icon: 'fa-users'}
     ];
+    this.cancelPurchaseHour = 0;
     this.curStat = {};
     this.curStatScore = '';
     this.filterCourseName = '';
@@ -60,6 +63,12 @@ export class StudentClassPeriodComponent implements OnInit {
     const studentId = this.curStat.studentId;
     this.stManagerService.updateStuScore(courseId, score, studentId).then( result => {
       this.curStat.score = this.curStatScore;
+    } );
+  }
+
+  cancelCoursePurchase(): void {
+    this.stManagerService.returnCoursePurchase(this.curStat.studentId, this.curStat.courseId, this.cancelPurchaseHour).then( () => {
+      this.curStat.buyHour -= this.cancelPurchaseHour;
     } );
   }
 }
