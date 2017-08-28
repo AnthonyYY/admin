@@ -46,4 +46,5 @@ export const roles = {
   'consultant_main': 'CONSULTANT_MAIN',
   'teacher_director': 'TEACHER_DIRECTOR',
   'schoolmaster': 'SCHOOLMASTER',
+  'personnel_cashier': 'PERSONNEL_CASHIER',
 };

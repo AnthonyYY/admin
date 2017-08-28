@@ -66,6 +66,9 @@ import {TeacherDirectorService} from './tc-director/teacher-director.service';
 import { PresidentComponent } from './president/president.component';
 import { TransferComponent } from './president/transfer/transfer.component';
 import { RefundComponent } from './president/refund/refund.component';
+import { PersonnelCashierComponent } from './personnel-cashier/personnel-cashier.component';
+import { FeesComponent } from './personnel-cashier/fees/fees.component';
+import {PersonalCashierService} from './personnel-cashier/personal-cashier.service';
 
 @NgModule({
   declarations: [
@@ -112,7 +115,9 @@ import { RefundComponent } from './president/refund/refund.component';
     OriginCourseComponent,
     PresidentComponent,
     TransferComponent,
-    RefundComponent
+    RefundComponent,
+    PersonnelCashierComponent,
+    FeesComponent
   ],
   imports: [
     Select2Module,
@@ -135,7 +140,8 @@ import { RefundComponent } from './president/refund/refund.component';
     CounselorService,
     ConsultantMainService,
     StmanagerService,
-    TeacherDirectorService
+    TeacherDirectorService,
+    PersonalCashierService
   ],
   bootstrap: [AppComponent]
 })

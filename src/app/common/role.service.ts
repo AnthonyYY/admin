@@ -62,6 +62,9 @@ export class RoleService {
       case roles['schoolmaster']:
         this.router.navigate(['dashboard/president-master']);
         break;
+      case roles['personnel_cashier']:
+        this.router.navigate(['dashboard/personal-cashier']);
+        break;
       default:
         this.alertService.alert({title: '提示', content: '角色异常', type: 'danger'});
         // this.router.navigate(['login']);

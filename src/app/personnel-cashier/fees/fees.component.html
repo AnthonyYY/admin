@@ -1,0 +1,66 @@
+<app-content-header
+  [title]="'缴费管理'" [menus]="contentHeader"></app-content-header>
+<div class="content">
+  <div class="box box-primary box-divide">
+    <div class="box-header">
+      <h3 class="box-title">校区列表</h3>
+    </div>
+    <div class="box-body">
+      <table class="table table-bordered table-pointer table-hover text-center">
+        <thead>
+          <tr>
+            <th>学校名称</th>
+            <th>校区描述</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let school of schools" (click)="setCurSchool(school)" [class.current]="school.current">
+            <td>{{ school.name }}</td>
+            <td>{{ school.remark }}</td>
+            <td>
+              <a href="javascript:void(0)">
+                查看校区学员 <i class="fa fa-angle-double-right"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="box box-warning box-divide">
+    <div class="box-header">
+      <h3 class="box-title">
+        {{ curSchool.name }} 校区学员
+      </h3>
+    </div>
+    <div class="box-body">
+      <table class="table table-hovered table-bordered">
+        <thead>
+          <tr>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>电话</th>
+            <th>学科</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of students;">
+            <td>{{ student.name }}</td>
+            <td>{{ student.sex === 'MALE' ? '男': '女' }}</td>
+            <td>{{ student.phone }}</td>
+            <td>{{ student.subject }}</td>
+            <td>
+              <div class="btn-group btn-group-xs">
+                <button class="btn btn-primary btn-xs">缴费</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

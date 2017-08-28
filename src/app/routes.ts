@@ -24,6 +24,8 @@ import {TcDirectorComponent} from './tc-director/tc-director.component';
 import {TransferComponent} from './president/transfer/transfer.component';
 import {RefundComponent} from './president/refund/refund.component';
 import {PresidentComponent} from './president/president.component';
+import {PersonnelCashierComponent} from './personnel-cashier/personnel-cashier.component';
+import {FeesComponent} from './personnel-cashier/fees/fees.component';
 
 export const routes: Routes = [
   {
@@ -172,7 +174,22 @@ export const routes: Routes = [
             component: TransferComponent
           }
         ]
-      }
+      },
+      {
+        path: 'personal-cashier',
+        component: PersonnelCashierComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'fees',
+            pathMatch: 'full'
+          },
+          {
+            path: 'fees',
+            component: FeesComponent,
+          }
+        ]
+      },
     ]
   },
 ];
