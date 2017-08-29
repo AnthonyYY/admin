@@ -14,7 +14,6 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { BasicInfoComponent } from './basic-info/basic-info.component';
 import { SyllabusComponent } from './syllabus/syllabus.component';
-import { EmployeeComponent } from './employee/employee.component';
 import { UserComponent } from './user/user.component';
 import { RoleComponent } from './role/role.component';
 import {HttpService} from './service/http.service';
@@ -28,7 +27,6 @@ import {ConfirmService} from './confirm/confirm.service';
 import {AlertService} from './alert/alert.service';
 import { CollapseBoxComponent } from './collapse-box/collapse-box.component';
 import { DateRangerPickerComponent } from './date-ranger-picker/date-ranger-picker.component';
-import { EmployeeService } from './employee/employee.service';
 import { AdminComponent } from './admin/admin.component';
 import { RoleService } from './common/role.service';
 import { SchoolService } from './common/school.service';
@@ -71,6 +69,8 @@ import { FeesComponent } from './personnel-cashier/fees/fees.component';
 import {PersonalCashierService} from './personnel-cashier/personal-cashier.service';
 import { SchoolTableComponent } from './personnel-cashier/fees/school-table/school-table.component';
 import { StudentTableComponent } from './personnel-cashier/fees/student-table/student-table.component';
+import { PersonnelManagerComponent } from './personnel-manager/personnel-manager.component';
+import { EmployeeComponent } from './personnel-manager/employee/employee.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +82,6 @@ import { StudentTableComponent } from './personnel-cashier/fees/student-table/st
     SidebarComponent,
     BasicInfoComponent,
     SyllabusComponent,
-    EmployeeComponent,
     UserComponent,
     RoleComponent,
     AlertComponent,
@@ -121,7 +120,9 @@ import { StudentTableComponent } from './personnel-cashier/fees/student-table/st
     PersonnelCashierComponent,
     FeesComponent,
     SchoolTableComponent,
-    StudentTableComponent
+    StudentTableComponent,
+    PersonnelManagerComponent,
+    EmployeeComponent
   ],
   imports: [
     Select2Module,
@@ -137,7 +138,6 @@ import { StudentTableComponent } from './personnel-cashier/fees/student-table/st
     ModalService,
     ConfirmService,
     AlertService,
-    EmployeeService,
     RoleService,
     SchoolService,
     AdminService,

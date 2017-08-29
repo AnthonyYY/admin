@@ -35,14 +35,23 @@ export const courseTypeList = [
 ];
 
 export const roles = {
-  'super_admin': 'SUPER_ADMIN',
-  'consultant': 'CONSULTANT',
-  'consultant_boss': 'CONSULTANT_BOSS',
-  'finance': 'FINANCE',
-  'studentmanager': 'STUDENTMANAGER',
-  'teacher': 'TEACHER',
-  'consultant_main': 'CONSULTANT_MAIN',
-  'teacher_director': 'TEACHER_DIRECTOR',
-  'schoolmaster': 'SCHOOLMASTER',
-  'personnel_cashier': 'PERSONNEL_CASHIER',
+  'super_admin': 'SUPER_ADMIN',                               //超级管理员
+
+  'consultant': 'CONSULTANT',                                 //咨询师
+  'consultant_boss': 'CONSULTANT_BOSS',                     //咨询主任
+  'consultant_main': 'CONSULTANT_MAIN',                     //咨询总监
+
+  'studentmanager': 'STUDENTMANAGER',                        //学管师
+  'studentmanager_boss': 'studentmanager_boss',            //教管主任
+
+  'teacher': 'TEACHER',                                        //教师
+
+  'teacher_director': 'TEACHER_DIRECTOR',                   //教研主任
+
+  'schoolmaster': 'SCHOOLMASTER',                             //分校长
+  'schoolmaster_boss': 'SCHOOLMASTER_BOSS',                  //总校长
+
+  'finance': 'FINANCE',                                        //财务
+  'personnel_cashier': 'PERSONNEL_CASHIER',                 //人事专员出纳
+  'personnel_manager': 'PERSONNEL_MANAGER',                 //人事经理
 };

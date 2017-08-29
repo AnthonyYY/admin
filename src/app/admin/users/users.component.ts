@@ -3,6 +3,7 @@ import {Sidebar} from '../../sidebar/sidebar';
 import {AdminService} from '../admin.service';
 import {User} from '../../models/user';
 import {RoleService} from '../../common/role.service';
+import {roles} from '../../common/enum';
 
 @Component({
   selector: 'app-users',
@@ -41,7 +42,7 @@ export class UsersComponent implements OnInit {
       {name: '主页', icon: 'fa-dashboard'},
       {name: '用户列表页', icon: 'fa-users'}
     ];
-    this.roles = this.roleService.roles;
+    this.roles = this.roleService.roles || roles;
     this.roleList = this.roleService.roleList;
     this.curUsr = new User();
     this.newPassword = {id: '', password: '', rePassword: ''};

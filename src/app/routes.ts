@@ -28,6 +28,8 @@ import {PersonnelCashierComponent} from './personnel-cashier/personnel-cashier.c
 import {FeesComponent} from './personnel-cashier/fees/fees.component';
 import {SchoolTableComponent} from './personnel-cashier/fees/school-table/school-table.component';
 import {StudentTableComponent} from './personnel-cashier/fees/student-table/student-table.component';
+import {PersonnelManagerComponent} from './personnel-manager/personnel-manager.component';
+import {EmployeeComponent} from './personnel-manager/employee/employee.component';
 
 export const routes: Routes = [
   {
@@ -207,6 +209,21 @@ export const routes: Routes = [
           }
         ]
       },
+      {
+        path: 'personnel-manager',
+        component: PersonnelManagerComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'employee',
+            pathMatch: 'full'
+          },
+          {
+            path: 'user',
+            component: EmployeeComponent
+          }
+        ]
+      }
     ]
   },
 ];
