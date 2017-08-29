@@ -18,7 +18,7 @@ export class RoleService {
   fetchRoleEnums(): void {
     this.http.get('common/role').then( data => {
       if (data.success) {
-        data.data.forEach( (role ) => {
+        (data.data || []).forEach( (role ) => {
           role['text'] = role['roleName'];
           role['id'] = role['roleId'];
           this.roles[role.roleId] = role.roleName;

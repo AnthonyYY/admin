@@ -13,15 +13,13 @@ export const states = [
 export const payType = {
   'STUDENTMANAGER_PAY': '学管师续费',
   'COUNSELOR_PAY': '咨询师缴费',
-  'STUDENTMANAGER_BACK': '学管师退费',
-  'SELF_PAY': '自主缴费',
+  'STUDENTMANAGER_BACK': '学管师退费'
 };
 
 export const payTypeList = [
   {id: 'STUDENTMANAGER_PAY', text: '学管师续费'},
   {id: 'COUNSELOR_PAY', text: '咨询师缴费'},
-  {id: 'STUDENTMANAGER_BACK', text: '学管师退费'},
-  {id: 'SELF_PAY', text: '自主缴费'}
+  {id: 'STUDENTMANAGER_BACK', text: '学管师退费'}
 ];
 
 export const courseTypeMap = {

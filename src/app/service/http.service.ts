@@ -52,7 +52,7 @@ export class HttpService {
   private _handle500(status, msg): void {
     if ( status === 500 ) {
       this.alertService.alert({
-        title: '警告',
+        title: '警告,操作失败',
         content: msg,
         type: 'danger'
       });
@@ -77,8 +77,8 @@ export class HttpService {
       .then( HttpService._successHandle )
       .catch( err => {
         this._handle401(err.status);
-        this._handle500(err.status, err.data);
-        return {success: false, data: null};
+        console.log(err);
+        this._handle500(err.status, err.json().data);
       } );
   }
   remove(url: string, options?: any): Promise<any> {

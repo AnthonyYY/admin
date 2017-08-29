@@ -51,11 +51,12 @@
         <td>{{ student.subject || '-' }}</td>
         <td>
           <div class="btn-group btn-group-xs">
-            <button class="btn btn-primary btn-xs" (click)="payModal.showModal({
-
+            <button class="btn btn-primary btn-xs" (click)="initPaymentEvent(student);
+            payModal.showModal({
+              title: '请填写缴费信息',
+              confirm: pay
             })">
-              <i class="fa fa-credit-card"></i>
-              缴费
+              <i class="fa fa-credit-card"></i>缴费
             </button>
           </div>
         </td>
@@ -70,7 +71,7 @@
   </div>
 </div>
 
-<app-modal #payModal>
+<app-modal #payModal [disabledAcceptBtn]="!(payOrRefundEvent.employeeId && payOrRefundEvent.money)">
   <form class="form">
     <div class="form-group clearfix">
       <label for="payType" class="control-label col-xs-3">缴费类型:</label>
@@ -79,6 +80,7 @@
                  [cssImport]="false"
                  [width]="'100%'"
                  [data]="payTypeList"
+                 (valueChanged)="switchPayType($event)"
                  [options]="{minimumResultsForSearch: -1}"></select2>
       </div>
     </div>
@@ -88,8 +90,23 @@
         <select2 [cssImport]="false"
                  [width]="'100%'"
                  id="submitter"
-                 [options]="{placeholder: '请输入姓名搜索教师',query: searchTeacher($event)}"
+                 [value]="payOrRefundEvent.employeeId"
+                 (valueChanged)="handlePayerSwitch($event)"
+                 [data]="payer"
+                 [options]="select2Options"
         ></select2>
+      </div>
+    </div>
+    <div class="form-group clearfix">
+      <label for="payMoney" class="control-label col-xs-3">代缴金额</label>
+      <div class="col-xs-9">
+        <input type="number" class="form-control" id="payMoney" name="payMoney" [(ngModel)]="payOrRefundEvent.money" >
+      </div>
+    </div>
+    <div class="form-group clearfix">
+      <label for="payRemark" class="control-label col-xs-3">缴费备注</label>
+      <div class="col-xs-9">
+        <textarea class="form-control" id="payRemark" name="payRemark" [(ngModel)]="payOrRefundEvent.remark" rows="2" placeholder="请输入缴费备注"></textarea>
       </div>
     </div>
   </form>

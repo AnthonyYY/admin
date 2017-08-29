@@ -24,4 +24,22 @@ export class PersonalCashierService {
     } );
   }
 
+  pay(payment): Promise<any> {
+    return this.http.put('finance/student/pay', payment).then( result => {
+      if (result.success) {
+        this.alertService.alert({
+          title: '提示',
+          type: 'success',
+          content: '缴费成功'
+        });
+        return result.success;
+      } else {
+        this.alertService.alert({
+          title: '提示',
+          type: 'danger',
+          content: '缴费失败，' + result.data
+        });
+      }
+    } );
+  }
 }
