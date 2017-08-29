@@ -69,6 +69,8 @@ import { RefundComponent } from './president/refund/refund.component';
 import { PersonnelCashierComponent } from './personnel-cashier/personnel-cashier.component';
 import { FeesComponent } from './personnel-cashier/fees/fees.component';
 import {PersonalCashierService} from './personnel-cashier/personal-cashier.service';
+import { SchoolTableComponent } from './personnel-cashier/fees/school-table/school-table.component';
+import { StudentTableComponent } from './personnel-cashier/fees/student-table/student-table.component';
 
 @NgModule({
   declarations: [
@@ -117,7 +119,9 @@ import {PersonalCashierService} from './personnel-cashier/personal-cashier.servi
     TransferComponent,
     RefundComponent,
     PersonnelCashierComponent,
-    FeesComponent
+    FeesComponent,
+    SchoolTableComponent,
+    StudentTableComponent
   ],
   imports: [
     Select2Module,

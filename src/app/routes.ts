@@ -26,6 +26,8 @@ import {RefundComponent} from './president/refund/refund.component';
 import {PresidentComponent} from './president/president.component';
 import {PersonnelCashierComponent} from './personnel-cashier/personnel-cashier.component';
 import {FeesComponent} from './personnel-cashier/fees/fees.component';
+import {SchoolTableComponent} from './personnel-cashier/fees/school-table/school-table.component';
+import {StudentTableComponent} from './personnel-cashier/fees/student-table/student-table.component';
 
 export const routes: Routes = [
   {
@@ -187,6 +189,21 @@ export const routes: Routes = [
           {
             path: 'fees',
             component: FeesComponent,
+            children: [
+              {
+                path: '',
+                redirectTo: 'schools',
+                pathMatch: 'full'
+              },
+              {
+                path: 'schools',
+                component: SchoolTableComponent
+              },
+              {
+                path: ':schoolId/students',
+                component: StudentTableComponent
+              }
+            ]
           }
         ]
       },
