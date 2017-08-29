@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Sidebar} from '../../sidebar/sidebar';
 
 @Component({
   selector: 'app-employee',
@@ -7,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EmployeeComponent implements OnInit {
 
+  contentHeader: Sidebar[];
   constructor() { }
 
   ngOnInit() {
-
+    this.contentHeader = [
+      {name: '主页', icon: 'fa-dashboard'},
+      {name: '员工列表管理页', icon: 'fa-users'}
+    ];
   }
 
 }

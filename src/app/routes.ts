@@ -219,7 +219,7 @@ export const routes: Routes = [
             pathMatch: 'full'
           },
           {
-            path: 'user',
+            path: 'employee',
             component: EmployeeComponent
           }
         ]

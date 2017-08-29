@@ -55,3 +55,25 @@ export const roles = {
   'personnel_cashier': 'PERSONNEL_CASHIER',                 //人事专员出纳
   'personnel_manager': 'PERSONNEL_MANAGER',                 //人事经理
 };
+
+export const roleMap = {
+  'SUPER_ADMIN': '系统管理员',                             //超级管理员
+
+  'CONSULTANT': '咨询师',                                 //咨询师
+  'CONSULTANT_BOSS': '咨询主任',                     //咨询主任
+  'CONSULTANT_MAIN': '咨询总监',                     //咨询总监
+
+  'STUDENTMANAGER': '学管师',                        //学管师
+  'studentmanager_boss': '教管主任',            //教管主任
+
+  'TEACHER': '教师',                                        //教师
+
+  'TEACHER_DIRECTOR': '教研主任',                   //教研主任
+
+  'SCHOOLMASTER': '分校长',                             //分校长
+  'SCHOOLMASTER_BOSS': '总校长',                  //总校长
+
+  'FINANCE': '财务',                                        //财务
+  'PERSONNEL_CASHIER': '人事专员出纳',                 //人事专员出纳
+  'PERSONNEL_MANAGER': '人事经理',                 //人事经理
+};

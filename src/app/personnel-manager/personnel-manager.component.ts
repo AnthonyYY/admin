@@ -15,7 +15,7 @@ export class PersonnelManagerComponent implements OnInit {
     this.sidebarMenu = [
       {
         name: '员工列表管理',
-        routerLink: ['personnel-manager'],
+        routerLink: ['employee'],
         icon: 'fa-users'
       }
     ]
