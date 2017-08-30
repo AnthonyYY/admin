@@ -1,0 +1,137 @@
+<app-content-header
+  [title]="'签约/缴费/课时统计'" [menus]="contentHeader"></app-content-header>
+
+<div class="content">
+
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active" (click)="fetchSignRecord()"><a href="#waitAudit" data-toggle="tab" aria-expanded="true">签约统计</a></li>
+      <li class="" (click)="fetchRenewRecord()"><a href="#auditSuccess" data-toggle="tab" aria-expanded="false">续约统计</a></li>
+      <li class="" (click)="fetchClassHourRecord()"><a href="#auditFail" data-toggle="tab" aria-expanded="false">课时统计</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="waitAudit">
+        <div class="table-title clearfix">
+          <p class="text-muted pull-left">签约总人数: {{signMoneyRecord.num || 0}}</p>
+          <p class="text-muted pull-left">签约总金额: {{signMoneyRecord.total || 0}}</p>
+        </div>
+        <table class="table table-bordered table-hover text-center">
+          <thead>
+          <tr>
+            <th>咨询师姓名</th>
+            <th>咨询师电话</th>
+            <th>签约个数</th>
+            <th>签约金额</th>
+            <th>所属校区</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let record of signMoneyRecord.details;">
+            <td>{{ record.name }}</td>
+            <td>{{ record.phone }}</td>
+            <td>{{ record.num }}</td>
+            <td>{{ record.total }}</td>
+            <td>{{ record.schoolName }}</td>
+          </tr>
+          <tr *ngIf="!signMoneyRecord.details.length">
+            <td colspan="6">
+              <p class="text-center text-muted">暂时无统计信息</p>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tab-pane" id="auditSuccess">
+        <div class="table-title clearfix">
+          <p class="text-muted pull-left">续约总人数: {{renewMoneyRecord.num || 0}}</p>
+          <p class="text-muted pull-left">续约总金额: {{renewMoneyRecord.total || 0}}</p>
+        </div>
+        <table class="table table-bordered table-hover text-center">
+          <thead>
+          <tr>
+            <th>咨询师姓名</th>
+            <th>咨询师电话</th>
+            <th>签约个数</th>
+            <th>签约金额</th>
+            <th>所属校区</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let record of renewMoneyRecord.details;">
+            <td>{{ record.name }}</td>
+            <td>{{ record.phone }}</td>
+            <td>{{ record.num }}</td>
+            <td>{{ record.total }}</td>
+            <td>{{ record.schoolName }}</td>
+          </tr>
+          <tr *ngIf="!renewMoneyRecord.details.length">
+            <td colspan="6">
+              <p class="text-center text-muted">暂时无统计信息</p>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tab-pane" id="auditFail">
+        <div class="table-title clearfix">
+          <p class="text-muted pull-left">总课时: {{classHourRecord.totalHour || 0}}</p>
+          <p class="text-muted pull-left">已完成课时: {{classHourRecord.finishHour || 0}}</p>
+          <p class="text-muted pull-left">未完成课时: {{classHourRecord.unFinishHour || 0}}</p>
+        </div>
+        <table class="table table-bordered table-hover text-center">
+          <thead>
+          <tr>
+            <th>教师姓名</th>
+            <th>教师电话</th>
+            <th>完成课时</th>
+            <th>未完成课时</th>
+            <th>总课时</th>
+            <th>所属校区</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let record of classHourRecord.details;">
+            <td>{{ record.name }}</td>
+            <td>{{ record.phone }}</td>
+            <td>{{ record.finishHour }}</td>
+            <td>{{ record.unFinishHour }}</td>
+            <td>{{ record.totalHour }}</td>
+            <td>{{record.schoolName}}</td>
+          </tr>
+          <tr *ngIf="!classHourRecord.details.length">
+            <td colspan="6">
+              <p class="text-center text-muted">暂时无统计信息</p>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal #auditModal>
+  <form class="form text-center clearfix">
+    <div class="radio">
+      <label>
+        <input type="radio" name="optionsRadios" id="approve" (change)="approve = 'AUDIT_SUCCESS'" [checked]="approve === 'AUDIT_SUCCESS'">
+        通过该退费申请
+      </label>
+    </div>
+
+    <div class="radio">
+      <label>
+        <input type="radio" name="optionsRadios" id="reject" value="option1" (change)="approve = 'AUDIT_FAIL'" [checked]="approve === 'AUDIT_FAIL'">
+        拒绝该退费申请
+      </label>
+    </div>
+
+    <div class="form-group form-group-sm col-xs-6 col-xs-offset-3">
+      <div>
+        <textarea name="remark" id="remark" class="form-control" rows="2" placeholder="请填写审核备注" [(ngModel)]="approveRemark"></textarea>
+      </div>
+    </div>
+  </form>
+</app-modal>

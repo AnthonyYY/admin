@@ -69,6 +69,10 @@ export class RoleService {
       case roles['schoolmaster']:
         this.router.navigate(['dashboard/president-master']);
         break;
+        // 总校长
+      case roles['schoolmaster_boss']:
+        this.router.navigate(['dashboard/president-master']);
+        break;
       /*人事专员出纳*/
       case roles['personnel_cashier']:
         this.router.navigate(['dashboard/personal-cashier']);

@@ -18,7 +18,7 @@ export class PersonnelCashierComponent implements OnInit {
         routerLink: ['fees'],
         icon: 'fa-graduation-cap'
       }
-    ]
+    ];
   }
 
 }

@@ -50,7 +50,7 @@ export class EmployeeComponent implements OnInit {
     this.fetchSchools();
   }
 
-  initCurEmployee(employee?:any): void {
+  initCurEmployee(employee?: any): void {
     if (employee) {
       this.curEmployee = {...employee};
       console.log(this.curEmployee);
@@ -58,21 +58,21 @@ export class EmployeeComponent implements OnInit {
       const initRoleId = [this.roles[0]['id']];
       const initSchoolId = this.schools.length ? this.schools[0]['id'] : '';
       this.curEmployee = {
-        address: "",
-        clamantName: "",
-        clamantPhone: "",
-        education: "",
-        email: "",
-        graduationSchool: "",
-        idCard: "",
-        name: "",
-        phone: "",
-        remark: "",
+        address: '',
+        clamantName: '',
+        clamantPhone: '',
+        education: '',
+        email: '',
+        graduationSchool: '',
+        idCard: '',
+        name: '',
+        phone: '',
+        remark: '',
         roleIds: initRoleId,
         schoolId: initSchoolId,
-        sex: "MALE",
-        specialty: "",
-        username: ""
+        sex: 'MALE',
+        specialty: '',
+        username: ''
       }
     }
   }

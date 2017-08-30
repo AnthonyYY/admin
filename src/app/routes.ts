@@ -38,6 +38,7 @@ import {FinanceComponent} from './finance/finance.component';
 import {ToApprovementComponent} from './finance/to-approvement/to-approvement.component';
 import {StuPayStatComponent} from './finance/stu-pay-stat/stu-pay-stat.component';
 import {StuPayRecordComponent} from './finance/stu-pay-record/stu-pay-record.component';
+import {StatComponent} from './president/stat/stat.component';
 
 export const routes: Routes = [
   {
@@ -193,7 +194,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'refund',
+            redirectTo: 'stats',
             pathMatch: 'full'
           },
           {
@@ -203,6 +204,10 @@ export const routes: Routes = [
           {
             path: 'transfer',
             component: TransferComponent
+          },
+          {
+            path: 'stats',
+            component: StatComponent
           }
         ]
       },

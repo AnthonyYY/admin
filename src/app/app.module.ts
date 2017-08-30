@@ -82,6 +82,9 @@ import { ToApprovementComponent } from './finance/to-approvement/to-approvement.
 import { StuPayStatComponent } from './finance/stu-pay-stat/stu-pay-stat.component';
 import { StuPayRecordComponent } from './finance/stu-pay-record/stu-pay-record.component';
 import {FinanceService} from './finance/finance.service';
+import { PresidentBossComponent } from './president-boss/president-boss.component';
+import { StatComponent } from './president/stat/stat.component';
+import {PresidentService} from './president/president.service';
 
 @NgModule({
   declarations: [
@@ -141,7 +144,9 @@ import {FinanceService} from './finance/finance.service';
     FinanceComponent,
     ToApprovementComponent,
     StuPayStatComponent,
-    StuPayRecordComponent
+    StuPayRecordComponent,
+    PresidentBossComponent,
+    StatComponent
   ],
   imports: [
     Select2Module,
@@ -167,7 +172,8 @@ import {FinanceService} from './finance/finance.service';
     PersonalCashierService,
     PersonnelService,
     TeacherService,
-    FinanceService
+    FinanceService,
+    PresidentService
   ],
   bootstrap: [AppComponent]
 })

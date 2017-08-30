@@ -77,7 +77,7 @@ export class SchoolService {
   }
 
   fetchPendingApproval(processType, processState): Promise<any> {
-    return this.http.get(`common/progress/${processType}/processState`).then( result => {
+    return this.http.get(`common/progress/${processType}/${processState}`).then( result => {
       if ( result.success ) {
         return result.data;
       } else {

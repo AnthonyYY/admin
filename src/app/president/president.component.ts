@@ -9,10 +9,17 @@ import {Sidebar} from '../sidebar/sidebar';
 export class PresidentComponent implements OnInit {
 
   sidebarMenu: Array<Sidebar>;
-  constructor() { }
+  constructor(
+
+  ) { }
 
   ngOnInit() {
     this.sidebarMenu = [
+      {
+        name: '统计信息管理',
+        routerLink: ['stats'],
+        icon: 'fa-pie-chart'
+      },
       {
         name: '退费申请管理',
         routerLink: ['refund'],
