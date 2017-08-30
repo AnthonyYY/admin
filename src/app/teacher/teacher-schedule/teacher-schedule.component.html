@@ -1,0 +1,47 @@
+<app-content-header
+  [title]="'教学课表'" [menus]="contentHeader"></app-content-header>
+
+<div class="content">
+  <app-collapse-box [collapse]="false" [icon]="'filter'" [boxTitle]="'课表筛选'">
+    <div class="col-xs-12 col-md-4 input-group-sm">
+      <label class="pull-left">课程名称:</label>
+      <div class="input-group input-group-sm" style="width: 148px;">
+        <input class="form-control" [(ngModel)]="filterCourseName" placeholder="请输入课程名称">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-4 input-group input-group-sm">
+      <label class="pull-left">是否结课:</label>
+      <select2 [options]="{minimumResultsForSearch: -1}" [cssImport]="false" [width]="148" [data]="[{id: 'ALL' ,text: '全部'}, {id: true ,text: '已结课'}, {id: false ,text: '未结课'}]" (valueChanged)="switchCourseState($event)"></select2>
+    </div>
+  </app-collapse-box>
+
+  <div class="box box-primary box-divide">
+    <div class="box-header">
+      <div class="h3 box-title">
+        课表信息
+      </div>
+    </div>
+    <div class="box-body">
+      <table class="table table-hover table-bordered text-center">
+        <thead>
+          <tr>
+            <th>课程名称</th>
+            <th>开课时间</th>
+            <th>结课时间</th>
+            <th>是否结课</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let schedule of schedules | matchItem: filterCourseName : 'courseName' | matchItem: filterCourseState: 'finish': 'exact' ">
+            <td>{{ schedule.courseName }}</td>
+            <td>{{ schedule.startTime | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+            <td>{{ schedule.endTime | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+            <td>{{ schedule.finish ? '是' : '否' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

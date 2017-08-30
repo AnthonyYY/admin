@@ -73,6 +73,15 @@ import { PersonnelManagerComponent } from './personnel-manager/personnel-manager
 import { EmployeeComponent } from './personnel-manager/employee/employee.component';
 import {PersonnelService} from './personnel-manager/personnel.service';
 import { EmployeeDetailComponent } from './personnel-manager/employee-detail/employee-detail.component';
+import { TeacherComponent } from './teacher/teacher.component';
+import { TeacherScheduleComponent } from './teacher/teacher-schedule/teacher-schedule.component';
+import { TeacherClassHourComponent } from './teacher/teacher-class-hour/teacher-class-hour.component';
+import {TeacherService} from './teacher/teacher.service';
+import { FinanceComponent } from './finance/finance.component';
+import { ToApprovementComponent } from './finance/to-approvement/to-approvement.component';
+import { StuPayStatComponent } from './finance/stu-pay-stat/stu-pay-stat.component';
+import { StuPayRecordComponent } from './finance/stu-pay-record/stu-pay-record.component';
+import {FinanceService} from './finance/finance.service';
 
 @NgModule({
   declarations: [
@@ -125,7 +134,14 @@ import { EmployeeDetailComponent } from './personnel-manager/employee-detail/emp
     StudentTableComponent,
     PersonnelManagerComponent,
     EmployeeComponent,
-    EmployeeDetailComponent
+    EmployeeDetailComponent,
+    TeacherComponent,
+    TeacherScheduleComponent,
+    TeacherClassHourComponent,
+    FinanceComponent,
+    ToApprovementComponent,
+    StuPayStatComponent,
+    StuPayRecordComponent
   ],
   imports: [
     Select2Module,
@@ -149,7 +165,9 @@ import { EmployeeDetailComponent } from './personnel-manager/employee-detail/emp
     StmanagerService,
     TeacherDirectorService,
     PersonalCashierService,
-    PersonnelService
+    PersonnelService,
+    TeacherService,
+    FinanceService
   ],
   bootstrap: [AppComponent]
 })

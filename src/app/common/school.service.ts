@@ -7,7 +7,7 @@ import {roles} from './enum';
 @Injectable()
 export class SchoolService {
 
-  schools: any[];//cache schools list
+  schools: any[]; // cache schools list
   constructor(
     private http: HttpService,
     private alertService: AlertService
@@ -70,6 +70,20 @@ export class SchoolService {
         this.alertService.alert({
           title: '提示',
           content: '获取教师列表失败',
+          type: 'danger'
+        });
+      }
+    } );
+  }
+
+  fetchPendingApproval(processType, processState): Promise<any> {
+    return this.http.get(`common/progress/${processType}/processState`).then( result => {
+      if ( result.success ) {
+        return result.data;
+      } else {
+        this.alertService.alert({
+          title: '提示',
+          content: '获取审核列表失败,' + result.data,
           type: 'danger'
         });
       }

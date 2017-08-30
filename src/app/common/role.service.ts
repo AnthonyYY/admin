@@ -41,30 +41,39 @@ export class RoleService {
       case roles['consultant']:
         this.router.navigate(['dashboard/counselor']);
         break;
+      /*咨询总监*/
       case roles['consultant_boss']:
         this.router.navigate(['dashboard/counselor']);
         break;
+      /*咨询财务*/
       case roles['finance']:
         this.router.navigate(['dashboard/finance']);
         break;
+      /*学管师*/
       case roles['studentmanager']:
         this.router.navigate(['dashboard/studentmanager']);
         break;
+      /*教师*/
       case roles['teacher']:
         this.router.navigate(['dashboard/teacher']);
         break;
+      /*咨询主任*/
       case roles['consultant_main']:
         this.router.navigate(['dashboard/consultant-main']);
         break;
+      /*教研主任*/
       case roles['teacher_director']:
         this.router.navigate(['dashboard/teacher-director']);
         break;
+      /*分校长*/
       case roles['schoolmaster']:
         this.router.navigate(['dashboard/president-master']);
         break;
+      /*人事专员出纳*/
       case roles['personnel_cashier']:
         this.router.navigate(['dashboard/personal-cashier']);
         break;
+      /*人事经理*/
       case roles['personnel_manager']:
         this.router.navigate(['dashboard/personnel-manager']);
         break;

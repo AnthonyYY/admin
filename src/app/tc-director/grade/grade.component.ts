@@ -12,7 +12,7 @@ export class GradeComponent implements OnInit {
   contentHeader: any[];
   grades: any[];
   filterGradeName: string;
-  curGrade: { name: string, remark: string, price: number | '', id?:string};
+  curGrade: { name: string, remark: string, price: number | '', id?: string };
   constructor(
     private schoolService: SchoolService,
     private teacherDirectorService: TeacherDirectorService
@@ -33,20 +33,20 @@ export class GradeComponent implements OnInit {
   }
 
   setCurGrade(grade?: { name: string, remark: string, price: number | '' ,id?:string}): void {
-    this.curGrade = {...grade} ||{ name: '', remark: '', price: '' };
+    this.curGrade = {...grade} || { name: '', remark: '', price: '' };
   }
 
   fetchGrades(): void {
     this.schoolService.fetchGrades().then( grades => {
       this.grades = grades;
-    } )
+    } );
   }
 
   createGrade(): void {
     this.teacherDirectorService.createGrade(this.curGrade).then( id => {
       this.curGrade.id = id;
       this.grades.unshift(this.curGrade);
-    } )
+    } );
   }
 
   updateGrade(): void {
@@ -54,7 +54,7 @@ export class GradeComponent implements OnInit {
       const curGrade = this.findGradeById(this.curGrade.id);
       const curGradeIndex = this.grades.indexOf(curGrade);
       this.grades[curGradeIndex] = {...this.curGrade};
-    } )
+    } );
   }
 
   deleteGrade(): void {

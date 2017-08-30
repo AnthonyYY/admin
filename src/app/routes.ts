@@ -31,6 +31,13 @@ import {StudentTableComponent} from './personnel-cashier/fees/student-table/stud
 import {PersonnelManagerComponent} from './personnel-manager/personnel-manager.component';
 import {EmployeeComponent} from './personnel-manager/employee/employee.component';
 import {EmployeeDetailComponent} from './personnel-manager/employee-detail/employee-detail.component';
+import {TeacherComponent} from './teacher/teacher.component';
+import {TeacherScheduleComponent} from './teacher/teacher-schedule/teacher-schedule.component';
+import {TeacherClassHourComponent} from './teacher/teacher-class-hour/teacher-class-hour.component';
+import {FinanceComponent} from './finance/finance.component';
+import {ToApprovementComponent} from './finance/to-approvement/to-approvement.component';
+import {StuPayStatComponent} from './finance/stu-pay-stat/stu-pay-stat.component';
+import {StuPayRecordComponent} from './finance/stu-pay-record/stu-pay-record.component';
 
 export const routes: Routes = [
   {
@@ -162,6 +169,25 @@ export const routes: Routes = [
         ]
       },
       {
+        path: 'teacher',
+        component: TeacherComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'teacher-schedule',
+            pathMatch: 'full'
+          },
+          {
+            path: 'teacher-schedule',
+            component: TeacherScheduleComponent,
+          },
+          {
+            path: 'teacher-class-hour',
+            component: TeacherClassHourComponent,
+          }
+        ]
+      },
+      {
         path: 'president-master',
         component: PresidentComponent,
         children: [
@@ -227,6 +253,29 @@ export const routes: Routes = [
             path: 'employee/:employeeId',
             component: EmployeeDetailComponent
           }
+        ]
+      },
+      {
+        path: 'finance',
+        component: FinanceComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'to-approve',
+            pathMatch: 'full'
+          },
+          {
+            path: 'to-approve',
+            component: ToApprovementComponent
+          },
+          {
+            path: 'stu-pay-stat',
+            component: StuPayStatComponent
+          },
+          {
+            path: 'stu-pay-record',
+            component: StuPayRecordComponent
+          },
         ]
       }
     ]

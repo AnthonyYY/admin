@@ -1,0 +1,33 @@
+<app-content-header
+  [title]="'教学课时'" [menus]="contentHeader"></app-content-header>
+
+<div class="content">
+  <div class="box box-primary box-divide">
+    <div class="box-header">
+      <h3 class="box-title">课时信息</h3>
+    </div>
+    <div class="box-body">
+      <table class="table table-hover table-bordered text-center">
+        <thead>
+        <tr>
+          <th>课程名称</th>
+          <th>课时</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let stat of pendingApproval">
+          <td>{{ stat.courseName }}</td>
+          <td>{{ stat.hours || 0 }}</td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <p class="text-muted text-center">
+              暂无课时信息
+            </p>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

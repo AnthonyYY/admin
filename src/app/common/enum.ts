@@ -35,67 +35,67 @@ export const courseTypeList = [
 ];
 
 export const roles = {
-  'super_admin': 'SUPER_ADMIN',                               //超级管理员
+  'super_admin': 'SUPER_ADMIN',                               // 超级管理员
 
-  'consultant': 'CONSULTANT',                                 //咨询师
-  'consultant_boss': 'CONSULTANT_BOSS',                     //咨询主任
-  'consultant_main': 'CONSULTANT_MAIN',                     //咨询总监
+  'consultant': 'CONSULTANT',                                 // 咨询师
+  'consultant_boss': 'CONSULTANT_BOSS',                     // 咨询主任
+  'consultant_main': 'CONSULTANT_MAIN',                     // 咨询总监
 
-  'studentmanager': 'STUDENTMANAGER',                        //学管师
-  'studentmanager_boss': 'studentmanager_boss',            //教管主任
+  'studentmanager': 'STUDENTMANAGER',                        // 学管师
+  'studentmanager_boss': 'studentmanager_boss',            // 教管主任
 
-  'teacher': 'TEACHER',                                        //教师
+  'teacher': 'TEACHER',                                        // 教师
 
-  'teacher_director': 'TEACHER_DIRECTOR',                   //教研主任
+  'teacher_director': 'TEACHER_DIRECTOR',                   // 教研主任
 
-  'schoolmaster': 'SCHOOLMASTER',                             //分校长
-  'schoolmaster_boss': 'SCHOOLMASTER_BOSS',                  //总校长
+  'schoolmaster': 'SCHOOLMASTER',                             // 分校长
+  'schoolmaster_boss': 'SCHOOLMASTER_BOSS',                  // 总校长
 
-  'finance': 'FINANCE',                                        //财务
-  'personnel_cashier': 'PERSONNEL_CASHIER',                 //人事专员出纳
-  'personnel_manager': 'PERSONNEL_MANAGER',                 //人事经理
+  'finance': 'FINANCE',                                        // 财务
+  'personnel_cashier': 'PERSONNEL_CASHIER',                 // 人事专员出纳
+  'personnel_manager': 'PERSONNEL_MANAGER',                 // 人事经理
 };
 
 export const roleMap = {
-  'SUPER_ADMIN': '系统管理员',                             //超级管理员
+  'SUPER_ADMIN': '系统管理员',                             // 超级管理员
 
-  'CONSULTANT': '咨询师',                                 //咨询师
-  'CONSULTANT_BOSS': '咨询主任',                     //咨询主任
-  'CONSULTANT_MAIN': '咨询总监',                     //咨询总监
+  'CONSULTANT': '咨询师',                                 // 咨询师
+  'CONSULTANT_BOSS': '咨询主任',                     // 咨询主任
+  'CONSULTANT_MAIN': '咨询总监',                     // 咨询总监
 
-  'STUDENTMANAGER': '学管师',                        //学管师
-  'studentmanager_boss': '教管主任',            //教管主任
+  'STUDENTMANAGER': '学管师',                        // 学管师
+  'studentmanager_boss': '教管主任',            // 教管主任
 
-  'TEACHER': '教师',                                        //教师
+  'TEACHER': '教师',                                        // 教师
 
-  'TEACHER_DIRECTOR': '教研主任',                   //教研主任
+  'TEACHER_DIRECTOR': '教研主任',                   // 教研主任
 
-  'SCHOOLMASTER': '分校长',                             //分校长
-  'SCHOOLMASTER_BOSS': '总校长',                  //总校长
+  'SCHOOLMASTER': '分校长',                             // 分校长
+  'SCHOOLMASTER_BOSS': '总校长',                  // 总校长
 
-  'FINANCE': '财务',                                        //财务
-  'PERSONNEL_CASHIER': '人事专员出纳',                 //人事专员出纳
-  'PERSONNEL_MANAGER': '人事经理',                 //人事经理
+  'FINANCE': '财务',                                        // 财务
+  'PERSONNEL_CASHIER': '人事专员出纳',                 // 人事专员出纳
+  'PERSONNEL_MANAGER': '人事经理',                 // 人事经理
 };
 
 export const roleList = [
- {id: 'CONSULTANT', text: '咨询师'},                                 //咨询师
-{id: 'CONSULTANT_BOSS', text: '咨询主任'},                     //咨询主任
-{id: 'CONSULTANT_MAIN', text: '咨询总监'},                     //咨询总监
+ {id: 'CONSULTANT', text: '咨询师'},                                 // 咨询师
+{id: 'CONSULTANT_BOSS', text: '咨询主任'},                     // 咨询主任
+{id: 'CONSULTANT_MAIN', text: '咨询总监'},                     // 咨询总监
 
-{id: 'STUDENTMANAGER', text: '学管师'},                        //学管师
-{id: 'STUDENTMANAGER_BOSS', text: '教管主任'},            //教管主任
+{id: 'STUDENTMANAGER', text: '学管师'},                        // 学管师
+{id: 'STUDENTMANAGER_BOSS', text: '教管主任'},            // 教管主任
 
-{id: 'TEACHER', text: '教师'},                                        //教师
+{id: 'TEACHER', text: '教师'},                                        // 教师
 
-{id: 'TEACHER_DIRECTOR', text: '教研主任'},                   //教研主任
+{id: 'TEACHER_DIRECTOR', text: '教研主任'},                   // 教研主任
 
-{id: 'SCHOOLMASTER', text: '分校长'},                             //分校长
-{id: 'SCHOOLMASTER_BOSS', text: '总校长'},                  //总校长
+{id: 'SCHOOLMASTER', text: '分校长'},                             // 分校长
+{id: 'SCHOOLMASTER_BOSS', text: '总校长'},                  // 总校长
 
-{id: 'FINANCE', text: '财务'},                                        //财务
-{id: 'PERSONNEL_CASHIER', text: '人事专员出纳'},                 //人事专员出纳
-{id: 'PERSONNEL_MANAGER', text: '人事经理'},                 //人事经理
+{id: 'FINANCE', text: '财务'},                                        // 财务
+{id: 'PERSONNEL_CASHIER', text: '人事专员出纳'},                 // 人事专员出纳
+{id: 'PERSONNEL_MANAGER', text: '人事经理'},                 // 人事经理
 ];
 
 
