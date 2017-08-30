@@ -77,3 +77,34 @@ export const roleMap = {
   'PERSONNEL_CASHIER': '人事专员出纳',                 //人事专员出纳
   'PERSONNEL_MANAGER': '人事经理',                 //人事经理
 };
+
+export const roleList = [
+ {id: 'CONSULTANT', text: '咨询师'},                                 //咨询师
+{id: 'CONSULTANT_BOSS', text: '咨询主任'},                     //咨询主任
+{id: 'CONSULTANT_MAIN', text: '咨询总监'},                     //咨询总监
+
+{id: 'STUDENTMANAGER', text: '学管师'},                        //学管师
+{id: 'STUDENTMANAGER_BOSS', text: '教管主任'},            //教管主任
+
+{id: 'TEACHER', text: '教师'},                                        //教师
+
+{id: 'TEACHER_DIRECTOR', text: '教研主任'},                   //教研主任
+
+{id: 'SCHOOLMASTER', text: '分校长'},                             //分校长
+{id: 'SCHOOLMASTER_BOSS', text: '总校长'},                  //总校长
+
+{id: 'FINANCE', text: '财务'},                                        //财务
+{id: 'PERSONNEL_CASHIER', text: '人事专员出纳'},                 //人事专员出纳
+{id: 'PERSONNEL_MANAGER', text: '人事经理'},                 //人事经理
+];
+
+
+export const gender = {
+  'MALE': '男',
+  'FEMALE': '女'
+};
+
+export const genderList = [
+  {id: 'MALE', text: '男'},
+  {id: 'FEMALE', text: '女'},
+];

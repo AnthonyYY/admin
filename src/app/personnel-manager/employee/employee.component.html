@@ -1,13 +1,48 @@
 <app-content-header
   [title]="'员工列表管理'" [menus]="contentHeader"></app-content-header>
 <div class="content">
-  <app-collapse-box [collapse]="false" [boxTitle]="'员工过滤'"></app-collapse-box>
+  <app-collapse-box [collapse]="false" [boxTitle]="'员工过滤'">
+    <div class="col-xs-12 col-md-4 input-group-sm">
+      <label class="pull-left">姓名:</label>
+      <div class="input-group input-group-sm" style="width: 148px;">
+        <input class="form-control" [(ngModel)]="filterEmployeeName" placeholder="请输入员工姓名">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-4 input-group-sm">
+      <label class="pull-left">电话:</label>
+      <div class="input-group input-group-sm" style="width: 148px;">
+        <input class="form-control" [(ngModel)]="filterEmployeePhone" placeholder="请输入员工手机号">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-4 input-group-sm">
+      <label class="pull-left">
+        性别:
+      </label>
+      <div class="input-group input-group-sm" style="width: 148px;">
+        <select2 [cssImport]="false"
+                 [options]="{minimumResultsForSearch: -1}"
+                 [data]="[{id: 'ALL', text: '全部'}].concat(genders)"
+                 (valueChanged)="switchFilterGender($event)"
+                 [width]="'148px'"></select2>
+      </div>
+    </div>
+  </app-collapse-box>
 
   <div class="box box-primary box-divide">
     <div class="box-header">
       <h3 class="box-title">员工列表</h3>
       <div class="box-tools">
-        <button class="btn btn-sm btn-primary">
+        <button class="btn btn-sm btn-primary" (click)="form.reset();
+        initCurEmployee();
+        employeeUpdaterOrCreator.showModal({
+          title: '添加新员工',
+          modalSize: 'lg',
+          confirm: createOrUpdateEmployee
+        })">
           <i class="fa fa-plus"></i>
           添加新员工
         </button>
@@ -15,10 +50,31 @@
     </div>
     <div class="box-body">
       <div class="row">
-        <div class="col-xs-4 col-md-3" *ngFor="let employee of employees" [routerLink]="['./' + employee.id]">
+        <div class="col-xs-12 xol-sm-6 col-md-4 col-lg-3" *ngFor="let employee of employees |
+        matchItem: filterEmployeeName : 'name' |
+        matchItem: filterEmployeeGender : 'sex' : 'exact' |
+        matchItem: filterEmployeePhone: 'phone'"
+        (click)="form.reset();
+        initCurEmployee(employee);
+        employeeUpdaterOrCreator.showModal({
+          title: '编辑员工' + curEmployee.name + '的相关信息',
+          modalSize: 'lg',
+          confirm: createOrUpdateEmployee
+        })">
           <div class="box box-widget widget-user">
             <div class="widget-user-header {{ employee.sex === 'MALE' ? 'bg-aqua-active' : 'bg-yellow' }}">
-              <h3 class="widget-user-username">{{ employee.name }}</h3>
+              <h3 class="widget-user-username">
+                {{ employee.name }}
+                <a class="pull-right">
+                  <i class="fa fa-trash-o text-danger" (click)="$event.stopPropagation();
+                  initCurEmployee(employee);
+                  confirmDeleteModal.showModal({
+                    title: '提示',
+                    content: '是否删除员工' + curEmployee.name,
+                    confirm: deleteEmployee
+                  })"></i>
+                </a>
+              </h3>
               <h5 class="widget-user-desc">
                 <i class="fa fa-{{  employee.sex === 'FEMALE' ?'venus':'mars' }}"></i>
                 {{employee.sex === 'MALE' ? '男' : '女'}}
@@ -31,13 +87,26 @@
               <ul class="nav nav-stacked">
                 <li><a href="javascript:void(0)">生日 <span class="pull-right">{{ employee.birthday | date: 'yyyy-MM-dd' }}</span></a></li>
                 <li><a href="javascript:void(0)">邮箱 <span class="pull-right">{{ employee.email }}</span></a></li>
-                <li><a href="javascript:void(0)">电话 <span class="pull-right">{{ employee.phone }}</span></a></li>
-                <li><a href="javascript:void(0)">专业 <span class="pull-right">{{ employee.specialty }}</span></a></li>
+                <li><a href="javascript:void(0)">电话<span class="pull-right">{{ employee.phone }}</span></a></li>
+                <li><a href="javascript:void(0)">专业 <span class="pull-right">{{ employee.specialty || '--' }}</span></a></li>
                 <li>
                   <a href="javascript:void(0)">
-                    学历
-                    <span class="pull-right">{{ employee.education }}
+                    学历/院校
+                    <span class="pull-right">{{ employee.education || '--' }}
                         <span *ngIf="employee.orignSchool"> '(' {{ employee.orignSchool }} ')'</span>
+                    </span>
+                  </a>
+                </li>
+                <li>
+                  <a href="javascript: void(0)">
+                    身份证 <span class="pull-right">{{employee.idCard}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)">
+                    联系人
+                    <span class="pull-right" data-toggle="tooltip" data-placement="top"title="电话：{{employee.clamantPhone || '--'}}">
+                      {{ employee.clamantName || '--'}}
                     </span>
                   </a>
                 </li>
@@ -49,3 +118,124 @@
     </div>
   </div>
 </div>
+
+
+<app-modal #employeeUpdaterOrCreator [disabledAcceptBtn]="!form.valid">
+  <form class="form" #form="ngForm">
+    <div class="row">
+      <div class="col-sm-12 col-md-5">
+
+        <div class="form-group form-group-sm clearfix">
+          <label for="name" class="control-label col-xs-3 necessary">姓名</label>
+          <div class="col-xs-9">
+            <input name="name" #name="ngModel" id="name" placeholder="请输入姓名" class="form-control {{ name.touched && name.invalid && 'error' }}" [(ngModel)]="curEmployee.name" required>
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm clearfix" [hidden]="curEmployee.id">
+          <label for="username" class="control-label col-xs-3 necessary">用户名</label>
+          <div class="col-xs-9">
+            <input name="username" #username=ngModel id="username" placeholder="请输入用户名" class="form-control {{username.touched && username.invalid && 'error'}}" [(ngModel)]="curEmployee.username" [required]="!curEmployee.id">
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm clearfix">
+          <label for="gender" class="control-label col-xs-3">性别</label>
+          <div class="col-xs-9">
+            <select2 [width]="229" [cssImport]="false" id="gender" [data]="genders" [options]="{minimumResultsForSearch: -1}" (valueChanged)="switchCurEmployeeGender($event)"></select2>
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm clearfix" *ngIf="!curEmployee.id">
+          <label for="role" class="control-label col-xs-3">角色</label>
+          <div class="col-xs-9">
+            <select2 [width]="229" [value]="curEmployee.roleIds[0]" [cssImport]="false" id="role" [data]="roles" [options]="{minimumResultsForSearch: 5}" (valueChanged)="switchCurEmployeeRole($event)"></select2>
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm clearfix">
+          <label for="phone" class="control-label col-xs-3 necessary">电话</label>
+          <div class="col-xs-9">
+            <input type="tel" #phone="ngModel" name="phone" id="phone" placeholder="电话" class="form-control {{phone.touched && phone.invalid && 'error'}}" [(ngModel)]="curEmployee.phone" required pattern="[0-9]{11}">
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm clearfix">
+          <label for="email" class="control-label col-xs-3 necessary">邮箱</label>
+          <div class="col-xs-9">
+            <input name="email" #email="ngModel" id="email" placeholder="请输入邮箱" class="form-control {{email.touched && email.invalid && 'error'}}" [(ngModel)]="curEmployee.email" required>
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm clearfix">
+          <label for="education" class="control-label col-xs-3">学历</label>
+          <div class="col-xs-9">
+            <input name="education" id="education" placeholder="请输入学历信息" class="form-control" [(ngModel)]="curEmployee.education">
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm clearfix">
+          <label for="specialty" class="control-label col-xs-3">专业</label>
+          <div class="col-xs-9">
+            <input name="specialty" id="specialty" placeholder="请输入专业信息" class="form-control" [(ngModel)]="curEmployee.specialty">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-sm-12 col-md-7">
+
+        <div class="form-group form-group-sm clearfix">
+          <label for="idCard" class="control-label col-xs-3 necessary">身份证号</label>
+          <div class="col-xs-9">
+            <input name="idCard" #idCard="ngModel" id="idCard" placeholder="请输入身份证号" class="form-control {{idCard && idCard.touched && idCard.invalid && 'error'}}" [(ngModel)]="curEmployee.idCard" required pattern="[0-9]{18}">
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm clearfix">
+          <label for="graduationSchool" class="control-label col-xs-3">毕业院校</label>
+          <div class="col-xs-9">
+            <input name="graduationSchool" id="graduationSchool" placeholder="请输入毕业学校信息" class="form-control" [(ngModel)]="curEmployee.graduationSchool">
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm clearfix">
+          <label for="address" class="control-label col-xs-3 necessary">居住地址</label>
+          <div class="col-xs-9">
+            <input name="address" #address="ngModel" id="address" placeholder="请输入居住地址" class="form-control {{address.touched && address.invalid && 'error'}}" [(ngModel)]="curEmployee.address" required>
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm clearfix">
+          <label for="clamantName" class="control-label col-xs-3">联系人姓名</label>
+          <div class="col-xs-9">
+            <input name="clamantName" id="clamantName" placeholder="请输入紧急联系人姓名" class="form-control" [(ngModel)]="curEmployee.clamantName">
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm clearfix">
+          <label for="clamantPhone" class="control-label col-xs-3">联系人电话</label>
+          <div class="col-xs-9">
+            <input name="clamantPhone" #clamantPhone="ngModel" id="clamantPhone" placeholder="请输入紧急联系人电话" class="form-control {{ clamantPhone.touched && clamantPhone.invalid && 'error' }}" [(ngModel)]="curEmployee.clamantPhone" pattern="[0-9]{11}">
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm clearfix" [hidden]="curEmployee.id" *ngIf="schools.length">
+          <label for="school" class="control-label col-xs-3">所属校区</label>
+          <div class="col-xs-9">
+            <select2 [value]="curEmployee.schoolId" [disabled]="ifDisabledSchool()" [width]="341" [cssImport]="false" id="school" [data]="schools" [options]="{minimumResultsForSearch: 5}" (valueChanged)="switchCurEmployeeSchool($event)"></select2>
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm clearfix">
+          <label for="remark" class="control-label col-xs-3">备注信息</label>
+          <div class="col-xs-9">
+            <textarea name="remark" id="remark" placeholder="请输入备注信息" class="form-control" [(ngModel)]="curEmployee.remark" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</app-modal>
+
+<app-modal #confirmDeleteModal></app-modal>
