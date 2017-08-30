@@ -53,6 +53,7 @@ export class EmployeeComponent implements OnInit {
   initCurEmployee(employee?:any): void {
     if (employee) {
       this.curEmployee = {...employee};
+      console.log(this.curEmployee);
     } else {
       const initRoleId = [this.roles[0]['id']];
       const initSchoolId = this.schools.length ? this.schools[0]['id'] : '';
