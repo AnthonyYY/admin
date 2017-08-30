@@ -7,14 +7,16 @@ import {roles} from './enum';
 @Injectable()
 export class SchoolService {
 
+  schools: any[];//cache schools list
   constructor(
     private http: HttpService,
     private alertService: AlertService
   ) { }
 
   fetchSchoolList(): Promise<School[]> {
-    return this.http.get('common/school').then( result => {
+    const xhr = this.http.get('common/school').then( result => {
       if (result.success) {
+        this.schools = result.data;
         return result.data;
       } else {
         this.alertService.alert({
@@ -25,6 +27,10 @@ export class SchoolService {
         return [];
       }
     } );
+    if(this.schools){
+      return Promise.resolve(this.schools);
+    }
+    return xhr;
   }
 
   fetchCourses(): Promise<any>{
