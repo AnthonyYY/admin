@@ -71,6 +71,8 @@ import { SchoolTableComponent } from './personnel-cashier/fees/school-table/scho
 import { StudentTableComponent } from './personnel-cashier/fees/student-table/student-table.component';
 import { PersonnelManagerComponent } from './personnel-manager/personnel-manager.component';
 import { EmployeeComponent } from './personnel-manager/employee/employee.component';
+import {PersonnelService} from './personnel-manager/personnel.service';
+import { EmployeeDetailComponent } from './personnel-manager/employee-detail/employee-detail.component';
 
 @NgModule({
   declarations: [
@@ -122,7 +124,8 @@ import { EmployeeComponent } from './personnel-manager/employee/employee.compone
     SchoolTableComponent,
     StudentTableComponent,
     PersonnelManagerComponent,
-    EmployeeComponent
+    EmployeeComponent,
+    EmployeeDetailComponent
   ],
   imports: [
     Select2Module,
@@ -145,7 +148,8 @@ import { EmployeeComponent } from './personnel-manager/employee/employee.compone
     ConsultantMainService,
     StmanagerService,
     TeacherDirectorService,
-    PersonalCashierService
+    PersonalCashierService,
+    PersonnelService
   ],
   bootstrap: [AppComponent]
 })

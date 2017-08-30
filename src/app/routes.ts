@@ -30,6 +30,7 @@ import {SchoolTableComponent} from './personnel-cashier/fees/school-table/school
 import {StudentTableComponent} from './personnel-cashier/fees/student-table/student-table.component';
 import {PersonnelManagerComponent} from './personnel-manager/personnel-manager.component';
 import {EmployeeComponent} from './personnel-manager/employee/employee.component';
+import {EmployeeDetailComponent} from './personnel-manager/employee-detail/employee-detail.component';
 
 export const routes: Routes = [
   {
@@ -221,6 +222,10 @@ export const routes: Routes = [
           {
             path: 'employee',
             component: EmployeeComponent
+          },
+          {
+            path: 'employee/:employeeId',
+            component: EmployeeDetailComponent
           }
         ]
       }

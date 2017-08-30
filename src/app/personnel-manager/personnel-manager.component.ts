@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Sidebar} from '../sidebar/sidebar';
+import {PersonnelService} from './personnel.service';
 
 @Component({
   selector: 'app-personnel-manager',
@@ -18,6 +19,6 @@ export class PersonnelManagerComponent implements OnInit {
         routerLink: ['employee'],
         icon: 'fa-users'
       }
-    ]
+    ];
   }
 }
