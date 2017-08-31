@@ -54,7 +54,7 @@
                 class="btn btn-default center-block"
                 style="width: 310px;"
                 (click)="transfer()"
-                [disabled]="!transferEvent.studentId">
+                [disabled]="!transferEvent.studentId || !transferEvent.remark">
           <i class="fa fa-hand-o-hand"></i>
           发起退费申请
         </button>
