@@ -23,7 +23,7 @@ export class StatComponent implements OnInit {
     this.signMoneyRecord = {details: [], num: 0, total: 0};
     this.renewMoneyRecord = {details: [], num: 0, total: 0 };
     this.classHourRecord = { details: [], finishHour: 0, unFinishHour: 0, totalHour: 0};
-    this.contentHeader =     this.contentHeader = [
+    this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
       {name: '签约/缴费/课时统计页', icon: 'fa-th-li'}
     ];

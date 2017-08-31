@@ -194,7 +194,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'stats',
+            redirectTo: 'transfer',
             pathMatch: 'full'
           },
           {
