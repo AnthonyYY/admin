@@ -38,7 +38,7 @@ export class PresidentService {
   }
 
   fetchRenewMoney(): Promise<any> {
-    return this.http.get('president/stat/rene').then( result => {
+    return this.http.get('president/stat/renew').then( result => {
       if (result.success) {
         return result.data;
       } else {
@@ -54,6 +54,19 @@ export class PresidentService {
       } else {
         throw Error('操作失败');
       }
+    } );
+  }
+
+  transfer(transferEvent: any) : Promise<boolean> {
+    return this.http.post('president/school', transferEvent).then( result => {
+      if (result.success) {
+        this.alertService.alert({
+          title: '提示',
+          content: '转校申请已发起， 正在审核中',
+          type: 'success'
+        });
+      }
+      return result.success;
     } );
   }
 }
