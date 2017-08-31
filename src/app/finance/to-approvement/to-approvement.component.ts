@@ -8,7 +8,7 @@ import {SchoolService} from '../../common/school.service';
 })
 export class ToApprovementComponent implements OnInit {
 
-  pendingApproval: any[];
+  records: any[];
   contentHeader: any[];
 
   constructor(
@@ -16,7 +16,7 @@ export class ToApprovementComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.pendingApproval = [];
+    this.records = [];
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
       {name: '退费审批列表页', icon: 'fa-list'}
@@ -26,7 +26,7 @@ export class ToApprovementComponent implements OnInit {
 
   fetchPendingApprovals(): void {
     this.schoolService.fetchPendingApproval( 'BACK_MONEY', 'WAIT_AUDIT' ).then( records => {
-      this.pendingApproval = records;
+      this.records = records;
     } );
   }
 }

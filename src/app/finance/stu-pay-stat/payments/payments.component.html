@@ -1,0 +1,44 @@
+<div class="box box-primary box-divide">
+  <div class="box-header">
+    <h3 class="box-title">学生缴费统计</h3>
+    <div class="box-tools">
+      <a [routerLink]="['../school-table']">
+        <button class="btn btn-sm btn-primary">
+          <i class="fa fa-building"></i>
+          返回校区列表
+        </button>
+      </a>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-hover box-bordered text-center">
+      <thead>
+        <tr>
+          <th>姓名</th>
+          <th>所在校区</th>
+          <th>电话</th>
+          <th>缴款金额</th>
+          <th>退款金额</th>
+          <th>使用金额</th>
+          <th>缴费状态</th>
+          <th>备注</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let payment of payments">
+          <td>{{ payment.name }}</td>
+          <td>{{ payment.schoolName }}</td>
+          <td>{{ payment.phone }}</td>
+          <td>{{ payment.hasPay || 0 }}</td>
+          <td>{{ payment.hasBack || 0 }}</td>
+          <td>{{ payment.hasUsed || 0 }}</td>
+          <td>{{ payment.alreadyPaid === 'YES' ? '已缴费':'未缴费' }}</td>
+          <td>{{ payment.remark || '--' }}</td>
+        </tr>
+        <tr *ngIf="!payments.length">
+          <td colspan="8" class="text-muted">暂无学员缴费信息</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

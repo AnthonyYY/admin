@@ -1,26 +1,38 @@
 <app-content-header
-  [title]="'教学课时'" [menus]="contentHeader"></app-content-header>
+  [title]="'退费审批'" [menus]="contentHeader"></app-content-header>
 
 <div class="content">
   <div class="box box-primary box-divide">
     <div class="box-header">
-      <h3 class="box-title">课时信息</h3>
+      <h3 class="box-title">待审批退费列表</h3>
     </div>
     <div class="box-body">
       <table class="table table-hover table-bordered text-center">
         <thead>
         <tr>
-          <th>课程名称</th>
-          <th>课时</th>
+          <th>申请时间</th>
+          <th>退款金额</th>
+          <th>所在学校</th>
+          <th>学生姓名</th>
+          <th>备注</th>
+          <th>操作</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let stat of pendingApproval">
-          <td>{{ stat.courseName }}</td>
-          <td>{{ stat.hours || 0 }}</td>
+        <tr *ngFor="let record of records">
+          <td>{{ record.applicationTime | date: 'yyyy-MM-dd HH-mm' }}</td>
+          <td>{{ record.returnAmount || 0 }}</td>
+          <td>{{ record.schoolName }}</td>
+          <td>{{ record.studentName }}</td>
+          <td>{{ record.remark || '--' }}</td>
+          <td>
+            <div class="form-group form-group-sm">
+              <button class="btn btn-xs btn-primary">审批</button>
+            </div>
+          </td>
         </tr>
-        <tr>
-          <td colspan="2">
+        <tr *ngIf="!records.length">
+          <td colspan="5">
             <p class="text-muted text-center">
               暂无课时信息
             </p>
@@ -31,3 +43,27 @@
     </div>
   </div>
 </div>
+
+<app-modal #auditModal>
+  <form class="form text-center clearfix">
+    <div class="radio">
+      <label>
+        <input type="radio" name="optionsRadios" id="approve" (change)="approve = 'AUDIT_SUCCESS'" [checked]="approve === 'AUDIT_SUCCESS'">
+        通过该退费申请
+      </label>
+    </div>
+
+    <div class="radio">
+      <label>
+        <input type="radio" name="optionsRadios" id="reject" value="option1" (change)="approve = 'AUDIT_FAIL'" [checked]="approve === 'AUDIT_FAIL'">
+        拒绝该退费申请
+      </label>
+    </div>
+
+    <div class="form-group form-group-sm col-xs-6 col-xs-offset-3">
+      <div>
+        <textarea name="remark" id="remark" class="form-control" rows="2" placeholder="请填写审核备注" [(ngModel)]="approveRemark"></textarea>
+      </div>
+    </div>
+  </form>
+</app-modal>

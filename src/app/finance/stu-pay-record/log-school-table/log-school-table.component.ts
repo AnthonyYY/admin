@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {SchoolService} from '../../common/school.service';
+import {SchoolService} from '../../../common/school.service';
 
 @Component({
-  selector: 'app-stu-pay-record',
-  templateUrl: './stu-pay-record.component.html',
-  styleUrls: ['./stu-pay-record.component.less']
+  selector: 'app-log-school-table',
+  templateUrl: './log-school-table.component.html',
+  styleUrls: ['./log-school-table.component.less']
 })
-export class StuPayRecordComponent implements OnInit {
-
+export class LogSchoolTableComponent implements OnInit {
   schools: any[];
   contentHeader: any[];
   constructor(
@@ -18,7 +17,7 @@ export class StuPayRecordComponent implements OnInit {
     this.schools = [];
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
-      {name: '学生缴费日志', icon: 'fa-th-li'}
+      {name: '学生缴费统计', icon: 'fa-th-li'}
     ];
     this.fetchSchools();
   }

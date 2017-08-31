@@ -27,13 +27,14 @@ export class SchoolService {
         return [];
       }
     } );
-    if(this.schools){
+
+    if (this.schools) {
       return Promise.resolve(this.schools);
     }
     return xhr;
   }
 
-  fetchCourses(): Promise<any>{
+  fetchCourses(): Promise<any> {
     return this.http.get('common/course').then( data => {
       if (data.success) {
         data.data.forEach( course => course.text = course.name);

@@ -85,6 +85,10 @@ import {FinanceService} from './finance/finance.service';
 import { PresidentBossComponent } from './president-boss/president-boss.component';
 import { StatComponent } from './president/stat/stat.component';
 import {PresidentService} from './president/president.service';
+import { PaymentsComponent } from './finance/stu-pay-stat/payments/payments.component';
+import { FinanceSchoolTableComponent } from './finance/stu-pay-stat/school-table/school-table.component';
+import { PaymentLogComponent } from './finance/stu-pay-record/payment-log/payment-log.component';
+import { LogSchoolTableComponent } from './finance/stu-pay-record/log-school-table/log-school-table.component';
 
 @NgModule({
   declarations: [
@@ -146,7 +150,11 @@ import {PresidentService} from './president/president.service';
     StuPayStatComponent,
     StuPayRecordComponent,
     PresidentBossComponent,
-    StatComponent
+    StatComponent,
+    PaymentsComponent,
+    FinanceSchoolTableComponent,
+    PaymentLogComponent,
+    LogSchoolTableComponent
   ],
   imports: [
     Select2Module,

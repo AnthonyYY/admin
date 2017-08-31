@@ -39,6 +39,10 @@ import {ToApprovementComponent} from './finance/to-approvement/to-approvement.co
 import {StuPayStatComponent} from './finance/stu-pay-stat/stu-pay-stat.component';
 import {StuPayRecordComponent} from './finance/stu-pay-record/stu-pay-record.component';
 import {StatComponent} from './president/stat/stat.component';
+import {PaymentsComponent} from './finance/stu-pay-stat/payments/payments.component';
+import {FinanceSchoolTableComponent} from './finance/stu-pay-stat/school-table/school-table.component';
+import {LogSchoolTableComponent} from './finance/stu-pay-record/log-school-table/log-school-table.component';
+import {PaymentLogComponent} from './finance/stu-pay-record/payment-log/payment-log.component';
 
 export const routes: Routes = [
   {
@@ -271,15 +275,45 @@ export const routes: Routes = [
           },
           {
             path: 'to-approve',
-            component: ToApprovementComponent
+            component: ToApprovementComponent,
           },
           {
             path: 'stu-pay-stat',
-            component: StuPayStatComponent
+            component: StuPayStatComponent,
+            children: [
+              {
+                path: '',
+                redirectTo: 'school-table',
+                pathMatch: 'full'
+              },
+              {
+                path: 'student-payments',
+                component: PaymentsComponent
+              },
+              {
+                path: 'school-table',
+                component: FinanceSchoolTableComponent
+              }
+            ]
           },
           {
             path: 'stu-pay-record',
-            component: StuPayRecordComponent
+            component: StuPayRecordComponent,
+            children: [
+              {
+                path: '',
+                redirectTo: 'school-table',
+                pathMatch: 'full'
+              },
+              {
+                path: 'school-table',
+                component: LogSchoolTableComponent
+              },
+              {
+                path: 'logs',
+                component: PaymentLogComponent
+              }
+            ]
           },
         ]
       }
