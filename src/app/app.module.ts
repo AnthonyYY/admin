@@ -89,6 +89,7 @@ import { PaymentsComponent } from './finance/stu-pay-stat/payments/payments.comp
 import { FinanceSchoolTableComponent } from './finance/stu-pay-stat/school-table/school-table.component';
 import { PaymentLogComponent } from './finance/stu-pay-record/payment-log/payment-log.component';
 import { LogSchoolTableComponent } from './finance/stu-pay-record/log-school-table/log-school-table.component';
+import { TransferBossComponent } from './president/transfer-boss/transfer-boss.component';
 
 @NgModule({
   declarations: [
@@ -154,7 +155,8 @@ import { LogSchoolTableComponent } from './finance/stu-pay-record/log-school-tab
     PaymentsComponent,
     FinanceSchoolTableComponent,
     PaymentLogComponent,
-    LogSchoolTableComponent
+    LogSchoolTableComponent,
+    TransferBossComponent
   ],
   imports: [
     Select2Module,

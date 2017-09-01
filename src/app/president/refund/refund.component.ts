@@ -32,7 +32,7 @@ export class RefundComponent implements OnInit {
     this.auditRejectedList = [];
     this.contentHeader =     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
-      {name: '退费申请管理', icon: 'fa-th-li'}
+      {name: '退费审核管理', icon: 'fa-th-li'}
     ];
 
     this.fetchBackRecord();

@@ -1,12 +1,48 @@
 <app-content-header
-  [title]="'退费申请页'" [menus]="contentHeader"></app-content-header>
+  [title]="'转校申请页'" [menus]="contentHeader"></app-content-header>
 
 <div class="content">
   <div class="box box-primary box-divide">
     <div class="box-header">
-      <h3 class="box-title">退费申请</h3>
+      <h3 class="box-title">转校申请</h3>
     </div>
     <div class="box-body">
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>审核学生</th>
+            <th>原始校区</th>
+            <th>目标校区</th>
+            <th>发起时间</th>
+            <th>审核备注</th>
+            <th>审核状态</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let record of appRecords">
+            <td>{{ record.studentName }}</td>
+            <td>{{ record.fromSchoolName }}</td>
+            <td>{{ record.toSchoolName }}</td>
+            <td>{{ record.applicationTime | date:'yyyy-MM-dd' }}</td>
+            <td>{{ record.remark }}</td>
+            <td>
+              <span class="label"
+                    [class.label-danger]="record.applicationStatus === 'AUDIT_FAIL'"
+                    [class.label-success]="record.applicationStatus === 'AUDIT_SUCCESS'"
+                    [class.label-warning]="record.applicationStatus === 'AUDITING'">
+                {{ auditState[record.applicationStatus] }}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="6">
+              <p class="text-muted text-center">暂无转校申请记录</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
       <form  class="form center-block">
 
         <div class="row">

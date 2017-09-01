@@ -10,6 +10,12 @@ export const states = [
   {id: 'HAS_PAY', text: '已缴费'}
 ];
 
+export const auditState = {
+  'AUDITING': '审核中',
+  'AUDIT_SUCCESS': '审核通过',
+  'AUDIT_FAIL': '审核拒绝',
+};
+
 export const payType = {
   'STUDENTMANAGER_PAY': '学管师续费',
   'COUNSELOR_PAY': '咨询师缴费',

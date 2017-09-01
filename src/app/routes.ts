@@ -43,6 +43,7 @@ import {PaymentsComponent} from './finance/stu-pay-stat/payments/payments.compon
 import {FinanceSchoolTableComponent} from './finance/stu-pay-stat/school-table/school-table.component';
 import {LogSchoolTableComponent} from './finance/stu-pay-record/log-school-table/log-school-table.component';
 import {PaymentLogComponent} from './finance/stu-pay-record/payment-log/payment-log.component';
+import {TransferBossComponent} from './president/transfer-boss/transfer-boss.component';
 
 export const routes: Routes = [
   {
@@ -198,8 +199,8 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'transfer',
-            pathMatch: 'full'
+            redirectTo: 'stats',
+            pathMatch: 'full',
           },
           {
             path: 'refund',
@@ -208,6 +209,10 @@ export const routes: Routes = [
           {
             path: 'transfer',
             component: TransferComponent
+          },
+          {
+            path: 'transfer-boss',
+            component: TransferBossComponent
           },
           {
             path: 'stats',

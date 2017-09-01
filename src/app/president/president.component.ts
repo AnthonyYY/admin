@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Sidebar} from '../sidebar/sidebar';
+import {UserService} from '../common/user.service';
+import { Router} from '@angular/router';
 
 @Component({
   selector: 'app-president',
@@ -10,26 +12,41 @@ export class PresidentComponent implements OnInit {
 
   sidebarMenu: Array<Sidebar>;
   constructor(
-
+    private userService: UserService,
+    private router: Router
   ) { }
 
   ngOnInit() {
+
     this.sidebarMenu = [
       {
         name: '统计信息管理',
         routerLink: ['stats'],
         icon: 'fa-pie-chart'
       },
-      {
-        name: '退费申请管理',
-        routerLink: ['refund'],
-        icon: 'fa-file-excel-o'
-      },
-      {
-        name: '转校申请管理',
-        routerLink: ['transfer'],
-        icon: 'fa-file-pdf-o'
-      },
     ];
+    this.userService.userInfoChange.subscribe( value => {
+      if (value) {
+        if (value === 'SCHOOLMASTER_BOSS') {
+          this.sidebarMenu.push({
+            name: '转校审核管理',
+            routerLink: ['transfer-boss'],
+            icon: 'fa-file-pdf-o'
+          }, {
+            name: '退费审核管理',
+            routerLink: ['refund'],
+            icon: 'fa-file-excel-o'
+          });
+        } else {
+          this.sidebarMenu.push(
+            {
+              name: '转校申请管理',
+              routerLink: ['transfer'],
+              icon: 'fa-file-pdf-o'
+            }
+          );
+        }
+      }
+    } );
   }
 }

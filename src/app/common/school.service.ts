@@ -90,4 +90,21 @@ export class SchoolService {
       }
     } );
   }
+
+  audit(handlerStatus: string, processId: string, remark?: string): Promise<boolean> {
+    let url = `president/money/${handlerStatus}/${processId}`;
+    if (remark) {
+      url += `?remark=${remark}`;
+    }
+    return this.http.put(url, {} ).then( result => {
+      if (result.success) {
+        this.alertService.alert({
+          title: '提示',
+          content: '审核成功',
+          type: 'success'
+        });
+      }
+      return result.success;
+    } );
+  }
 }

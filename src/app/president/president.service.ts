@@ -57,7 +57,7 @@ export class PresidentService {
     } );
   }
 
-  transfer(transferEvent: any) : Promise<boolean> {
+  transfer(transferEvent: any): Promise<boolean> {
     return this.http.post('president/school', transferEvent).then( result => {
       if (result.success) {
         this.alertService.alert({
@@ -69,4 +69,40 @@ export class PresidentService {
       return result.success;
     } );
   }
+
+  fetchAppRecords(): Promise<any> {
+    return this.http.get('common/my/application/CHANGE_SCHOOL').then( result => {
+      if (result.success) {
+        console.log(result);
+        return result.data;
+      }
+      return [];
+    } );
+  }
+
+  fetchStuTransferAppRecords(processLog: string, handlerStatus: string): Promise<any> {
+    return this.http.get(`common/progress/${processLog}/${handlerStatus}`).then( result => {
+      if (result.success) {
+        return result.data;
+      }
+      return [];
+    } );
+  }
+
+  /*
+   *
+   */
+  checkBackApplication(handlerStatus, processId): Promise<any> {
+    return this.http.put(`president/school/${handlerStatus}/${processId}`, {}).then( result => {
+      if (result.success) {
+        this.alertService.alert({
+          type: 'success',
+          title: '成功提示',
+          content: '审批成功'
+        });
+      }
+      return result.success;
+    }  );
+  }
+
 }

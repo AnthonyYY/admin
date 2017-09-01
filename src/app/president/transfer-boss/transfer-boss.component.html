@@ -1,36 +1,38 @@
 <app-content-header
-  [title]="'退费审批'" [menus]="contentHeader"></app-content-header>
+  [title]="'转校审核页'" [menus]="contentHeader"></app-content-header>
 
 <div class="content">
   <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-      <li class="active" (click)="fetchAuditPendingRecord()"><a href="#waitAudit" data-toggle="tab">待审批退费</a></li>
-      <li class="" (click)="fetchAuditSuccessRecords()"><a href="#auditSuccess" data-toggle="tab">已通过退费</a></li>
-      <li class="" (click)="fetchAuditFailedRecords()"><a href="#auditFail" data-toggle="tab">已拒绝退费</a></li>
+      <li class="active" (click)="fetchAuditPendingRecord()"><a href="#waitAudit" data-toggle="tab">待审批转校</a></li>
+      <li class="" (click)="fetchAuditSuccessRecords()"><a href="#auditSuccess" data-toggle="tab">已通过转校</a></li>
+      <li class="" (click)="fetchAuditFailedRecords()"><a href="#auditFail" data-toggle="tab">已拒绝转校</a></li>
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="waitAudit">
         <table class="table table-bordered table-hover text-center">
           <thead>
           <tr>
+            <th>申请人</th>
             <th>申请时间</th>
-            <th>退款金额</th>
-            <th>所在学校</th>
-            <th>学生姓名</th>
-            <th>备注</th>
+            <th>原始学校</th>
+            <th>目标学校(本校)</th>
+            <th>转校学生</th>
+            <th>申请备注</th>
             <th>操作</th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let record of auditPendingRecords;">
-            <td>{{ record.applicationTime | date: 'yyyy-MM-dd HH-mm'}}</td>
-            <td>{{ record.returnAmount || 0}}</td>
-            <td>{{ record.schoolName}}</td>
-            <td>{{ record.studentName}}</td>
-            <td>{{ record.applicationRemark || '--'}}</td>
-            <td>
-              <div class="button-group button-group-xs">
-                <button class="btn btn-xs btn-primary" (click)="approve='AUDIT_SUCCESS';
+            <tr *ngFor="let record of auditPendingRecords;">
+              <td>{{ record.applicationName}}</td>
+              <td>{{ record.applicationTime | date: 'yyyyMM-dd' }}</td>
+              <td>{{ record.fromSchoolName }}</td>
+              <td>{{ record.toSchoolName }}</td>
+              <td>{{ record.studentName }}</td>
+              <td>{{ record.applicationRemark }}</td>
+              <td>
+                <div class="button-group button-group-xs">
+                  <button class="btn btn-xs btn-primary" (click)="approve='AUDIT_SUCCESS';
                   approveRemark = '';
                   curAudit = record;
                   auditModal.showModal({
@@ -38,9 +40,9 @@
                     title: '是否通过审核?',
                     confirm: checkBackApplication
                   })">审核</button>
-              </div>
-            </td>
-          </tr>
+                </div>
+              </td>
+            </tr>
           <tr *ngIf="!auditPendingRecords.length">
             <td colspan="7">
               <p class="text-center text-muted">暂时无审批项信息</p>
@@ -54,20 +56,22 @@
         <table class="table table-bordered table-hover text-center">
           <thead>
           <tr>
+            <th>申请人</th>
             <th>申请时间</th>
-            <th>退款金额</th>
-            <th>所在学校</th>
-            <th>学生姓名</th>
-            <th>备注</th>
+            <th>原始学校</th>
+            <th>目标学校</th>
+            <th>转校学生</th>
+            <th>申请备注</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let record of auditSuccessRecords;">
-            <td>{{ record.applicationTime | date: 'yyyy-MM-dd HH-mm'}}</td>
-            <td>{{ record.returnAmount || 0}}</td>
-            <td>{{ record.schoolName}}</td>
-            <td>{{ record.studentName}}</td>
-            <td>{{ record.applicationRemark || '--'}}</td>
+            <td>{{ record.applicationName }}</td>
+            <td>{{ record.applicationTime | date: 'yyyyMM-dd' }}</td>
+            <td>{{ record.fromSchoolName }}</td>
+            <td>{{ record.toSchoolName }}</td>
+            <td>{{ record.studentName }}</td>
+            <td>{{record.applicationRemark }}</td>
           </tr>
           <tr *ngIf="!auditSuccessRecords.length">
             <td colspan="6">
@@ -82,20 +86,22 @@
         <table class="table table-bordered table-hover text-center">
           <thead>
           <tr>
+            <th>申请人</th>
             <th>申请时间</th>
-            <th>退款金额</th>
-            <th>所在学校</th>
-            <th>学生姓名</th>
-            <th>备注</th>
+            <th>原始学校</th>
+            <th>目标学校</th>
+            <th>转校学生</th>
+            <th>申请备注</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let record of auditFailedRecords;">
-            <td>{{ record.applicationTime | date: 'yyyy-MM-dd HH-mm'}}</td>
-            <td>{{ record.returnAmount || 0}}</td>
-            <td>{{ record.schoolName}}</td>
-            <td>{{ record.studentName}}</td>
-            <td>{{ record.applicationRemark || '--'}}</td>
+            <td>{{ record.applicationName }}</td>
+            <td>{{ record.applicationTime | date: 'yyyy-MM-dd' }}</td>
+            <td>{{ record.fromSchoolName }}</td>
+            <td>{{ record.toSchoolName }}</td>
+            <td>{{ record.studentName }}</td>
+            <td>{{record.applicationRemark}}</td>
           </tr>
           <tr *ngIf="!auditFailedRecords.length">
             <td colspan="6">
@@ -108,6 +114,7 @@
     </div>
   </div>
 </div>
+
 
 <app-modal #auditModal>
   <form class="form text-center clearfix">

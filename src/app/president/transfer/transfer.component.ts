@@ -3,14 +3,18 @@ import {SchoolService} from '../../common/school.service';
 import {UserService} from '../../common/user.service';
 import {AppSettings} from '../../app-settings';
 import {PresidentService} from '../president.service';
+import {auditState} from '../../common/enum';
 
 @Component({
   selector: 'app-transfer',
   templateUrl: './transfer.component.html',
   styleUrls: ['./transfer.component.less']
 })
+
 export class TransferComponent implements OnInit {
 
+  auditState: any;
+  appRecords: any[];
   students: any[];
   select2Options: any;
   transferEvent: any;
@@ -24,6 +28,8 @@ export class TransferComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.auditState = auditState;
+    this.appRecords = [];
     this.students = [];
     this.transferEvent = {
       toSchoolId: '',
@@ -36,6 +42,7 @@ export class TransferComponent implements OnInit {
       {name: '转校申请页', icon: 'fa-th-li'}
     ];
     this.fetchSchools();
+    this.fetchAppRecords();
     this.select2Options = {
       placeholder: '请输入姓名搜索学生',
       minimumInputLength: 1,
@@ -57,7 +64,7 @@ export class TransferComponent implements OnInit {
           console.log(term, page, context);
         }
       }
-    }
+    };
   }
 
   fetchSchools(): void {
@@ -68,15 +75,22 @@ export class TransferComponent implements OnInit {
     } );
   }
 
-  switchSchool($event){
+  switchSchool($event): void {
     this.transferEvent.toSchoolId = $event.value;
   }
 
-  switchStudent($event){
+  switchStudent($event): void {
     this.transferEvent.studentId = $event.value;
   }
 
   transfer(): void {
-    this.presidentService.transfer( this.transferEvent );
+    this.presidentService.transfer( this.transferEvent )
+                          .then( success => success && this.fetchAppRecords() );
+  }
+
+  fetchAppRecords(): void {
+    this.presidentService.fetchAppRecords().then( records => {
+      this.appRecords = records;
+    } );
   }
 }
