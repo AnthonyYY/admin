@@ -87,19 +87,22 @@ export class EmployeeComponent implements OnInit {
       this.schools = schools;
       this.schools.forEach( school => {
         school.text = school.name;
-      } )
-    } )
+      } );
+    } );
   }
 
   createOrUpdateEmployee(): void {
-    if(this.curEmployee.id){
+    if (this.curEmployee.id) {
       this.editEmployee();
-    }else{
+    } else {
       this.createEmployee();
     }
   }
 
   createEmployee(): void {
+    if (this.ifDisabledSchool() ){
+      delete this.curEmployee.schoolId;
+    }
     this.personnelService.createEmployee(this.curEmployee).then( id => {
       this.curEmployee.id = id;
       delete this.curEmployee.roleIds;
@@ -115,7 +118,7 @@ export class EmployeeComponent implements OnInit {
     } );
   }
 
-  deleteEmployee():void {
+  deleteEmployee(): void {
     this.personnelService.deleteEmployee(this.curEmployee.id).then( success => {
       if (success) {
         const curEmployee = this.findEmployeeById(this.curEmployee.id);
@@ -127,23 +130,23 @@ export class EmployeeComponent implements OnInit {
 
   /* action */
   switchFilterGender($event): void {
-    this.filterEmployeeGender = $event.value == 'ALL' ? '' : $event.value;
+    this.filterEmployeeGender = $event.value ===  'ALL' ? '' : $event.value;
   }
 
-  switchCurEmployeeGender($event){
+  switchCurEmployeeGender($event) {
     this.curEmployee.sex = $event.value;
   }
 
-  switchCurEmployeeRole($event){
+  switchCurEmployeeRole($event) {
     this.curEmployee.roleIds = [$event.value];
   }
-  switchCurEmployeeSchool($event){
+  switchCurEmployeeSchool($event) {
     this.curEmployee.schoolId = $event.value;
   }
 
   /* helpers */
   ifDisabledSchool(): boolean {
-    if(this.curEmployee.id){
+    if (this.curEmployee.id) {
       return true;
     }
     return this.curEmployee.roleIds.indexOf('PERSONNEL_MANAGER') >= 0 ||

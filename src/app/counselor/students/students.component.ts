@@ -108,6 +108,7 @@ export class StudentsComponent implements OnInit {
   addStudent() {
     this.consultantService.addStudent(this.curStudent).then( data => {
       this.curStudent.id = data.id;
+      this.curStudent.status = Object.keys(state)[0];
       this.students.unshift(this.curStudent);
     } );
   }

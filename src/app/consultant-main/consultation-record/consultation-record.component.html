@@ -34,7 +34,7 @@
       <div class="dataTables_wrapper form-inline dt-bootstrap">
         <div class="row">
           <div class="col-xs-12">
-            <table class="table table-bordered table-hover dataTable">
+            <table class="table table-bordered table-hover text-center">
               <thead>
                 <tr role="row">
                   <th>姓名</th>
@@ -102,7 +102,7 @@
 
     <div class="col-xs-12 table-container">
       <form class="form">
-        <table class="table table-add">
+        <table class="table table-add text-center">
           <thead>
           <tr>
             <th></th>
@@ -115,17 +115,24 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let student of unAllocatedStudents">
-            <td class="text-center">
-              <input type="checkbox" (change)="student.selected = !student.selected" [checked]="student.selected">
-            </td>
-            <td>{{ student.name }}</td>
-            <td>{{ student.sex == 'MALE' ? '男' : '女' }}</td>
-            <td>{{ student.phone }}</td>
-            <td>{{ student.address }}</td>
-            <td>{{ student.orignSchool }}</td>
-            <td>{{ student.subject }}</td>
-          </tr>
+            <tr *ngFor="let student of unAllocatedStudents">
+              <td class="text-center">
+                <input type="checkbox" (change)="student.selected = !student.selected" [checked]="student.selected">
+              </td>
+              <td>{{ student.name }}</td>
+              <td>{{ student.sex == 'MALE' ? '男' : '女' }}</td>
+              <td>{{ student.phone }}</td>
+              <td>{{ student.address }}</td>
+              <td>{{ student.orignSchool }}</td>
+              <td>{{ student.subject }}</td>
+            </tr>
+            <tr *ngIf="!unAllocatedStudents.length">
+              <td colspan="7">
+                <p class="text-muted text-center">
+                  暂无可分配的学生
+                </p>
+              </td>
+            </tr>
           </tbody>
         </table>
       </form>

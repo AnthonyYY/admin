@@ -86,14 +86,15 @@ export class AdminService {
 
   addSchool(body): Promise<any> {
     return this.http.post('admin/school', body).then( data => {
-      if(data.success){
+      if (data.success) {
         this.alertService.alert({
           title: '提示',
           content: '成功添加新校区' + body.name,
           type: 'success'
         });
+        data.data.createTime = Date.now();
         return data.data;
-      }else{
+      } else {
         this.alertService.alert({
           title: '提示',
           content: '添加校区信息失败',

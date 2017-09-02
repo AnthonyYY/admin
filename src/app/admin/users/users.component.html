@@ -76,7 +76,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let user of users |
-                  timeRange: userCreatedFilterTime |
+                  timeRange: userCreatedFilterTime : 'createTime' |
                   matchItem: userFilterName : 'name' |
                   matchItem: userFilterUserName : 'username' |
                   matchItem: userFilterUserPhone : 'phone' |

@@ -29,12 +29,6 @@ export class ConsultantMainService {
           type: 'success'
         });
         return data.data;
-      } else {
-        this.alertService.alert({
-          title: '提示',
-          content: '创建学生失败',
-          type: 'danger'
-        });
       }
     } );
   }

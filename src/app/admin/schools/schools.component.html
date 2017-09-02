@@ -45,7 +45,8 @@
       <p class="text-info text-center" *ngIf="!schools">暂无校区信息</p>
       <div class="col-xs-12">
         <div class="row">
-          <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let school of schools | timeRange: schoolCreatedFilterTime | matchItem: schoolFilterName:'name'">
+          <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+               *ngFor="let school of schools | timeRange: schoolCreatedFilterTime : 'createTime' | matchItem: schoolFilterName:'name'">
             <div class="box box-primary box-solid ">
               <div class="box-header with-border">
                 <h4 class="box-title">{{ school.name }}</h4>

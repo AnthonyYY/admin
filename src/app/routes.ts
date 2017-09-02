@@ -84,7 +84,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'consult-record',
+            redirectTo: 'consultation-record',
             pathMatch: 'full'
           },
           {
@@ -107,7 +107,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'sign-record',
+            redirectTo: 'students-asset',
             pathMatch: 'full'
           },
           {

@@ -68,16 +68,16 @@ export class SchoolsComponent implements OnInit {
 
   addSchool(): void {
     this.adminService.addSchool(this.curSchool).then( data => {
-        this.schools.unshift({
-          ...this.curSchool,
-          createTime: Date.now(),
-          id: data.id,
-        });
+      this.schools.unshift({
+        ...this.curSchool,
+        ...data
+      });
+      this.schools = [...this.schools];
     } );
   }
 
   /* handle school list filter */
-  handleTimeRangeChange ($event){
+  handleTimeRangeChange ($event): void {
     this.schoolCreatedFilterTime = {
       start: $event.start,
       end: $event.end,

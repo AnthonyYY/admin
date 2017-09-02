@@ -99,7 +99,6 @@ export class HttpService {
       .then( HttpService._successHandle )
       .catch( err => {
         err = err.json();
-        console.log(err);
         this._handle401(err.status);
         this._handle500(err.status === false ? 500 : err.status, err.data);
         return {success: false, data: null};

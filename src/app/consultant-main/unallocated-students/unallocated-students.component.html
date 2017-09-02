@@ -42,8 +42,8 @@
       <h3 class="box-title">学生列表</h3>
       <div class="box-tools">
         <div class="btn-group btn-group-sm">
-          <button class="btn btn-primary"
-            (click)="resetCurStudent();
+          <button class="btn btn-info"
+            (click)="form.reset();resetCurStudent();
               studentModal.showModal({
                 modalSize: 'lg',
                 title: '添加学生',
@@ -58,7 +58,7 @@
       <div class="dataTables_wrapper form-inline dt-bootstrap">
         <div class="row">
           <div class="col-xs-12">
-            <table class="table table-bordered table-hover dataTable">
+            <table class="table table-bordered table-hover text-center">
               <thead>
                 <tr role="row">
                   <th>姓名</th>
@@ -119,7 +119,7 @@
 </div>
 
 <app-modal #studentModal [disabledAcceptBtn]=!stuForm.form.valid>
-  <form class="form clearfix" autocomplete="off" #stuForm="ngForm">
+  <form class="form clearfix" autocomplete="off" #stuForm="ngForm" #form="ngForm">
     <div class="col-xs-12">
       <div class="col-sm-5 col-xs-12">
         <div class="form-group clearfix">

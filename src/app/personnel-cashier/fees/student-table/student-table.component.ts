@@ -79,7 +79,7 @@ export class StudentTableComponent implements OnInit {
             console.log(term, page, context);
           }
         }
-    }
+    };
   }
 
   fetchStuBySchoolId(schoolId: string): void {
@@ -91,11 +91,11 @@ export class StudentTableComponent implements OnInit {
     this.payer = [];
   }
 
-  handlePayerSwitch($event) : void {
+  handlePayerSwitch($event): void {
     this.payOrRefundEvent.employeeId = $event.value;
   }
 
-  pay(){
+  pay() {
     this.cashierService.pay( this.payOrRefundEvent ).then( success => {  })
   }
 

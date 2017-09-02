@@ -84,7 +84,7 @@
             <div class="box-footer">
               <ul class="nav nav-stacked">
                 <li><a href="javascript:void(0)">生日 <span class="pull-right">{{ employee.birthday | date: 'yyyy-MM-dd' }}</span></a></li>
-                <li><a href="javascript:void(0)">邮箱 <span class="pull-right">{{ employee.email }}</span></a></li>
+                <li><a href="javascript:void(0)">邮箱 <span class="pull-right">{{ employee.email || '--' }}</span></a></li>
                 <li><a href="javascript:void(0)">电话<span class="pull-right">{{ employee.phone }}</span></a></li>
                 <li><a href="javascript:void(0)">专业 <span class="pull-right">{{ employee.specialty || '--' }}</span></a></li>
                 <li>
@@ -140,7 +140,7 @@
         <div class="form-group form-group-sm clearfix">
           <label for="gender" class="control-label col-xs-3">性别</label>
           <div class="col-xs-9">
-            <select2 [width]="229" [cssImport]="false" id="gender" [data]="genders" [options]="{minimumResultsForSearch: -1}" (valueChanged)="switchCurEmployeeGender($event)"></select2>
+            <select2 [value]="curEmployee.sex" [width]="229" [cssImport]="false" id="gender" [data]="genders" [options]="{minimumResultsForSearch: -1}" (valueChanged)="switchCurEmployeeGender($event)"></select2>
           </div>
         </div>
 

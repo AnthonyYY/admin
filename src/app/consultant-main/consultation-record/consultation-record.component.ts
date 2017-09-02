@@ -61,7 +61,7 @@ export class ConsultationRecordComponent implements OnInit {
     this.consultantMainService.assignStudentToCounselor(body).then( result => {
       if ( result === true ) {
         this.unAllocatedStudents = this.unAllocatedStudents.filter( (stu ) => {
-          return stu.selected = false;
+          return stu.selected === false;
         } );
       }
     } );

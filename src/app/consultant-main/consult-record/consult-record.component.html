@@ -45,43 +45,34 @@
     <div class="box-body">
       <div class="row">
         <div class="col-xs-12">
-          <table class="table table-bordered table-hover dataTable">
+          <table class="table table-bordered table-hover text-center">
             <thead>
-            <tr>
-              <th>咨询师姓名</th>
-              <th>电话号码</th>
-              <th>学生姓名</th>
-              <th>学生手机号</th>
-              <th>跟进状态</th>
-              <!--<th class="text-center">操作</th>-->
-            </tr>
+              <tr>
+                <th>咨询师姓名</th>
+                <th>电话号码</th>
+                <th>学生姓名</th>
+                <th>学生手机号</th>
+                <th>跟进状态</th>
+              </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let record of consultRecords |
-             matchItem: filterStuName : 'studentName' |
-             matchItem: filterEmployeeName : 'employeeName' |
-             matchItem: filterState:'status':'exact'">
-              <td>{{record.employeeName}}</td>
-              <td>{{record.employeePhone}}</td>
-              <td>{{record.studentName}}</td>
-              <td>{{record.studentPhone}}</td>
-              <td>{{states[record.status]}}</td>
-              <!--<td class="text-center">
-                <span *ngIf="record.status !== 'CONNECTION_NO'">&#45;&#45;</span>
-                <div *ngIf="record.status == 'CONNECTION_NO'" class="btn-group btn-group-xs">
-                  <button class="btn btn-success btn-xs"
-                  (click)="curRecord = record;
-                  confirm.showModal({
-                         title: '提示',
-                         content: '是否确认将该学生的跟进状态改为已联系？',
-                         confirm: switchState
-                      })">
-                    <i class="fa fa-exchange"></i>
-                    已联系
-                  </button>
-                </div>
-              </td>-->
-            </tr>
+              <tr *ngFor="let record of consultRecords |
+               matchItem: filterStuName : 'studentName' |
+               matchItem: filterEmployeeName : 'employeeName' |
+               matchItem: filterState:'status':'exact'">
+                <td>{{record.employeeName}}</td>
+                <td>{{record.employeePhone}}</td>
+                <td>{{record.studentName}}</td>
+                <td>{{record.studentPhone}}</td>
+                <td>{{states[record.status]}}</td>
+              </tr>
+              <tr *ngIf="!consultRecords.length">
+                <td colspan="5">
+                  <p class="text-center text-muted">
+                    暂无咨询师咨询记录
+                  </p>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>

@@ -48,7 +48,7 @@ export const roles = {
   'consultant_main': 'CONSULTANT_MAIN',                     // 咨询总监
 
   'studentmanager': 'STUDENTMANAGER',                        // 学管师
-  'studentmanager_boss': 'studentmanager_boss',            // 教管主任
+  'studentmanager_boss': 'STUDENTMANAGER_BOSS',            // 教管主任
 
   'teacher': 'TEACHER',                                        // 教师
 
@@ -70,7 +70,7 @@ export const roleMap = {
   'CONSULTANT_MAIN': '咨询总监',                     // 咨询总监
 
   'STUDENTMANAGER': '学管师',                        // 学管师
-  'studentmanager_boss': '教管主任',            // 教管主任
+  'STUDENTMANAGER_BOSS': '教管主任',            // 教管主任
 
   'TEACHER': '教师',                                        // 教师
 
