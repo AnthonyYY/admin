@@ -1,0 +1,121 @@
+<app-content-header
+  [title]="'学管师管理'" [menus]="contentHeader"></app-content-header>
+
+<div class="content">
+
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#tab_1" data-toggle="tab">基本信息</a></li>
+      <li><a href="#tab_2" data-toggle="tab">退费/续费</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="tab_1">
+        <table class="table table-bordered table-hover text-center">
+          <thead>
+            <tr>
+              <th>姓名</th>
+              <th>性别</th>
+              <th>生日</th>
+              <th>身份证</th>
+              <th>手机</th>
+              <th>邮箱</th>
+              <th>毕业学校</th>
+              <th>学历</th>
+              <th>专业</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let manager of studentManagers">
+              <td>{{ manager.name }}</td>
+              <td>{{ manager.sex === 'MALE' ? '男' : '女' }}</td>
+              <td>{{ manager.birthday | date: 'yyyy-MM-dd' }}</td>
+              <td>{{ manager.idCard }}</td>
+              <td>{{ manager.phone }}</td>
+              <td>{{ manager.email || '--' }}</td>
+              <td>{{ manager.graduationSchool || '--' }}</td>
+              <td>{{ manager.education || '--' }}</td>
+              <td>{{ manager.specialty || '--' }}</td>
+              <td>
+                <div class="btn-group btn-group-xs">
+                  <button class="btn btn-xs btn-primary"
+                          (click)="curStudentManager = manager;
+                  assignModal.showModal({
+                    title: '分配以下学员给' + curStudentManager.name,
+                    modalConfirmText: '确认分配',
+                    modalSize: 'md',
+                    type: 'default',
+                    confirm: assignStudentToManager
+                  })">分配学员</button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="!studentManagers.length">
+              <td colspan="9">
+                <p class="text-muted text-center">
+                  暂无学管师信息
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tab-pane" id="tab_2">
+        <table class="table table-hover text-center">
+          <thead>
+            <tr>
+              <th>姓名</th>
+              <th>电话</th>
+              <th>续费金额</th>
+              <th>退费金额</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let payment of payments">
+              <td>{{ payment.teacherName }}</td>
+              <td>{{ payment.teacherPhone }}</td>
+              <td>{{ payment.renewMoney || '--' }}</td>
+              <td>{{ payment.backMoney || '--' }}</td>
+            </tr>
+            <tr *ngIf="!payments.length">
+              <td class="text-muted" colspan="4">
+                暂无学管师退费/续费记录
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-modal #assignModal [disabledAcceptBtn]="ifZeroStudentChosen()">
+  <div class="students-container">
+    <table class="table table-hover text-center">
+      <thead>
+        <tr>
+          <th></th>
+          <th>姓名</th>
+          <th>性别</th>
+          <th>手机号</th>
+          <th>班级</th>
+          <th>学科</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of undistributedStudents">
+          <td><input type="checkbox" (change)="student.chosen = !student.chosen"></td>
+          <td>{{ student.name }}</td>
+          <td>{{ student.sex === 'MALE' ? '男' : '女' }}</td>
+          <td>{{ student.phone }}</td>
+          <td>{{ student.grade }}</td>
+          <td>{{ student.subject || '--' }}</td>
+        </tr>
+        <tr *ngIf="!undistributedStudents.length">
+          <td class="text-muted" colspan="6">暂无可分配学员</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</app-modal>

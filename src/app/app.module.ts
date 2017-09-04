@@ -90,6 +90,10 @@ import { FinanceSchoolTableComponent } from './finance/stu-pay-stat/school-table
 import { PaymentLogComponent } from './finance/stu-pay-record/payment-log/payment-log.component';
 import { LogSchoolTableComponent } from './finance/stu-pay-record/log-school-table/log-school-table.component';
 import { TransferBossComponent } from './president/transfer-boss/transfer-boss.component';
+import { StudentManagerBossComponent } from './student-manager-boss/student-manager-boss.component';
+import { AssignmentComponent } from './student-manager-boss/assignment/assignment.component';
+import { StudentMasterDocsComponent } from './student-manager-boss/student-master-docs/student-master-docs.component';
+import { StudentManagerBossService} from './student-manager-boss/student-manager-boss.service';
 
 @NgModule({
   declarations: [
@@ -156,7 +160,10 @@ import { TransferBossComponent } from './president/transfer-boss/transfer-boss.c
     FinanceSchoolTableComponent,
     PaymentLogComponent,
     LogSchoolTableComponent,
-    TransferBossComponent
+    TransferBossComponent,
+    StudentManagerBossComponent,
+    AssignmentComponent,
+    StudentMasterDocsComponent
   ],
   imports: [
     Select2Module,
@@ -183,7 +190,8 @@ import { TransferBossComponent } from './president/transfer-boss/transfer-boss.c
     PersonnelService,
     TeacherService,
     FinanceService,
-    PresidentService
+    PresidentService,
+    StudentManagerBossService
   ],
   bootstrap: [AppComponent]
 })

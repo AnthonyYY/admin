@@ -29,10 +29,6 @@ export class PresidentComponent implements OnInit {
       if (value) {
         if (value === 'SCHOOLMASTER_BOSS') {
           this.sidebarMenu.push({
-            name: '转校审核管理',
-            routerLink: ['transfer-boss'],
-            icon: 'fa-file-pdf-o'
-          }, {
             name: '退费审核管理',
             routerLink: ['refund'],
             icon: 'fa-file-excel-o'

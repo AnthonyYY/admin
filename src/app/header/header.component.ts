@@ -4,6 +4,7 @@ import {UserService} from '../common/user.service';
 import {HttpService} from '../service/http.service';
 import {User} from '../models/user';
 import {RoleService} from '../common/role.service';
+import {roleMap} from '../common/enum';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +14,7 @@ import {RoleService} from '../common/role.service';
 export class HeaderComponent implements OnInit {
 
   user: User;
+  roles: any;
 
   constructor(
     private router: Router,
@@ -23,6 +25,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.user = new User();
+    this.roles = roleMap;
     if (!UserService.getAccessToken()) {
       return this.router.navigate(['login']);
     }

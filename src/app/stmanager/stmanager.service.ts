@@ -68,12 +68,6 @@ export class StmanagerService {
           content: '新课表已成功创建'
         });
         return result.data;
-      } else {
-        this.alertService.alert({
-          type: 'danger',
-          title: '提示',
-          content: '创建课表失败'
-        });
       }
     } );
   }

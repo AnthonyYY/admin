@@ -9,6 +9,8 @@ import * as moment from 'moment';
 export class DateRangerPickerComponent implements OnInit {
 
   @Input()
+  format: string;
+  @Input()
   timePicker: boolean;
   @Input()
   startTime: number;
@@ -28,7 +30,7 @@ export class DateRangerPickerComponent implements OnInit {
           daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
           monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
           firstDay: 1,
-          format: 'YYYY-MM-DD'
+          format: this.format ||  'YYYY-MM-DD'
         },
         timePicker: this.timePicker,
         ranges: {

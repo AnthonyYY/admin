@@ -33,7 +33,7 @@ export class PersonnelService {
           content: '新员工已添加',
           type: 'success'
         });
-        return result.data.id;
+        return result.data;
       }
     } );
   }

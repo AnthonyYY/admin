@@ -147,4 +147,14 @@ export class TeacherDirectorService {
       }
     } );
   }
+
+  fetchTeachersByCourseId(courseId: string): Promise<any[]> {
+    return this.http.post(`director/course/teacher/${courseId}`).then( results => {
+      if (results.success) {
+        console.log(results.data);
+        return results.data;
+      }
+      return [];
+    } );
+  }
 }

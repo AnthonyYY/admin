@@ -44,6 +44,9 @@ import {FinanceSchoolTableComponent} from './finance/stu-pay-stat/school-table/s
 import {LogSchoolTableComponent} from './finance/stu-pay-record/log-school-table/log-school-table.component';
 import {PaymentLogComponent} from './finance/stu-pay-record/payment-log/payment-log.component';
 import {TransferBossComponent} from './president/transfer-boss/transfer-boss.component';
+import {StudentManagerBossComponent} from './student-manager-boss/student-manager-boss.component';
+import {AssignmentComponent} from './student-manager-boss/assignment/assignment.component';
+import {StudentMasterDocsComponent} from './student-manager-boss/student-master-docs/student-master-docs.component';
 
 export const routes: Routes = [
   {
@@ -320,6 +323,25 @@ export const routes: Routes = [
               }
             ]
           },
+        ]
+      },
+      {
+        path: 'studentmanager-boss',
+        component: StudentManagerBossComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'student-master-docs',
+            pathMatch: 'full'
+          },
+          {
+            path: 'student-assignment',
+            component: AssignmentComponent
+          },
+          {
+            path: 'student-master-docs',
+            component: StudentMasterDocsComponent
+          }
         ]
       }
     ]

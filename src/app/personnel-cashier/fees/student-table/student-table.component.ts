@@ -65,7 +65,7 @@ export class StudentTableComponent implements OnInit {
           delay: 450,
           headers: {'Access-Token': UserService.getAccessToken()},
           url: (params) => {
-            return AppSettings.API_ENDPOINT + `finance/employee/${this.curSchoolId}/${this.curPayType}/${params.term || '1-1'}`;
+            return AppSettings.API_ENDPOINT + `finance/employee/${this.curSchoolId}/${this.payOrRefundEvent.payType}/${params.term || '1-1'}`;
           },
           processResults: ( data ) => {
             (data.data || []).forEach( item => item.text = item.name + '(' + item.idCard + ')' );
@@ -96,7 +96,7 @@ export class StudentTableComponent implements OnInit {
   }
 
   pay() {
-    this.cashierService.pay( this.payOrRefundEvent ).then( success => {  })
+    this.cashierService.pay( this.payOrRefundEvent ).then( success => {  });
   }
 
   initPaymentEvent(student): void {

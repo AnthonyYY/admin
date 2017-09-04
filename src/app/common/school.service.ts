@@ -92,7 +92,7 @@ export class SchoolService {
   }
 
   audit(handlerStatus: string, processId: string, remark?: string): Promise<boolean> {
-    let url = `president/money/${handlerStatus}/${processId}`;
+    let url = `common/money/${handlerStatus}/${processId}`;
     if (remark) {
       url += `?remark=${remark}`;
     }

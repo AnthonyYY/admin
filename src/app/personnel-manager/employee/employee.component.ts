@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Sidebar} from '../../sidebar/sidebar';
 import {PersonnelService} from '../personnel.service';
-import {genderList, roleList} from '../../common/enum';
+import {genderList, roleList, roleMap} from '../../common/enum';
 import {SchoolService} from '../../common/school.service';
 
 @Component({
@@ -13,6 +13,7 @@ export class EmployeeComponent implements OnInit {
 
   schools: any[];
   roles: any[];
+  roleMap: any;
   curEmployee: any;
   genders: any;
   employees: any[];
@@ -33,6 +34,7 @@ export class EmployeeComponent implements OnInit {
   ngOnInit() {
     this.schools = [];
     this.roles = roleList;
+    this.roleMap = roleMap;
     this.curEmployee = {};
     this.genders = genderList;
     this.employees = [];
@@ -73,7 +75,7 @@ export class EmployeeComponent implements OnInit {
         sex: 'MALE',
         specialty: '',
         username: ''
-      }
+      };
     }
   }
 
@@ -100,11 +102,13 @@ export class EmployeeComponent implements OnInit {
   }
 
   createEmployee(): void {
-    if (this.ifDisabledSchool() ){
+    if (this.ifDisabledSchool() ) {
       delete this.curEmployee.schoolId;
     }
-    this.personnelService.createEmployee(this.curEmployee).then( id => {
-      this.curEmployee.id = id;
+    this.personnelService.createEmployee(this.curEmployee).then( data => {
+      this.curEmployee.id = data.id;
+      this.curEmployee.birthday = data.birthday;
+      this.curEmployee.role = this.curEmployee.roleIds[0];
       delete this.curEmployee.roleIds;
       this.employees.unshift({...this.curEmployee});
     });

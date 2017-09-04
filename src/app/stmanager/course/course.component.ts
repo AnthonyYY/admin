@@ -59,7 +59,6 @@ export class CourseComponent implements OnInit {
   }
 
   changeFilterScheduleState($event): void {
-    console.log($event);
     this.filterScheduleState = $event.value === 'ALL' ? '' : $event.value;
   }
 
@@ -79,6 +78,7 @@ export class CourseComponent implements OnInit {
       const curCourseId = course[0]['id'];
       this.scheduleEvent.courseId = curCourseId;
       this.fetchTeachersByCourseId(curCourseId);
+      this.fetchScheduleStu(curCourseId);
     } );
   }
   // 获取对应课程的授课教师
@@ -106,6 +106,7 @@ export class CourseComponent implements OnInit {
   handleCourseSwitch($event): void {
     this.scheduleEvent.courseId = $event.value;
     this.fetchTeachersByCourseId($event.value);
+    this.fetchScheduleStu($event.value);
     const curCourse = this.findCourseById($event.value);
     this.scheduleEvent.courseName = curCourse.name;
   }
@@ -137,12 +138,12 @@ export class CourseComponent implements OnInit {
   // 分配学生的时候
   // 创建课表分配学生的时候是否未选中任何学生
   ifZeroStuChosen(): boolean {
-    return this.students.every( stu => !stu.inCourse );
+    return this.students.every( stu => !stu.selected );
   }
   // 创建课表
   createSchedule(): void {
     this.students.forEach( stu => {
-      if (stu.inCourse) {
+      if (stu.selected) {
         this.scheduleEvent.studentIds.push(stu.id);
       }
     } );
@@ -157,5 +158,10 @@ export class CourseComponent implements OnInit {
     this.stmanagerService.updateSchedule(this.scheduleEvent).then( success => {
 
     } );
+  }
+
+  resetStudents(): void {
+    this.scheduleEvent.studyTime = 0;
+    this.students.forEach( student => student.selected = false );
   }
 }

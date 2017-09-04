@@ -21,6 +21,7 @@ export class OriginCourseComponent implements OnInit {
   courseTypeMap: any;
   courseTypeList: any[];
   teachers: any[];
+  courseTeachers: any[];
   assignedTeachers: any[];
 
   filterCourseName: string;
@@ -46,6 +47,7 @@ export class OriginCourseComponent implements OnInit {
     this.courseTypeMap = courseTypeMap;
     this.courseTypeList = courseTypeList;
     this.teachers = [];
+    this.courseTeachers = [];
     this.fetchCourse();
     this.fetchTeachers();
     this.initCurCourse();
@@ -156,5 +158,11 @@ export class OriginCourseComponent implements OnInit {
 
   changeFilterCourseState($event): void {
     this.filterCourseType = $event.value === 'ALL' ? '' : $event.value;
+  }
+
+  fetchTeachersByCourseId( courseId ): void {
+    this.teacherDirectorService
+      .fetchTeachersByCourseId(courseId)
+      .then( teachers => this.courseTeachers = teachers );
   }
 }

@@ -63,6 +63,9 @@
             <div class="widget-user-header {{ employee.sex === 'MALE' ? 'bg-aqua-active' : 'bg-yellow' }}">
               <h3 class="widget-user-username">
                 {{ employee.name }}
+                <small style="color: #fff">
+                  <i class="fa fa-{{  employee.sex === 'FEMALE' ?'venus':'mars' }}"></i>
+                </small>
                 <a class="pull-right">
                   <i class="fa fa-trash-o" style="color: white" (click)="$event.stopPropagation();
                   initCurEmployee(employee);
@@ -73,20 +76,16 @@
                   })"></i>
                 </a>
               </h3>
-              <h5 class="widget-user-desc">
-                <i class="fa fa-{{  employee.sex === 'FEMALE' ?'venus':'mars' }}"></i>
-                {{employee.sex === 'MALE' ? '男' : '女'}}
-              </h5>
             </div>
             <div class="widget-user-image">
               <img src="https://adminlte.io/themes/AdminLTE/dist/img/user{{ employee.sex === 'MALE' ? 1 : 3 }}-128x128.jpg" alt="" class="img-circle">
             </div>
             <div class="box-footer">
               <ul class="nav nav-stacked">
-                <li><a href="javascript:void(0)">生日 <span class="pull-right">{{ employee.birthday | date: 'yyyy-MM-dd' }}</span></a></li>
-                <li><a href="javascript:void(0)">邮箱 <span class="pull-right">{{ employee.email || '--' }}</span></a></li>
+                <li><a href="javascript:void(0)">职位 <span class="pull-right">{{ roleMap[employee.role] }}</span></a></li>
                 <li><a href="javascript:void(0)">电话<span class="pull-right">{{ employee.phone }}</span></a></li>
-                <li><a href="javascript:void(0)">专业 <span class="pull-right">{{ employee.specialty || '--' }}</span></a></li>
+                <li style="white-space: nowrap;"><a href="javascript: void(0)">身份证 <span class="pull-right">{{employee.idCard}}</span></a></li>
+                <li><a href="javascript:void(0)">生日 <span class="pull-right">{{ employee.birthday | date: 'yyyy-MM-dd' }}</span></a></li>
                 <li>
                   <a href="javascript:void(0)">
                     学历/院校
@@ -95,15 +94,11 @@
                     </span>
                   </a>
                 </li>
-                <li>
-                  <a href="javascript: void(0)">
-                    身份证 <span class="pull-right">{{employee.idCard}}</span>
-                  </a>
-                </li>
+                <li><a href="javascript:void(0)">专业 <span class="pull-right">{{ employee.specialty || '--' }}</span></a></li>
                 <li>
                   <a href="javascript:void(0)">
                     联系人
-                    <span class="pull-right" data-toggle="tooltip" data-placement="top"title="电话：{{employee.clamantPhone || '--'}}">
+                    <span class="pull-right" data-toggle="tooltip" data-placement="top" title="电话：{{employee.clamantPhone || '--'}}">
                       {{ employee.clamantName || '--'}}
                     </span>
                   </a>
@@ -186,7 +181,14 @@
         <div class="form-group form-group-sm clearfix">
           <label for="idCard" class="control-label col-xs-3 necessary">身份证号</label>
           <div class="col-xs-9">
-            <input name="idCard" #idCard="ngModel" id="idCard" placeholder="请输入身份证号" class="form-control {{idCard && idCard.touched && idCard.invalid && 'error'}}" [(ngModel)]="curEmployee.idCard" required pattern="[0-9]{18}">
+            <input name="idCard"
+                   #idCard="ngModel"
+                   id="idCard"
+                   placeholder="请输入身份证号"
+                   class="form-control {{idCard && idCard.touched && idCard.invalid && 'error'}}"
+                   [(ngModel)]="curEmployee.idCard"
+                   required
+                   pattern="^([0-9]{17})(\d|x|X{1})$">
           </div>
         </div>
 
