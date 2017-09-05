@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChildren} from '@angular/core';
 import {Sidebar} from '../../sidebar/sidebar';
 import {AdminService} from '../admin.service';
 import {User} from '../../models/user';
@@ -102,7 +102,7 @@ export class UsersComponent implements OnInit {
     } );
   }
 
-  handleTimeRangeChange($event){
+  handleTimeRangeChange($event): void {
     this.userCreatedFilterTime = {
       start: $event.start,
       end: $event.end,
@@ -112,5 +112,9 @@ export class UsersComponent implements OnInit {
 
   switchFilterRoleId($event): void {
     this.userFilterUserRoleId = $event.value === '全部' ?  '' : $event.value;
+  }
+
+  handlePageChange (page): void {
+    console.log(page);
   }
 }

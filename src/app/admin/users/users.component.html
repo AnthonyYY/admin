@@ -80,7 +80,7 @@
                   matchItem: userFilterName : 'name' |
                   matchItem: userFilterUserName : 'username' |
                   matchItem: userFilterUserPhone : 'phone' |
-                  matchItem: userFilterUserRoleId : 'roleId' " >
+                  matchItem: userFilterUserRoleId : 'roleId' " #perUser>
                   <td>{{ user.name }}</td>
                   <td>{{ user.phone }}</td>
                   <td>{{ roles[user.roleId] }}</td>
@@ -126,7 +126,7 @@
             </table>
           </div>
         </div>
-        <app-pagination></app-pagination>
+        <app-pagination [totalCount]="110" (changePage)="handlePageChange($event)"></app-pagination>
       </div>
     </div>
   </div>
