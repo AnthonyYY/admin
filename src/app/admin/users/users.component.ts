@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChildren} from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import {Sidebar} from '../../sidebar/sidebar';
 import {AdminService} from '../admin.service';
 import {User} from '../../models/user';
@@ -11,6 +11,7 @@ import {roleMap} from '../../common/enum';
   styleUrls: ['./users.component.less']
 })
 export class UsersComponent implements OnInit {
+  curPage: number;
   contentHeader: Sidebar[];
   users: User[];
   curUsr: User;
@@ -37,20 +38,22 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.curPage = 1;
     this.rolesList = this.roleService.roleList;
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
       {name: '用户列表页', icon: 'fa-users'}
     ];
     this.roles = roleMap;
+    this.users = [];
     this.roleList = this.roleService.roleList;
     this.curUsr = new User();
     this.newPassword = {id: '', password: '', rePassword: ''};
-    this.fetchUserList();
     this.userCreatedFilterTime = {
       start: new Date(new Date().getFullYear() + '-01-01').getTime(),
       end: Infinity
     };
+    this.fetchUserList();
     this.userFilterName = '';
     this.userFilterUserName = '';
     this.userFilterUserPhone = '';
@@ -97,12 +100,11 @@ export class UsersComponent implements OnInit {
     });
   }
   fetchUserList(): void {
-    this.adminService.fetchUserList().then( users => {
-      this.users = users;
-    } );
+    this.adminService.fetchUserList().then( users => this.users = users );
   }
 
   handleTimeRangeChange($event): void {
+    this.curPage = 1;
     this.userCreatedFilterTime = {
       start: $event.start,
       end: $event.end,
@@ -111,10 +113,11 @@ export class UsersComponent implements OnInit {
   }
 
   switchFilterRoleId($event): void {
+    this.curPage = 1;
     this.userFilterUserRoleId = $event.value === '全部' ?  '' : $event.value;
   }
 
   handlePageChange (page): void {
-    console.log(page);
+    this.curPage = page;
   }
 }

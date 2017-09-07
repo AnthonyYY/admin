@@ -25,7 +25,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let payment of payments">
+        <tr *ngFor="let payment of payments | paging: curPage">
           <td>{{ payment.name }}</td>
           <td>{{ payment.schoolName }}</td>
           <td>{{ payment.phone }}</td>
@@ -42,3 +42,5 @@
     </table>
   </div>
 </div>
+
+<app-pagination [curPage]="curPage" [totalCount]="payments.length" (changePage)="handlePageChange($event)"></app-pagination>

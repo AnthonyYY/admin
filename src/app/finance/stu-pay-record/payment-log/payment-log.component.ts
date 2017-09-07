@@ -10,6 +10,7 @@ import {payType} from '../../../common/enum';
 })
 export class PaymentLogComponent implements OnInit {
 
+  curPage: number;
   payType: any;
   logs: any[];
   constructor(
@@ -18,6 +19,7 @@ export class PaymentLogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.curPage = 1;
     this.payType = payType;
     this.logs = [];
     this.router.params.subscribe( params => {
@@ -29,4 +31,7 @@ export class PaymentLogComponent implements OnInit {
     this.financeService.fetchStudentPayLogsById(schoolId).then( logs => this.logs = logs );
   }
 
+  handlePageChange(page): void {
+    this.curPage = page;
+  }
 }

@@ -94,6 +94,7 @@ import { StudentManagerBossComponent } from './student-manager-boss/student-mana
 import { AssignmentComponent } from './student-manager-boss/assignment/assignment.component';
 import { StudentMasterDocsComponent } from './student-manager-boss/student-master-docs/student-master-docs.component';
 import { StudentManagerBossService} from './student-manager-boss/student-manager-boss.service';
+import { PagingPipe } from './common/paging.pipe';
 
 @NgModule({
   declarations: [
@@ -163,7 +164,8 @@ import { StudentManagerBossService} from './student-manager-boss/student-manager
     TransferBossComponent,
     StudentManagerBossComponent,
     AssignmentComponent,
-    StudentMasterDocsComponent
+    StudentMasterDocsComponent,
+    PagingPipe
   ],
   imports: [
     Select2Module,

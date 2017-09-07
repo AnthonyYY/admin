@@ -3,25 +3,25 @@
 <div class="content">
 
   <app-collapse-box [collapse]="false" [icon]="'filter'" [boxTitle]="'学生课表过滤'">
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">姓名:</label>
-      <div class="input-group input-group-sm" style="width: 148px;">
-        <input class="form-control" [(ngModel)]="filterStuName" placeholder="请输入学生名称">
+      <div class="input-group input-group-sm">
+        <input class="form-control" (keypress)="curPage = 1;" [(ngModel)]="filterStuName" placeholder="请输入学生名称">
         <div class="input-group-addon"><i class="fa fa-search"></i></div>
       </div>
     </div>
 
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">课程名称:</label>
-      <div class="input-group input-group-sm" style="width: 148px;">
-        <input class="form-control" [(ngModel)]="filterCourseName" placeholder="请输入课程名称">
+      <div class="input-group input-group-sm">
+        <input class="form-control" (keypress)="curPage = 1;" [(ngModel)]="filterCourseName" placeholder="请输入课程名称">
         <div class="input-group-addon"><i class="fa fa-search"></i></div>
       </div>
     </div>
 
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">完成状态:</label>
-      <div class="input-group input-group-sm" style="width: 148px;">
+      <div class="input-group input-group-sm">
         <select2
           [width]="148"
           [value]="filterScheduleState"
@@ -32,7 +32,7 @@
       </div>
     </div>
 
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">上课时间:</label>
       <app-date-ranger-picker
         [timePicker]="false"
@@ -69,7 +69,7 @@
                 matchItem: filterCourseName: 'courseName' |
                 matchItem: filterScheduleState: 'finish' : 'exact' |
                 timeRange: filterTimeRange : 'startTime'|
-                timeRange: filterTimeRange : 'endTime';">
+                timeRange: filterTimeRange : 'endTime' | paging: curPage;">
                 <td>{{ record.studentName }}</td>
                 <td>{{ record.gradeName }}</td>
                 <td>{{ record.courseName }}</td>
@@ -105,6 +105,13 @@
       </div>
     </div>
   </div>
+
+  <app-pagination [totalCount]="(schedule |
+                matchItem: filterStuName: 'studentName' |
+                matchItem: filterCourseName: 'courseName' |
+                matchItem: filterScheduleState: 'finish' : 'exact' |
+                timeRange: filterTimeRange : 'startTime'|
+                timeRange: filterTimeRange : 'endTime').length" (changePage)="handlePageChange($event)"></app-pagination>
 </div>
 
 <app-confirm #confirm></app-confirm>

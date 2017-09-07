@@ -8,7 +8,9 @@
         缴费时间:
       </label>
       <div class="input-group input-group-sm" style="width: 148px;">
-        <app-date-ranger-picker [startTime]="filterPayTime.start" (dateRangeSetEvent)="setPayTimeRange($event)"></app-date-ranger-picker>
+        <app-date-ranger-picker
+          [startTime]="filterPayTime.start"
+          (dateRangeSetEvent)="setPayTimeRange($event)"></app-date-ranger-picker>
       </div>
     </div>
 
@@ -16,8 +18,8 @@
       <label class="pull-left">
         姓名:
       </label>
-      <div class="input-group input-group-sm" style="width: 148px;">
-        <input class="form-control input-sm" [(ngModel)]="studentFilterName" placeholder="输入学生名称">
+      <div class="input-group input-group-sm">
+        <input class="form-control input-sm" (keypress)="curPage = 1" [(ngModel)]="studentFilterName" placeholder="输入学生名称">
         <span class="input-group-addon"><i class="fa fa-search"></i></span>
       </div>
     </div>
@@ -45,7 +47,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let record of signRecord | matchItem: studentFilterName: 'studentName' | timeRange: filterPayTime: 'payTime'">
+          <tr *ngFor="let record of signRecord | matchItem: studentFilterName: 'studentName' | timeRange: filterPayTime: 'payTime' | paging : curPage">
             <td>{{ record.studentName }}</td>
             <td>{{ record.employeeName }}</td>
             <td>{{ payType[record.opPayType] }}</td>
@@ -64,4 +66,8 @@
       </table>
     </div>
   </div>
+
+  <app-pagination [curPage]="curPage"
+                    (changePage)="handleChangePage($event)"
+                    [totalCount]="(signRecord | matchItem: studentFilterName: 'studentName' | timeRange: filterPayTime: 'payTime').length"></app-pagination>
 </div>

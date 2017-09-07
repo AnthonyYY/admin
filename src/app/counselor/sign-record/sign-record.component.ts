@@ -9,6 +9,7 @@ import {payType} from '../../common/enum';
   styleUrls: ['./sign-record.component.less']
 })
 export class SignRecordComponent implements OnInit {
+  curPage: number;
   contentHeader: Sidebar[];
   signRecord: any[];
   totalMoney: number | string;
@@ -20,6 +21,7 @@ export class SignRecordComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.curPage = 1;
     this.fetchSignRecords();
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
@@ -40,9 +42,14 @@ export class SignRecordComponent implements OnInit {
   }
 
   setPayTimeRange($event): void {
+    this.curPage = 1;
     this.filterPayTime = {
       start: $event.start,
       end: $event.end,
-    }
+    };
+  }
+
+  handleChangePage(page): void  {
+    this.curPage = page;
   }
 }

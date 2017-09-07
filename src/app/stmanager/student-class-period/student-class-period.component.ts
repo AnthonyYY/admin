@@ -9,6 +9,7 @@ import {StmanagerService} from '../stmanager.service';
 })
 export class StudentClassPeriodComponent implements OnInit {
 
+  curPage: number;
   cancelPurchaseHour: number;
   contentHeader: Sidebar[];
   stuCourseHourStats: any[];
@@ -28,6 +29,8 @@ export class StudentClassPeriodComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.curPage = 1;
+    this.stuCourseHourStats = [];
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
       {name: '学生课时管理', icon: 'fa-users'}
@@ -51,6 +54,7 @@ export class StudentClassPeriodComponent implements OnInit {
   }
 
   handleTimeRangeChange($event): void {
+    this.curPage = 1;
     this.buyTimeRange = {
       start: $event.start,
       end: $event.end,
@@ -70,5 +74,9 @@ export class StudentClassPeriodComponent implements OnInit {
     this.stManagerService.returnCoursePurchase(this.curStat.studentId, this.curStat.courseId, this.cancelPurchaseHour).then( () => {
       this.curStat.buyHour -= this.cancelPurchaseHour;
     } );
+  }
+
+  handlePageChange(page) {
+    this.curPage = page;
   }
 }

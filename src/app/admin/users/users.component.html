@@ -3,7 +3,7 @@
 <div class="content">
 
   <app-collapse-box [collapse]="false" [icon]="'filter'" [boxTitle]="'用户过滤'">
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">
         创建时间:
       </label>
@@ -13,41 +13,41 @@
         class="pull-left"></app-date-ranger-picker>
     </div>
 
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">
         类型筛选:
       </label>
-      <div class="input-group input-group-sm" style="width: 148px;">
+      <div class="input-group input-group-sm">
         <select2 (valueChanged)="switchFilterRoleId($event)" [cssImport]="false" [options]="{minimumResultsForSearch: -1}" [data]="[{id:'',text:'全部'}].concat(rolesList)" [width]="'148px'"></select2>
       </div>
     </div>
 
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">
         用户姓名:
       </label>
-      <div class="input-group input-group-sm" style="width: 148px;">
-        <input type="text" class="form-control input-sm" [(ngModel)]="userFilterName" placeholder="输入用户名称">
+      <div class="input-group input-group-sm">
+        <input type="text" class="form-control input-sm" (keypress)="curPage=1;" [(ngModel)]="userFilterName" placeholder="输入用户名称">
         <span class="input-group-addon"><i class="fa fa-search"></i></span>
       </div>
     </div>
 
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">
         用户名:
       </label>
-      <div class="input-group input-group-sm" style="width: 148px;">
-        <input type="text" class="form-control input-sm" [(ngModel)]="userFilterUserName" placeholder="输入用户名">
+      <div class="input-group input-group-sm">
+        <input class="form-control input-sm" (keypress)="curPage=1;" [(ngModel)]="userFilterUserName" placeholder="输入用户名">
         <span class="input-group-addon"><i class="fa fa-search"></i></span>
       </div>
     </div>
 
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">
         电话:
       </label>
-      <div class="input-group input-group-sm" style="width: 148px;">
-        <input type="text" class="form-control input-sm" [(ngModel)]="userFilterUserPhone" placeholder="输入电话号码">
+      <div class="input-group input-group-sm">
+        <input class="form-control input-sm" (keypress)="curPage=1;" [(ngModel)]="userFilterUserPhone" placeholder="输入电话号码">
         <span class="input-group-addon"><i class="fa fa-search"></i></span>
       </div>
     </div>
@@ -80,7 +80,7 @@
                   matchItem: userFilterName : 'name' |
                   matchItem: userFilterUserName : 'username' |
                   matchItem: userFilterUserPhone : 'phone' |
-                  matchItem: userFilterUserRoleId : 'roleId' " #perUser>
+                  matchItem: userFilterUserRoleId : 'roleId' | paging: curPage">
                   <td>{{ user.name }}</td>
                   <td>{{ user.phone }}</td>
                   <td>{{ roles[user.roleId] }}</td>
@@ -122,14 +122,23 @@
                     </div>
                   </td>
                 </tr>
+                <tr *ngIf="!users.length">
+                  <td class="text-muted" colspan="8">暂无用户信息</td>
+                </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <app-pagination [totalCount]="110" (changePage)="handlePageChange($event)"></app-pagination>
       </div>
     </div>
   </div>
+
+  <app-pagination [curPage]="curPage" *ngIf="users.length" [totalCount]="(users |
+                  timeRange: userCreatedFilterTime : 'createTime' |
+                  matchItem: userFilterName : 'name' |
+                  matchItem: userFilterUserName : 'username' |
+                  matchItem: userFilterUserPhone : 'phone' |
+                  matchItem: userFilterUserRoleId : 'roleId')?.length" (changePage)="handlePageChange($event)"></app-pagination>
 </div>
 
 <app-modal #passwordModifyModal

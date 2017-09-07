@@ -23,7 +23,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let log of logs">
+      <tr *ngFor="let log of logs | paging: curPage">
         <td>{{ log.studentName }}</td>
         <td>{{ log.money }}</td>
         <td>{{ payType[log.payType] }}</td>
@@ -38,3 +38,5 @@
     </table>
   </div>
 </div>
+
+<app-pagination [curPage]="curPage" [totalCount]="logs.length" (changePage)="handlePageChange($event)"></app-pagination>

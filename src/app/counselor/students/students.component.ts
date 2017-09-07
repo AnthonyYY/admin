@@ -12,6 +12,7 @@ import {state, states} from '../../common/enum';
 })
 export class StudentsComponent implements OnInit {
 
+  curPage: number;
   contentHeader: Sidebar[];
   students: Array<any>;
   curStudent: Student;
@@ -34,6 +35,7 @@ export class StudentsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.curPage = 1;
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
       {name: '学生列表页', icon: 'fa-graduation-cap'}
@@ -60,6 +62,7 @@ export class StudentsComponent implements OnInit {
   }
 
   switchFilterState($event): void {
+    this.curPage = 1;
     this.userFilterState = $event.value === 'ALL' ?  '' : $event.value;
   }
 
@@ -110,6 +113,11 @@ export class StudentsComponent implements OnInit {
       this.curStudent.id = data.id;
       this.curStudent.status = Object.keys(state)[0];
       this.students.unshift(this.curStudent);
+      this.students = [...this.students];
     } );
+  }
+
+  handlePageChange(page) {
+    this.curPage = page;
   }
 }

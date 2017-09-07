@@ -9,6 +9,7 @@ import {StmanagerService} from '../stmanager.service';
 })
 export class StStudentsComponent implements OnInit {
 
+  curPage: number;
   contentHeader: Sidebar[];
   studentFilterName: string;
   studentFilterPhone: string;
@@ -23,11 +24,12 @@ export class StStudentsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.curPage = 1;
     this.students = [];
     this.studentFilterName = '';
     this.studentFilterPhone = '';
     this.studentBirthdayFilterTime = {
-      start: new Date(new Date(1950,0,1).getFullYear() + '-01-01').getTime(),
+      start: new Date(new Date(1950, 0, 1).getFullYear() + '-01-01').getTime(),
       end: Infinity
     };
 
@@ -45,5 +47,9 @@ export class StStudentsComponent implements OnInit {
       start: $event.start,
       end: $event.end,
     };
+  }
+
+  handlePageChange($event) {
+    this.curPage = $event;
   }
 }

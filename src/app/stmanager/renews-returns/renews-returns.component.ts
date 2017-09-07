@@ -8,6 +8,8 @@ import {Sidebar} from '../../sidebar/sidebar';
   styleUrls: ['./renews-returns.component.less']
 })
 export class RenewsReturnsComponent implements OnInit {
+
+  curPage: number;
   contentHeader: Sidebar[];
   assets: any[];
   curAsset: any;
@@ -24,6 +26,7 @@ export class RenewsReturnsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.curPage = 1;
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
       {name: '学生退费管理页', icon: 'fa-exchange'}
@@ -46,5 +49,9 @@ export class RenewsReturnsComponent implements OnInit {
   drawbackMoney(): void {
     this.withDrawEvent.studentId = this.curAsset.studentId;
     this.stManagerService.drawback(this.withDrawEvent);
+  }
+
+  handlePageChange(page): void {
+    this.curPage = page;
   }
 }

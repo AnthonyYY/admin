@@ -12,6 +12,7 @@ import {courseTypeList} from '../../common/course-type';
 })
 export class StudentsAssetComponent implements OnInit {
 
+  curPage: number;
   contentHeader: Sidebar[];
   allStuAsset: any[];
   courses: Array<any>;
@@ -33,6 +34,7 @@ export class StudentsAssetComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.curPage = 1;
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
       {name: '学生资产信息页', icon: 'fa-graduation-cap'}
@@ -93,5 +95,9 @@ export class StudentsAssetComponent implements OnInit {
       buyHour: course.buyHour
     }) );
     this.counselorService.buyCourses(body).then( success => {} );
+  }
+
+  handlePaeChange(page) {
+    this.curPage = page;
   }
 }

@@ -9,6 +9,7 @@ import {Sidebar} from '../../sidebar/sidebar';
 })
 export class StudentScheduleComponent implements OnInit {
 
+  curPage: number;
   contentHeader: Sidebar[];
   schedule: any[];
   // 当前值字段
@@ -30,6 +31,7 @@ export class StudentScheduleComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.curPage = 1;
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
       {name: '学生课表管理页', icon: 'fa-graduation-cap'}
@@ -52,10 +54,12 @@ export class StudentScheduleComponent implements OnInit {
   }
   // 筛选课程列表(课程完成状态筛选)
   changeFilterScheduleState($event): void {
+      this.curPage = 1;
       this.filterScheduleState = $event.value === 'ALL' ? '' : $event.value;
   }
   // 筛选课程列表 课程上课时间筛选
   handleTimeRangeChange($event): void {
+    this.curPage = 1;
     this.filterTimeRange = {
       start: $event.start,
       end: $event.end,
@@ -83,5 +87,9 @@ export class StudentScheduleComponent implements OnInit {
       this.schedule.splice(curScheduleIndex, 1);
       this.schedule = [...this.schedule];
     } );
+  }
+
+  handlePageChange(page) {
+    this.curPage = page;
   }
 }

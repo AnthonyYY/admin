@@ -10,6 +10,7 @@ import {SchoolService} from '../../common/school.service';
 })
 export class CourseComponent implements OnInit {
 
+  curPage: number;
   schedule: any[];
   courses: any[];
   teachers: any[];
@@ -32,6 +33,7 @@ export class CourseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.curPage = 1;
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
       {name: '教学课表管理页', icon: 'fa-users'}
@@ -59,10 +61,12 @@ export class CourseComponent implements OnInit {
   }
 
   changeFilterScheduleState($event): void {
+    this.curPage = 1;
     this.filterScheduleState = $event.value === 'ALL' ? '' : $event.value;
   }
 
   handleTimeRangeChange($event): void {
+    this.curPage = 1;
     this.filterTimeRange = {
       start: $event.start,
       end: $event.end,
@@ -163,5 +167,9 @@ export class CourseComponent implements OnInit {
   resetStudents(): void {
     this.scheduleEvent.studyTime = 0;
     this.students.forEach( student => student.selected = false );
+  }
+
+  handlePageChange(page): void {
+    this.curPage = page;
   }
 }

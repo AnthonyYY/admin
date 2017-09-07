@@ -4,15 +4,15 @@
 <div class="content">
 
   <app-collapse-box [collapse]="false" [boxTitle]="'学生课时列表筛选'">
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">学生姓名:</label>
-      <div class="input-group input-group-sm" style="width: 148px;">
-        <input class="form-control" [(ngModel)]="filterStudentName" placeholder="请输入学生名称">
+      <div class="input-group input-group-sm">
+        <input class="form-control" (keypress)="curPage = 1;" [(ngModel)]="filterStudentName" placeholder="请输入学生名称">
         <div class="input-group-addon"><i class="fa fa-search"></i></div>
       </div>
     </div>
 
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">购买时间:</label>
       <app-date-ranger-picker
         [timePicker]="false"
@@ -21,10 +21,10 @@
       </app-date-ranger-picker>
     </div>
 
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">课程名称:</label>
-      <div class="input-group input-group-sm" style="width: 148px;">
-        <input class="form-control" [(ngModel)]="filterCourseName" placeholder="请输入课程名称">
+      <div class="input-group input-group-sm">
+        <input class="form-control" (keypress)="curPage = 1;" [(ngModel)]="filterCourseName" placeholder="请输入课程名称">
         <div class="input-group-addon"><i class="fa fa-search"></i></div>
       </div>
     </div>
@@ -55,7 +55,7 @@
               <tr *ngFor="let stat of stuCourseHourStats |
                 matchItem: filterStudentName:'studentName' |
                 matchItem: filterCourseName: 'courseName' |
-                timeRange: buyTimeRange : 'buyTime'">
+                timeRange: buyTimeRange : 'buyTime' | paging: curPage">
                 <td>{{ stat.studentName }}</td>
                 <td>{{ stat.courseName }}</td>
                 <td>{{ stat.buyHour }}</td>
@@ -93,6 +93,11 @@
       </div>
     </div>
   </div>
+
+  <app-pagination (changePage)="handlePageChange($event)" [totalCount]="(stuCourseHourStats |
+                matchItem: filterStudentName:'studentName' |
+                matchItem: filterCourseName: 'courseName' |
+                timeRange: buyTimeRange : 'buyTime').length"></app-pagination>
 </div>
 
 <app-modal #markInputModal>

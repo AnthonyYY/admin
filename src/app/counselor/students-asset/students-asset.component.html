@@ -2,12 +2,12 @@
 
 <div class="content">
   <app-collapse-box [collapse]="false" [icon]="'filter'" [boxTitle]="'签约列表过滤'">
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">
         姓名筛选:
       </label>
-      <div class="input-group input-group-sm" style="width: 148px;">
-        <input class="form-control input-sm" placeholder="输入咨学生姓名" [(ngModel)]="filterStuName">
+      <div class="input-group input-group-sm">
+        <input class="form-control input-sm" (keypress)="curPage = 1;" placeholder="输入咨学生姓名" [(ngModel)]="filterStuName">
         <span class="input-group-addon"><i class="fa fa-search"></i></span>
       </div>
     </div>
@@ -80,6 +80,8 @@
       </div>
     </div>
   </div>
+
+  <app-pagination [curPage]="curPage" [totalCount]="(allStuAsset | matchItem: filterStuName : 'name').length" (changePage)="handlePaeChange($event)"></app-pagination>
 </div>
 
 <app-modal #buyCourseModal class="buyModal" [disabledAcceptBtn]="!chosenCourse.length" [closeAfterConfirmClicked]="false">
@@ -154,7 +156,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let course of courses | matchItem: filterCourseName: 'name' | matchItem: filterCourseType: 'type' | matchItem: filterGrade : 'gradeName';">
+          <tr *ngFor="let course of courses |
+            matchItem: filterCourseName: 'name' |
+          matchItem: filterCourseType: 'type' |
+          matchItem: filterGrade : 'gradeName' | paging : curPage;">
             <td>{{ course.name }}</td>
             <td>{{ course.gradeId }}</td>
             <td>{{ courseTypeMap[course.type] }}</td>

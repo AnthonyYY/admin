@@ -9,6 +9,7 @@ import {FinanceService} from '../../finance.service';
 })
 export class PaymentsComponent implements OnInit {
 
+  curPage: number;
   payments: any[];
   constructor(
     private router: ActivatedRoute,
@@ -16,6 +17,7 @@ export class PaymentsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.curPage = 1;
     this.payments = [];
     this.router.params.subscribe( params => {
       this.fetchPaymentsBySchoolId(params.schoolId);
@@ -28,4 +30,7 @@ export class PaymentsComponent implements OnInit {
     } );
   }
 
+  handlePageChange(page): void {
+    this.curPage = page;
+  }
 }

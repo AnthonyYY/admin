@@ -3,27 +3,26 @@
 <div class="content">
 
   <app-collapse-box [collapse]="false" [icon]="'filter'" [boxTitle]="'课表过滤'">
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">教师姓名:</label>
-      <div class="input-group input-group-sm" style="width: 148px;">
-        <input class="form-control" [(ngModel)]="filterTeacherName" placeholder="请输入教师名称">
+      <div class="input-group input-group-sm">
+        <input class="form-control" (keypress)="curPage = 1;" [(ngModel)]="filterTeacherName" placeholder="请输入教师名称">
         <div class="input-group-addon"><i class="fa fa-search"></i></div>
       </div>
     </div>
 
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">课程名称:</label>
-      <div class="input-group input-group-sm" style="width: 148px;">
-        <input class="form-control" [(ngModel)]="filterCourseName" placeholder="请输入课程名称">
+      <div class="input-group input-group-sm">
+        <input class="form-control" (keypress)="curPage = 1;" [(ngModel)]="filterCourseName" placeholder="请输入课程名称">
         <div class="input-group-addon"><i class="fa fa-search"></i></div>
       </div>
     </div>
 
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">完成状态:</label>
-      <div class="input-group input-group-sm" style="width: 148px;">
+      <div class="input-group input-group-sm">
         <select2
-          [width]="148"
           [value]="filterScheduleState"
           [cssImport]="false"
           (valueChanged)="changeFilterScheduleState($event)"
@@ -32,7 +31,7 @@
       </div>
     </div>
 
-    <div class="col-xs-12 col-md-5 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">上课时间:</label>
       <app-date-ranger-picker
         [timePicker]="false"
@@ -81,7 +80,7 @@
                 matchItem: filterCourseName: 'courseName' |
                 matchItem: filterScheduleState: 'finish' : 'exact' |
                 timeRange: filterTimeRange : 'startTime'|
-                timeRange: filterTimeRange : 'endTime';
+                timeRange: filterTimeRange : 'endTime' | paging: curPage;
                 let i = index" (click)="scheduleEvent = course;courseCreator.showModal({
                 modalSize: 'lg',
                   title: '编辑课表',
@@ -102,10 +101,16 @@
             </table>
           </div>
         </div>
-        <app-pagination></app-pagination>
       </div>
     </div>
   </div>
+
+  <app-pagination (changePage)="handlePageChange($event)" [curPage]="curPage" [totalCount]="(schedule |
+                matchItem: filterTeacherName: 'teacherName' |
+                matchItem: filterCourseName: 'courseName' |
+                matchItem: filterScheduleState: 'finish' : 'exact' |
+                timeRange: filterTimeRange : 'startTime'|
+                timeRange: filterTimeRange : 'endTime').length"></app-pagination>
 </div>
 
 <app-modal #courseCreator [disabledAcceptBtn]="ifZeroStuChosen() || !scheduleEvent.studyTime">
@@ -148,7 +153,6 @@
                      min="0"
                      name="studyHour"
                      id="studyHour"
-                     style="width: 148px;"
                      [(ngModel)]="scheduleEvent.studyTime">
             </div>
           </div>

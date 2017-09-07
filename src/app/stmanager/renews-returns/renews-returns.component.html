@@ -30,7 +30,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let asset of assets | matchItem: filterStuName : 'studentName'">
+        <tr *ngFor="let asset of assets | matchItem: filterStuName : 'studentName'| paging : curPage">
           <td>{{ asset.studentName }}</td>
           <td>{{ asset.totalMoney }}</td>
           <td>{{ asset.usedMoney }}</td>
@@ -55,6 +55,9 @@
       </table>
     </div>
   </div>
+
+  <app-pagination (changePage)="handlePageChange($event)"
+                    [totalCount]="(assets | matchItem: filterStuName : 'studentName').length"></app-pagination>
 </div>
 
 <app-modal #drawback [disabledAcceptBtn]="!withDrawEvent.returnAmount || (withDrawEvent.returnAmount > (curAsset.hasPay - curAsset.hasUsed))">
@@ -66,6 +69,7 @@
                style="width: 100%;"
                id="wantDrawbackMoney"
                class="form-control {{ withDrawEvent.returnAmount > (curAsset.canBackMoney) && 'error' }}"
+               (keypress)="curPage = 1;"
                [(ngModel)]="withDrawEvent.returnAmount"
                min="0"
                max="{{curAsset.canBackMoney}}"
