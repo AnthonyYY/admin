@@ -18,7 +18,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let stat of classHourRecords">
+          <tr *ngFor="let stat of classHourRecords | paging: curPage">
             <td>{{ stat.courseName }}</td>
             <td>{{ stat.hours || 0 }}</td>
           </tr>
@@ -33,4 +33,9 @@
       </table>
     </div>
   </div>
+
+  <app-pagination *ngIf="classHourRecords && classHourRecords.length"
+                    [totalCount]="classHourRecords.length"
+                    (changePage)="handlePageChange($event)"
+                    curPage="curPage"></app-pagination>
 </div>

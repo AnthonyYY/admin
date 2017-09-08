@@ -8,6 +8,7 @@ import {TeacherService} from '../teacher.service';
 })
 export class TeacherClassHourComponent implements OnInit {
 
+  curPage: number;
   classHourRecords: any[];
   contentHeader: any[];
   classHourTotal: number;
@@ -16,6 +17,7 @@ export class TeacherClassHourComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.curPage = 1;
     this.classHourRecords = [];
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
@@ -30,5 +32,9 @@ export class TeacherClassHourComponent implements OnInit {
       this.classHourRecords = data.details;
       this.classHourTotal = data.totalHours;
     } );
+  }
+
+  handlePageChange(page): void {
+    this.curPage = page;
   }
 }

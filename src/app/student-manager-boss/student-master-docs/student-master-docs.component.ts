@@ -9,6 +9,8 @@ import {StudentManagerBossService} from '../student-manager-boss.service';
 })
 export class StudentMasterDocsComponent implements OnInit {
 
+  curPageManager: number;
+  curPageRecord: number;
   contentHeader: Sidebar[];
   studentManagers: any[];
   payments: any[];
@@ -21,6 +23,8 @@ export class StudentMasterDocsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.curPageManager = 1;
+    this.curPageRecord = 1;
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
       {name: '学管师管理页', icon: 'fa-table'}
@@ -68,4 +72,11 @@ export class StudentMasterDocsComponent implements OnInit {
     this.studentManagerBossService.fetchPayments().then( payments => this.payments = payments );
   }
 
+  handleManagerPageChange(page): void {
+    this.curPageManager = 1;
+  }
+
+  handleRecordPageChange(page): void {
+    this.curPageRecord = 1;
+  }
 }

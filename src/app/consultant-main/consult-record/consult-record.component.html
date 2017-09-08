@@ -3,31 +3,31 @@
 
 <div class="content">
   <app-collapse-box [collapse]="false" [icon]="'filter'" [boxTitle]="'咨询记录过滤'">
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">
         咨询师姓名:
       </label>
-      <div class="input-group input-group-sm" style="width: 148px;">
+      <div class="input-group input-group-sm">
         <input type="text" class="form-control input-sm" placeholder="咨询师姓名" (keypress)="curPage = 1;" [(ngModel)]="filterEmployeeName">
         <span class="input-group-addon"><i class="fa fa-search"></i></span>
       </div>
     </div>
 
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">
         学生姓名:
       </label>
-      <div class="input-group input-group-sm" style="width: 148px;">
+      <div class="input-group input-group-sm">
         <input type="text" class="form-control input-sm" placeholder="输入学生姓名搜索" (keypress)="curPage = 1;" [(ngModel)]="filterStuName">
         <span class="input-group-addon"><i class="fa fa-search"></i></span>
       </div>
     </div>
 
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">
         跟进状态:
       </label>
-      <div class="input-group input-group-sm" style="width: 148px;">
+      <div class="input-group input-group-sm">
         <select2 [cssImport]="false"
                  [options]="{minimumResultsForSearch: -1, placeholder:'全部状态'}"
                  [data]="[{id: 'ALL', text: '全部状态'}].concat(stateList)"

@@ -11,6 +11,7 @@ import {genders} from '../../common/gender';
 })
 export class UnallocatedStudentsComponent implements OnInit {
 
+  curPage: number;
   genders: Array<object>;
   unAllocatedStudents: any[];
   curStudent: any;
@@ -27,6 +28,7 @@ export class UnallocatedStudentsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.curPage = 1;
     this.fetchUnallocatedStudents();
     this.unAllocatedStudents = [];
     this.curStudent = new Student();
@@ -68,6 +70,7 @@ export class UnallocatedStudentsComponent implements OnInit {
   }
 
   switchFilterGender($event): void {
+    this.curPage = 1;
     this.filterGender = $event.value === 'ALL' ? '' : $event.value;
   }
 
@@ -99,5 +102,9 @@ export class UnallocatedStudentsComponent implements OnInit {
       this.curStudent.id = data.id;
       this.unAllocatedStudents.unshift(this.curStudent);
     } );
+  }
+
+  handlePageChange(page): void {
+    this.curPage = page;
   }
 }

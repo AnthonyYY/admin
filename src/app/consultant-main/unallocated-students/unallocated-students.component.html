@@ -3,21 +3,21 @@
 <div class="content">
 
   <app-collapse-box [collapse]="false" [icon]="'filter'" [boxTitle]="'学生过滤'">
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">
         姓名筛选:
       </label>
-      <div class="input-group input-group-sm" style="width: 148px;">
-        <input type="text" class="form-control input-sm" placeholder="输入学生姓名" [(ngModel)]="filterStuName">
+      <div class="input-group input-group-sm">
+        <input type="text" class="form-control input-sm" placeholder="输入学生姓名" (keypress)="curPage = 1;" [(ngModel)]="filterStuName">
         <span class="input-group-addon"><i class="fa fa-search"></i></span>
       </div>
     </div>
 
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">
         性别筛选:
       </label>
-      <div class="input-group input-group-sm" style="width: 148px;">
+      <div class="input-group input-group-sm">
         <select2 [cssImport]="false"
                  [options]="{minimumResultsForSearch: -1}"
                  [data]="genders"
@@ -26,23 +26,23 @@
       </div>
     </div>
 
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">
         电话筛选:
       </label>
-      <div class="input-group input-group-sm" style="width: 148px;">
-        <input type="text" class="form-control input-sm" placeholder="输入电话号码" [(ngModel)]="filterPhone">
+      <div class="input-group input-group-sm">
+        <input type="text" class="form-control input-sm" placeholder="输入电话号码" (keypress)="curPage = 1;" [(ngModel)]="filterPhone">
         <span class="input-group-addon"><i class="fa fa-search"></i></span>
       </div>
     </div>
   </app-collapse-box>
 
-  <div class="box box-info">
+  <div class="box box-primary">
     <div class="box-header">
       <h3 class="box-title">学生列表</h3>
       <div class="box-tools">
         <div class="btn-group btn-group-sm">
-          <button class="btn btn-info"
+          <button class="btn btn-primary"
             (click)="form.reset();resetCurStudent();
               studentModal.showModal({
                 modalSize: 'lg',
@@ -75,7 +75,7 @@
                 <tr *ngFor="let student of unAllocatedStudents |
                   matchItem: filterStuName: 'name' |
                   matchItem: filterGender: 'sex' : 'exact'  |
-                  matchItem: filterPhone: 'phone'"
+                  matchItem: filterPhone: 'phone' | paging: curPage"
                   (click)="resetCurStudent(student.id);
                   studentModal.showModal({
                     modalSize: 'lg',
@@ -116,6 +116,13 @@
       </div>
     </div>
   </div>
+
+  <app-pagination (changePage)="handlePageChange($event)"
+                     [curPage]="curPage"
+                     [totalCount]="(unAllocatedStudents |
+                  matchItem: filterStuName: 'name' |
+                  matchItem: filterGender: 'sex' : 'exact'  |
+                  matchItem: filterPhone: 'phone').length"></app-pagination>
 </div>
 
 <app-modal #studentModal [disabledAcceptBtn]=!stuForm.form.valid>

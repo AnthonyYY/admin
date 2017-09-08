@@ -8,6 +8,7 @@ import {TeacherService} from '../teacher.service';
 })
 export class TeacherScheduleComponent implements OnInit {
 
+  curPage: number;
   schedules: any[];
   contentHeader: any[];
   filterCourseName: string;
@@ -17,6 +18,7 @@ export class TeacherScheduleComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.curPage = 1;
     this.schedules = [];
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
@@ -34,6 +36,11 @@ export class TeacherScheduleComponent implements OnInit {
   }
 
   switchCourseState($event): void {
+    this.curPage = 1;
     this.filterCourseState = $event.value === 'ALL' ? '' : $event.value;
+  }
+
+  handlePageChange(page): void {
+    this.curPage = page;
   }
 }

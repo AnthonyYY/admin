@@ -10,6 +10,7 @@ import {genderList} from '../../common/enum';
 })
 export class AssignmentComponent implements OnInit {
 
+  curPage: number;
   contentHeader: Sidebar[];
   students: any[];
   studentFilterName: string;
@@ -21,6 +22,7 @@ export class AssignmentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.curPage = 1;
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
       {name: '签约学员信息管理', icon: 'fa-table'}
@@ -41,6 +43,7 @@ export class AssignmentComponent implements OnInit {
   }
 
   switchFilterGender($event): void {
+    this.curPage = 1;
     this.studentFilterGender = $event.value === 'ALL' ? '' : $event.value;
   }
 
