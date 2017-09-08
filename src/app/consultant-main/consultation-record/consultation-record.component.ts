@@ -9,6 +9,7 @@ import {ConsultantMainService} from '../consultant-main.service';
 })
 export class ConsultationRecordComponent implements OnInit {
 
+  curPage: number;
   contentHeader: Sidebar[];
   signRecords: Array<any>;
   unAllocatedStudents: any[];
@@ -22,6 +23,7 @@ export class ConsultationRecordComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.curPage = 1;
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
       {name: '咨询师签约列表页', icon: 'fa-files-o'}
@@ -37,7 +39,7 @@ export class ConsultationRecordComponent implements OnInit {
 
   fetchSignRecords(): void {
     this.consultantMainService.fetchCounselorStat('').then( data => {
-      this.signRecords.push(...data);
+      this.signRecords = data;
     } );
   }
 
@@ -75,5 +77,9 @@ export class ConsultationRecordComponent implements OnInit {
 
   unSelectAllStu(): void {
     this.unAllocatedStudents.forEach( stu => stu.selected = false );
+  }
+
+  handlePageChange(page): void {
+    this.curPage = page;
   }
 }

@@ -12,6 +12,7 @@ import {CounselorService} from '../../counselor/counselor.service';
 })
 export class ConsultRecordComponent implements OnInit {
 
+  curPage: number;
   curRecord: any;
   contentHeader: Sidebar[];
   consultRecords: Array<any>;
@@ -28,6 +29,7 @@ export class ConsultRecordComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.curPage = 1;
     this.curRecord = {};
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
@@ -48,14 +50,19 @@ export class ConsultRecordComponent implements OnInit {
   }
 
   switchFilterState($event): void {
-    this.filterState = $event.value === 'ALL' ? '': $event.value;
+    this.curPage = 1;
+    this.filterState = $event.value === 'ALL' ? '' : $event.value;
   }
 
-  switchState(){
+  switchState(): void {
     this.counselorService.switchState(this.curRecord.studentId).then( success => {
       if (success) {
         this.curRecord.status = 'CONNECTION';
       }
     } );
+  }
+
+  handlePageChange(page): void {
+    this.curPage = page;
   }
 }
