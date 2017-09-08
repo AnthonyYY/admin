@@ -9,6 +9,7 @@ import {TeacherDirectorService} from '../teacher-director.service';
 })
 export class GradeComponent implements OnInit {
 
+  curPage: number;
   contentHeader: any[];
   grades: any[];
   filterGradeName: string;
@@ -23,6 +24,8 @@ export class GradeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.curPage = 1;
+    this.grades = [];
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
       {name: '教学班组管理页', icon: 'fa-users'}
@@ -68,4 +71,9 @@ export class GradeComponent implements OnInit {
   findGradeById(id: string): object {
     return this.grades.find( grade => id === grade.id );
   }
+
+  handlePageChange(page): void {
+    this.curPage = page;
+  }
+
 }

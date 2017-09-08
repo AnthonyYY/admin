@@ -3,10 +3,10 @@
 
 <div class="content">
   <app-collapse-box [collapse]="false" [icon]="'filter'" [boxTitle]="'班组过滤'">
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">班组:</label>
-      <div class="input-group input-group-sm" style="width: 148px;">
-        <input class="form-control" [(ngModel)]="filterGradeName" placeholder="请输入班组">
+      <div class="input-group input-group-sm">
+        <input class="form-control" (keypress)="curPage = 1;" [(ngModel)]="filterGradeName" placeholder="请输入班组">
         <div class="input-group-addon"><i class="fa fa-search"></i></div>
       </div>
     </div>
@@ -40,7 +40,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let grade of grades |
-             matchItem: filterGradeName : 'name'"
+             matchItem: filterGradeName : 'name' | paging: curPage"
             (click)="setCurGrade(grade);
             gradeCreatorOrUpdator.showModal({
               modalSize: 'sm',
@@ -69,6 +69,11 @@
       </table>
     </div>
   </div>
+
+  <app-pagination (changePage)="handlePageChange($event)"
+                  [curPage]="curPage"
+                  *ngIf="grades.length"
+                  [totalCount]="(grades | matchItem: filterGradeName : 'name').length"></app-pagination>
 </div>
 
 <app-modal #gradeCreatorOrUpdator [disabledAcceptBtn]="!(curGrade.name && curGrade.price && curGrade.remark)">

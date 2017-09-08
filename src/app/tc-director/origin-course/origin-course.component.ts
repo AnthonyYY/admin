@@ -11,6 +11,7 @@ import {TeacherDirectorService} from '../teacher-director.service';
 })
 export class OriginCourseComponent implements OnInit {
 
+  curPage: number;
   contentHeader: Sidebar[];
   curCourse: any;
   assignment: { courseId: string, teacherIds: string[] };
@@ -37,6 +38,7 @@ export class OriginCourseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.curPage = 1;
     this.contentHeader = [
       {name: '主页', icon: 'fa-dashboard'},
       {name: '教学课程管理页', icon: 'fa-book'}
@@ -47,6 +49,7 @@ export class OriginCourseComponent implements OnInit {
     this.courseTypeMap = courseTypeMap;
     this.courseTypeList = courseTypeList;
     this.teachers = [];
+    this.courses = [];
     this.courseTeachers = [];
     this.fetchCourse();
     this.fetchTeachers();
@@ -157,6 +160,7 @@ export class OriginCourseComponent implements OnInit {
   }
 
   changeFilterCourseState($event): void {
+    this.curPage = 1;
     this.filterCourseType = $event.value === 'ALL' ? '' : $event.value;
   }
 
@@ -164,5 +168,9 @@ export class OriginCourseComponent implements OnInit {
     this.teacherDirectorService
       .fetchTeachersByCourseId(courseId)
       .then( teachers => this.courseTeachers = teachers );
+  }
+
+  handlePageChange(page): void {
+    this.curPage = page;
   }
 }

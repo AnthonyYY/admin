@@ -5,6 +5,11 @@
   <div class="box box-primary box-divide">
     <div class="box-header">
       <h3 class="box-title">转校申请</h3>
+      <div class="box-tools">
+        <button class="btn btn-primary btn-sm">
+          发起转校申请
+        </button>
+      </div>
     </div>
     <div class="box-body">
 
@@ -43,58 +48,68 @@
         </tbody>
       </table>
 
-      <form  class="form center-block">
+    </div>
+  </div>
+</div>
 
-        <div class="row">
-          <div class="form-group col-xs-6 col-xs-offset-3">
-            <label class="control-label pull-left">转校学生</label>
-            <div class="pull-left">
-              <div class="input-group input-group-sm">
-                <select2 [cssImport]="false"
-                         [width]="240"
-                         [data]="students"
-                         (valueChanged)="switchStudent($event)"
-                         [options]="select2Options"></select2>
-              </div>
-            </div>
+
+<app-modal>
+  <form  class="form center-block">
+
+    <div class="row">
+      <div class="form-group col-xs-6 col-xs-offset-3">
+        <label class="control-label pull-left">转校学生</label>
+        <div class="pull-left">
+          <div class="input-group input-group-sm" style="width: 240px;">
+            <select2 [cssImport]="false"
+                     [width]="240"
+                     [data]="students"
+                     (valueChanged)="switchStudent($event)"
+                     [options]="select2Options"></select2>
           </div>
+        </div>
+      </div>
 
-          <div class="form-group col-xs-6 col-xs-offset-3">
-            <label class="control-label pull-left">转校校区</label>
-            <div class="pull-left">
-              <div class="input-group input-group-sm">
-                <select2 [cssImport]="false"
-                         [width]="'240'"
-                         [data]="schools"
-                         (valueChanged)="switchSchool($event)"></select2>
-              </div>
-            </div>
+      <div class="form-group col-xs-6 col-xs-offset-3">
+        <label class="control-label pull-left">转校校区</label>
+        <div class="pull-left">
+          <div class="input-group input-group-sm" style="width: 240px;">
+            <select2 [cssImport]="false"
+                     [width]="240"
+                     [data]="schools"
+                     (valueChanged)="switchSchool($event)"></select2>
           </div>
+        </div>
+      </div>
 
-          <div class="form-group col-xs-6 col-xs-offset-3">
-            <label class="control-label pull-left" id="remark">备注信息</label>
-            <div class="pull-left">
-              <div class="input-group input-group-sm">
-                <textarea style="width: 240px;"
-                          rows="2"
+      <div class="form-group col-xs-6 col-xs-offset-3">
+        <label class="control-label pull-left" id="remark">备注信息</label>
+        <div class="pull-left">
+          <div class="input-group input-group-sm">
+                <textarea style="width: 206px;"
+                          rows="4"
                           class="form-control"
                           name="remark"
                           placeholder="请输入备注信息"
                           [(ngModel)]="transferEvent.remark"></textarea>
-              </div>
-            </div>
           </div>
         </div>
+      </div>
+    </div>
 
+    <div class="form-group">
+      <label class="pull-left" style="visibility: hidden">提交申请</label>
+      <div class="input-group input-group-sm">
         <button type="button"
                 class="btn btn-default center-block"
-                style="width: 310px;"
+                style="width: 206px;"
                 (click)="transfer()"
                 [disabled]="!transferEvent.studentId || !transferEvent.remark">
           <i class="fa fa-hand-o-hand"></i>
           发起退费申请
         </button>
-      </form>
+      </div>
     </div>
-  </div>
-</div>
+  </form>
+
+</app-modal>
