@@ -1,20 +1,20 @@
 <app-collapse-box [collapse]="false" [boxTitle]="'学生信息筛选'">
-  <div class="col-xs-12 col-md-4 input-group-sm">
+  <div class="col-xs-12 col-lg-4 input-group-sm">
     <label class="pull-left">
       姓名:
     </label>
-    <div class="input-group input-group-sm" style="width: 148px;">
-      <input class="form-control input-sm" [(ngModel)]="filterStudentName" placeholder="输入学生名称">
+    <div class="input-group input-group-sm">
+      <input class="form-control input-sm" (keypress)="curPage = 1;" [(ngModel)]="filterStudentName" placeholder="输入学生名称">
       <span class="input-group-addon"><i class="fa fa-search"></i></span>
     </div>
   </div>
 
-  <div class="col-xs-12 col-md-4 input-group-sm">
+  <div class="col-xs-12 col-lg-4 input-group-sm">
     <label class="pull-left">
       电话号码:
     </label>
-    <div class="input-group input-group-sm" style="width: 148px;">
-      <input class="form-control input-sm" [(ngModel)]="filterStudentPhone" placeholder="输入学生电话号码">
+    <div class="input-group input-group-sm">
+      <input class="form-control input-sm" (keypress)="curPage = 1;" [(ngModel)]="filterStudentPhone" placeholder="输入学生电话号码">
       <span class="input-group-addon"><i class="fa fa-search"></i></span>
     </div>
   </div>
@@ -44,7 +44,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let student of students | matchItem: filterStudentName: 'name' | matchItem: filterStudentPhone: 'phone';">
+      <tr *ngFor="let student of students | matchItem: filterStudentName: 'name' | matchItem: filterStudentPhone: 'phone' | paging: curPage;">
         <td>{{ student.name }}</td>
         <td>{{ student.sex === 'MALE' ? '男': '女' }}</td>
         <td>{{ student.phone }}</td>
@@ -70,6 +70,10 @@
     </table>
   </div>
 </div>
+
+<app-pagination (changePage)="handlePageChange($event)"
+                [totalCount]="(students | matchItem: filterStudentName: 'name' | matchItem: filterStudentPhone: 'phone').length"></app-pagination>
+
 
 <app-modal #payModal [disabledAcceptBtn]="!(payOrRefundEvent.employeeId && payOrRefundEvent.money)">
   <form class="form">

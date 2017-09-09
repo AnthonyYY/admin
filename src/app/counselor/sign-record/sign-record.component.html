@@ -31,6 +31,8 @@
       <div class="box-tools" style="line-height: 30px;">
         <strong>缴费总金额:</strong>
         <span>{{ totalMoney }}</span>
+        <strong>退费总金额:</strong>
+        <span>{{ totalBack }}</span>
       </div>
 
     </div>
@@ -39,20 +41,20 @@
         <thead>
           <tr>
             <th>学生姓名</th>
-            <th>咨询师</th>
             <th>缴费类型</th>
             <th>缴费时间</th>
             <th>缴费金额</th>
+            <th>退费金额</th>
             <th>缴费描述</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let record of signRecord | matchItem: studentFilterName: 'studentName' | timeRange: filterPayTime: 'payTime' | paging : curPage">
             <td>{{ record.studentName }}</td>
-            <td>{{ record.employeeName }}</td>
             <td>{{ payType[record.opPayType] }}</td>
             <td>{{ record.payTime | date: 'yyyy-MM-dd mm:ss' }}</td>
             <td>{{ record.money }}</td>
+            <td>{{ record.hasBack || 0 }}</td>
             <td>{{ record.remark }}</td>
           </tr>
           <tr *ngIf="!signRecord.length">
@@ -68,6 +70,7 @@
   </div>
 
   <app-pagination [curPage]="curPage"
+                    *ngIf="signRecord.length"
                     (changePage)="handleChangePage($event)"
                     [totalCount]="(signRecord | matchItem: studentFilterName: 'studentName' | timeRange: filterPayTime: 'payTime').length"></app-pagination>
 </div>

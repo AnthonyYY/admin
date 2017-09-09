@@ -11,6 +11,8 @@ import {AppSettings} from '../../../app-settings';
   styleUrls: ['./student-table.component.less']
 })
 export class StudentTableComponent implements OnInit {
+
+  curPage: number;
   payOrRefundEvent: {
     employeeId: string,
     money: number,
@@ -37,6 +39,7 @@ export class StudentTableComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.curPage = 1;
     this.payer = [];
     this.students = [];
     this.route.params.subscribe((params) => {
@@ -103,5 +106,9 @@ export class StudentTableComponent implements OnInit {
     this.payOrRefundEvent.studentId = student.id;
     this.payOrRefundEvent.remark = '';
     this.payOrRefundEvent.money = 0;
+  }
+
+  handlePageChange(page): void {
+    this.curPage = page;
   }
 }

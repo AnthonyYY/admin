@@ -48,4 +48,11 @@ export class StudentManagerBossService {
       return [];
     } );
   }
+
+
+  finishSchedule(scheduleId): Promise<any> {
+    return this.http.post(`stmanager/student/finish/${scheduleId}`).then( result => {
+      return result.success;
+    } );
+  }
 }

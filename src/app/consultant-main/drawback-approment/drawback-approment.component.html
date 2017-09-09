@@ -1,0 +1,118 @@
+<app-content-header [title]="'咨询师签约列表'" [menus]="contentHeader"></app-content-header>
+
+<div class="content">
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li (click)="fetchPendingApp()" class="active"><a href="#tab_1" data-toggle="tab">待审核的申请</a></li>
+      <li (click)="fetchAcceptedApps()"><a href="#tab_2" data-toggle="tab">已通过的申请</a></li>
+      <li (click)="fetchRejectedApps()"><a href="#tab_3" data-toggle="tab">已拒绝的申请</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="tab_1">
+        <table class="table table-hover text-center">
+          <thead>
+          <tr>
+            <th>申请时间</th>
+            <th>退费金额</th>
+            <th>退费学生</th>
+            <th>备注</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let record of pendingApps">
+            <td>{{ record.applicationTime | date : 'yyyy-MM-dd HH:mm:ss' }}</td>
+            <td>{{ record.returnAmount }}</td>
+            <td>{{ record.studentName }}</td>
+            <td>{{ record.applicationRemark }}</td>
+            <td>
+              <button class="btn btn-xs btn-primary"
+                      (click)="approve = 'AUDIT_SUCCESS';
+                  curAudit = record;
+                  approveRemark = '';
+                  auditModal.showModal({
+                    modalSize: 'sm',
+                    title: '是否通过审核？',
+                    confirm: checkDrawbackApp
+                  })">审核</button>
+            </td>
+          </tr>
+          <tr *ngIf="!pendingApps.length">
+            <td class="text-muted" colspan="5"> 暂无退费申请</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tab-pane" id="tab_2">
+        <table class="table table-hover text-center">
+          <thead>
+          <tr>
+            <th>申请人</th>
+            <th>申请时间</th>
+            <th>退费金额</th>
+            <th>退费学生</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let record of acceptedApps">
+            <td>{{ record.applicationName }}</td>
+            <td>{{ record.applicationTime | date : 'yyyy-MM-dd HH:mm:ss' }}</td>
+            <td>{{ record.returnAmount }}</td>
+            <td>{{ record.studentName }}</td>
+          </tr>
+          <tr *ngIf="!acceptedApps.length">
+            <td class="text-muted" colspan="4"> 暂无退费通过申请</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tab-pane" id="tab_3">
+        <table class="table table-hover text-center">
+          <thead>
+          <tr>
+            <th>申请人</th>
+            <th>申请时间</th>
+            <th>退费金额</th>
+            <th>退费学生</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let record of rejectedApps">
+            <td>{{ record.applicationName }}</td>
+            <td>{{ record.applicationTime | date : 'yyyy-MM-dd HH:mm:ss' }}</td>
+            <td>{{ record.returnAmount }}</td>
+            <td>{{ record.studentName }}</td>
+          </tr>
+          <tr *ngIf="!rejectedApps.length">
+            <td class="text-muted" colspan="4"> 暂无退拒绝过申请</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal #auditModal>
+  <form class="form text-center clearfix">
+    <div class="radio">
+      <label>
+        <input type="radio" name="optionsRadios" id="approve" (change)="approve = 'AUDIT_SUCCESS'" [checked]="approve === 'AUDIT_SUCCESS'">
+        通过该退费申请
+      </label>
+    </div>
+
+    <div class="radio">
+      <label>
+        <input type="radio" name="optionsRadios" id="reject" value="option1" (change)="approve = 'AUDIT_FAIL'" [checked]="approve === 'AUDIT_FAIL'">
+        拒绝该退费申请
+      </label>
+    </div>
+
+    <div class="form-group form-group-sm col-xs-6 col-xs-offset-3">
+      <div>
+        <textarea name="remark" id="remark" class="form-control" rows="2" placeholder="请填写审核备注" [(ngModel)]="approveRemark"></textarea>
+      </div>
+    </div>
+  </form>
+</app-modal>

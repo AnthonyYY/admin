@@ -101,6 +101,7 @@ export class UnallocatedStudentsComponent implements OnInit {
     this.consultantService.addStudent(this.curStudent).then( data => {
       this.curStudent.id = data.id;
       this.unAllocatedStudents.unshift(this.curStudent);
+      this.unAllocatedStudents = [...this.unAllocatedStudents];
     } );
   }
 

@@ -53,7 +53,7 @@ export class SchoolService {
     return this.http.get('common/grade').then( data => {
       if (data.success) {
         return data.data;
-      }else{
+      } else {
         this.alertService.alert({
           title: '提示',
           content: '获取班组列表失败',
@@ -103,8 +103,9 @@ export class SchoolService {
           content: '审核成功',
           type: 'success'
         });
+        return result.success;
       }
-      return result.success;
+      return false;
     } );
   }
 }

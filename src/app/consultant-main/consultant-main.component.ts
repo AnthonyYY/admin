@@ -28,6 +28,11 @@ export class ConsultantMainComponent implements OnInit {
         routerLink: ['unallocated-students'],
         icon: 'fa-graduation-cap'
       },
+      {
+        name: '退费申请审核',
+        routerLink: ['drawbacks-auditing'],
+        icon: 'fa-file-text-o'
+      }
     ];
   }
 

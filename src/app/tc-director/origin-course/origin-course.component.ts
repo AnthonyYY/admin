@@ -22,6 +22,7 @@ export class OriginCourseComponent implements OnInit {
   courseTypeMap: any;
   courseTypeList: any[];
   teachers: any[];
+  filteredTeachers: any[];
   courseTeachers: any[];
   assignedTeachers: any[];
 
@@ -49,6 +50,7 @@ export class OriginCourseComponent implements OnInit {
     this.courseTypeMap = courseTypeMap;
     this.courseTypeList = courseTypeList;
     this.teachers = [];
+    this.filteredTeachers = [];
     this.courses = [];
     this.courseTeachers = [];
     this.fetchCourse();
@@ -151,7 +153,13 @@ export class OriginCourseComponent implements OnInit {
     } );
   }
 
+  filterTeachers(): void {
+    const courseTeachersIds = this.courseTeachers.map( teacher => teacher.id );
+    this.filteredTeachers = this.teachers.filter( teacher => courseTeachersIds.indexOf(teacher.id) < 0 );
+  }
+
   assignTeachers(): void {
+    this.assignment.teacherIds.unshift(...this.courseTeachers.map( teacher => teacher.id ));
     this.teacherDirectorService.assignTeachers(this.assignment);
   }
 
@@ -167,7 +175,11 @@ export class OriginCourseComponent implements OnInit {
   fetchTeachersByCourseId( courseId ): void {
     this.teacherDirectorService
       .fetchTeachersByCourseId(courseId)
-      .then( teachers => this.courseTeachers = teachers );
+      .then( teachers => this.courseTeachers = teachers )
+      .then( () => {
+        this.filterTeachers();
+        console.log(this.filteredTeachers);
+      } );
   }
 
   handlePageChange(page): void {

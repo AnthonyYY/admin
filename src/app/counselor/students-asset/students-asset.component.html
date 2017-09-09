@@ -63,6 +63,16 @@
                       class="btn btn-xs btn-success">
                       <i class="fa fa-shopping-cart"></i> 购买课程
                     </button>
+                    <button class="btn btn-xs btn-warning"
+                      *ngIf="asset.hasPay > (asset.hasUsed + asset.hasBack)"
+                      (click)="curAsset = asset;withDrawEvent.returnAmount = '';
+                        withDrawEvent.remark = '';
+                        drawbackModal.showModal({
+                        modalSize: 'sm',
+                        confirm: drawbackApp
+                      })">
+                      <i class="fa fa-money"></i> 申请退款
+                    </button>
                     <span class="text-danger" *ngIf="asset.hasPay <= (asset.hasUsed + asset.hasBack)">
                       <i class="fa fa-exclamation-triangle"></i>
                       余额不足
@@ -260,4 +270,41 @@
       <input min="1" max="{{ curChosenCourse.studyHour || 20 }}" type="number" class="input-sm form-control" name="studyHour" [(ngModel)]="curChosenCourse.buyHour">
     </div>
   </form>
+</app-modal>
+
+<app-modal #drawbackModal [disabledAcceptBtn]="!withDrawEvent.returnAmount || (withDrawEvent.returnAmount > (curAsset.hasPay - curAsset.hasUsed))">
+
+  <div class="form-group clearfix">
+    <label for="wantDrawbackMoney" class="control-label col-xs-3">退费金额:</label>
+    <div class="col-xs-9">
+      <div class="input-group input-group-sm">
+        <input type="number"
+               style="width: 214px"
+               id="wantDrawbackMoney"
+               class="form-control {{ withDrawEvent.returnAmount > (curAsset.canBackMoney) && 'error' }}"
+               (keypress)="curPage = 1;"
+               [(ngModel)]="withDrawEvent.returnAmount"
+               min="0"
+               max="{{curAsset.canBackMoney}}"
+               placeholder="最多可退金额{{ curAsset.canBackMoney }}">
+        <span class="input-group-addon">元</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group clearfix">
+    <label for="drawbackRemark" class="control-label col-xs-3">
+      退费说明:
+    </label>
+    <div class="col-xs-9">
+      <textarea name="drawbackRemark"
+                style="width: 100%;"
+                id="drawbackRemark"
+                rows="3"
+                class="form-control"
+                placeholder="请输入退费说明"
+                [(ngModel)]="withDrawEvent.remark"></textarea>
+    </div>
+  </div>
+
 </app-modal>

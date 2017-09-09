@@ -67,15 +67,24 @@ export class CounselorService {
 
   fetchSignRecord(): Promise<any> {
     return this.http.get('counselor/student/stat').then( data => {
-      if(data.success){
+      if (data.success) {
         return data.data;
-      }else{
+      } else {
         this.alertService.alert({
           title: '提示',
           content: '获取签约记录失败',
           type: 'danger'
         });
       }
-    } )
+    } );
+  }
+
+  fetchDrawbackAppRecords(): Promise<any> {
+    return this.http.get('common/my/application/BACK_MONEY').then( result => {
+      if (result.success) {
+         return result.data;
+      }
+      return [];
+    } );
   }
 }

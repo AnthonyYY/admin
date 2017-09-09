@@ -47,6 +47,13 @@ import {TransferBossComponent} from './president/transfer-boss/transfer-boss.com
 import {StudentManagerBossComponent} from './student-manager-boss/student-manager-boss.component';
 import {AssignmentComponent} from './student-manager-boss/assignment/assignment.component';
 import {StudentMasterDocsComponent} from './student-manager-boss/student-master-docs/student-master-docs.component';
+import {DrawbackComponent} from './student-manager-boss/drawback/drawback.component';
+import {CounselorsSignedRecordsComponent} from './counselor/counselors-signed-records/counselors-signed-records.component';
+import {DrawbackApplicationComponent} from './counselor/drawback-application/drawback-application.component';
+import {DrawbackAuditingComponent} from './counselor/drawback-auditing/drawback-auditing.component';
+import {DrawbackListComponent} from './stmanager/drawback-list/drawback-list.component';
+import {DrawbackApprovalComponent} from './consultant-main/drawback-approment/drawback-approment.component';
+import {ScheduleManagementComponent} from './student-manager-boss/schedule-management/schedule-management.component';
 
 export const routes: Routes = [
   {
@@ -101,6 +108,10 @@ export const routes: Routes = [
           {
             path: 'consult-record',
             component: ConsultRecordComponent
+          },
+          {
+            path: 'drawbacks-auditing',
+            component: DrawbackApprovalComponent
           }
         ]
       },
@@ -124,6 +135,18 @@ export const routes: Routes = [
           {
             path: 'sign-record',
             component: SignRecordComponent
+          },
+          {
+            path: 'counselors-signs',
+            component: CounselorsSignedRecordsComponent
+          },
+          {
+            path: 'drawback-application',
+            component: DrawbackApplicationComponent
+          },
+          {
+            path: 'drawback-auditing',
+            component: DrawbackAuditingComponent
           }
         ]
       },
@@ -133,7 +156,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'schedule',
+            redirectTo: 'renews-returns',
             pathMatch: 'full'
           },
           {
@@ -155,6 +178,10 @@ export const routes: Routes = [
           {
             path: 'renews-returns',
             component: RenewsReturnsComponent
+          },
+          {
+            path: 'drawbacks',
+            component: DrawbackListComponent
           }
         ]
       },
@@ -331,7 +358,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'student-master-docs',
+            redirectTo: 'student-assignment',
             pathMatch: 'full'
           },
           {
@@ -339,8 +366,16 @@ export const routes: Routes = [
             component: AssignmentComponent
           },
           {
+            path: 'drawback',
+            component: DrawbackComponent
+          },
+          {
             path: 'student-master-docs',
             component: StudentMasterDocsComponent
+          },
+          {
+            path: 'schedule-management',
+            component: ScheduleManagementComponent
           }
         ]
       }

@@ -8,6 +8,7 @@
       <div class="box-tools">
         <button class="btn btn-primary btn-sm" (click)="transferApplication.showModal({
           modalType: 'default',
+          modalConfirmText: '确认发起转校申请',
           confirm: transfer
         })">
           发起转校申请
@@ -43,7 +44,7 @@
               </span>
             </td>
           </tr>
-          <tr>
+          <tr *ngIf="!appRecords.length">
             <td colspan="6">
               <p class="text-muted text-center">暂无转校申请记录</p>
             </td>

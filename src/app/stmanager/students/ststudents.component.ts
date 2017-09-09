@@ -28,6 +28,10 @@ export class StStudentsComponent implements OnInit {
     this.students = [];
     this.studentFilterName = '';
     this.studentFilterPhone = '';
+    this.contentHeader = [
+      {name: '主页', icon: 'fa-dashboard'},
+      {name: '学生列表页', icon: 'fa-graduation-cap'}
+    ];
     this.studentBirthdayFilterTime = {
       start: new Date(new Date(1950, 0, 1).getFullYear() + '-01-01').getTime(),
       end: Infinity

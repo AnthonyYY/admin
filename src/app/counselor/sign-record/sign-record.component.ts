@@ -13,6 +13,7 @@ export class SignRecordComponent implements OnInit {
   contentHeader: Sidebar[];
   signRecord: any[];
   totalMoney: number | string;
+  totalBack: number | string;
   studentFilterName: string;
   filterPayTime: any;
   payType: any;
@@ -29,15 +30,17 @@ export class SignRecordComponent implements OnInit {
     ];
     this.signRecord = [];
     this.totalMoney = 0;
+    this.totalBack = 0;
     this.studentFilterName = '';
     this.filterPayTime = { start: new Date(new Date().getFullYear() + '-01-01').getTime(), end: Infinity };
     this.payType = payType;
   }
 
-  fetchSignRecords(): void{
+  fetchSignRecords(): void {
     this.counselorService.fetchSignRecord().then( data => {
-      this.signRecord = data.detail;
+      this.signRecord = data.detail || [];
       this.totalMoney = data.totalMoney;
+      this.totalBack = data.totalBack;
     } );
   }
 

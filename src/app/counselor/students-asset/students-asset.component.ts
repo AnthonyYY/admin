@@ -4,6 +4,7 @@ import {CounselorService} from '../counselor.service';
 import {SchoolService} from '../../common/school.service';
 import {courseTypeMap} from '../../common/course-type';
 import {courseTypeList} from '../../common/course-type';
+import {StmanagerService} from "../../stmanager/stmanager.service";
 
 @Component({
   selector: 'app-students-asset',
@@ -25,12 +26,20 @@ export class StudentsAssetComponent implements OnInit {
   filterCourseName: string;
   filterCourseType: string;
   filterGrade: string;
+  withDrawEvent: {
+    returnAmount: any,
+    remark: string,
+    studentId: string
+  };
+  curAsset: any;
   constructor(
     private counselorService: CounselorService,
-    private schoolService: SchoolService
+    private schoolService: SchoolService,
+    private stmanagerService: StmanagerService
   ) {
     this.addChosenCourse = this.addChosenCourse.bind(this);
     this.buyCourses = this.buyCourses.bind(this);
+    this.drawbackApp = this.drawbackApp.bind(this);
   }
 
   ngOnInit() {
@@ -50,7 +59,8 @@ export class StudentsAssetComponent implements OnInit {
     this.filterCourseName = '';
     this.filterCourseType = '';
     this.filterGrade = '';
-    this.fetchStuAsset();
+    this.withDrawEvent = {returnAmount: '', remark: '', studentId: ''};    this.fetchStuAsset();
+    this.curAsset = {};
     this.fetchCourses();
   }
 
@@ -99,5 +109,10 @@ export class StudentsAssetComponent implements OnInit {
 
   handlePaeChange(page) {
     this.curPage = page;
+  }
+
+  drawbackApp(): void {
+    this.withDrawEvent.studentId = this.curAsset.id;
+    this.stmanagerService.drawback(this.withDrawEvent);
   }
 }

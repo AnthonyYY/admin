@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {StmanagerService} from '../stmanager.service';
 import {Sidebar} from '../../sidebar/sidebar';
+import {payType} from '../../common/enum';
 
 @Component({
   selector: 'app-renews-returns',
@@ -9,6 +10,7 @@ import {Sidebar} from '../../sidebar/sidebar';
 })
 export class RenewsReturnsComponent implements OnInit {
 
+  payType = payType;
   curPage: number;
   contentHeader: Sidebar[];
   assets: any[];
@@ -18,6 +20,11 @@ export class RenewsReturnsComponent implements OnInit {
     returnAmount: any,
     remark: string,
     studentId: string
+  };
+  paymentOrReturnRecords: {
+    details: any[],
+    totalMoney: number,
+    totalBack: number,
   };
   constructor(
     private stManagerService: StmanagerService
@@ -31,12 +38,18 @@ export class RenewsReturnsComponent implements OnInit {
       {name: '主页', icon: 'fa-dashboard'},
       {name: '学生退费管理页', icon: 'fa-exchange'}
     ];
+    this.paymentOrReturnRecords = {
+      details: [],
+      totalMoney: 0,
+      totalBack: 0,
+    };
     this.assets = [];
     this.filterStuName = '';
     this.curAsset = {};
     this.withDrawEvent = {returnAmount: '', remark: '', studentId: ''};
 
     this.fetchStuAssets();
+    this.fetchPaymentOrReturnRecords();
   }
 
   fetchStuAssets(): void {
@@ -53,5 +66,11 @@ export class RenewsReturnsComponent implements OnInit {
 
   handlePageChange(page): void {
     this.curPage = page;
+  }
+
+  fetchPaymentOrReturnRecords(): void {
+    this.stManagerService.fetchPaymentOrReturnRecords().then( result => {
+      this.paymentOrReturnRecords = result;
+    } );
   }
 }

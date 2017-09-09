@@ -1,0 +1,39 @@
+<app-content-header
+  [title]="'咨询师签约记录'" [menus]="contentHeader"></app-content-header>
+
+<div class="content">
+  <div class="box box-primary box-divide">
+    <div class="box-body">
+      <table class="table table-hover text-center">
+        <thead>
+        <tr>
+          <th>咨询师</th>
+          <th>电话</th>
+          <th>签约人数</th>
+          <th>学生人数</th>
+          <th>签约金额</th>
+          <th>退款金额</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let record of counselorsSignRecords | paging: curPage">
+          <td>{{ record.name }}</td>
+          <td>{{ record.phone }}</td>
+          <td>{{ record.signNum }}</td>
+          <td>{{ record.totalStudentNum }}</td>
+          <td>{{ record.totalMoney }}</td>
+          <td>{{ record.totalBack }}</td>
+        </tr>
+        <tr *ngIf="!counselorsSignRecords.length">
+          <td colspan="6" class="text-muted">暂无咨询师签约记录</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <app-pagination [curPage]="curPage"
+                    (changePage)="handlePageChange($event)"
+                    *ngIf="counselorsSignRecords.length"
+                    [totalCount]="(counselorsSignRecords.length)"></app-pagination>
+</div>

@@ -44,7 +44,10 @@ export class AssignmentComponent implements OnInit {
 
   switchFilterGender($event): void {
     this.curPage = 1;
-    this.studentFilterGender = $event.value === 'ALL' ? '' : $event.value;
+    alert($event.value);
+    alert($event.value === 'ALL');
+    this.studentFilterGender = $event.value === 'ALL' ?  '' : $event.value;
+    console.log(this.studentFilterGender);
   }
 
 }

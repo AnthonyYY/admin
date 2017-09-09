@@ -19,6 +19,16 @@ export class StudentManagerBossComponent implements OnInit {
         icon: 'fa-graduation-cap'
       },
       {
+        name: '退费申请审批',
+        routerLink: ['drawback'],
+        icon: 'fa-file-excel-o'
+      },
+      {
+        name: '教学课表管理',
+        routerLink: ['schedule-management'],
+        icon: 'fa-th-list'
+      },
+      {
         name: '学管师管理',
         routerLink: ['student-master-docs'],
         icon: 'fa-table'

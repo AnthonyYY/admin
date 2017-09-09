@@ -37,6 +37,11 @@ export class StmanagerComponent implements OnInit {
         name: '续费/退费管理',
         routerLink: ['renews-returns'],
         icon: 'fa-credit-card'
+      },
+      {
+        name: '退费申请列表',
+        routerLink: ['drawbacks'],
+        icon: 'fa-th-list'
       }
     ];
   }

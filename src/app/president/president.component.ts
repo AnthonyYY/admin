@@ -24,16 +24,15 @@ export class PresidentComponent implements OnInit {
         routerLink: ['stats'],
         icon: 'fa-pie-chart'
       },
-    ];
+      {
+        name: '退费审核管理',
+        routerLink: ['refund'],
+        icon: 'fa-file-excel-o'
+      }
+  ];
     this.userService.userInfoChange.subscribe( value => {
       if (value) {
-        if (value === 'SCHOOLMASTER_BOSS') {
-          this.sidebarMenu.push({
-            name: '退费审核管理',
-            routerLink: ['refund'],
-            icon: 'fa-file-excel-o'
-          });
-        } else {
+        if (value === 'SCHOOLMASTER') {
           this.sidebarMenu.push(
             {
               name: '转校申请管理',

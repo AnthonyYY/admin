@@ -95,6 +95,13 @@ import { AssignmentComponent } from './student-manager-boss/assignment/assignmen
 import { StudentMasterDocsComponent } from './student-manager-boss/student-master-docs/student-master-docs.component';
 import { StudentManagerBossService} from './student-manager-boss/student-manager-boss.service';
 import { PagingPipe } from './common/paging.pipe';
+import { DrawbackComponent } from './student-manager-boss/drawback/drawback.component';
+import { CounselorsSignedRecordsComponent } from './counselor/counselors-signed-records/counselors-signed-records.component';
+import { DrawbackApplicationComponent } from './counselor/drawback-application/drawback-application.component';
+import { DrawbackAuditingComponent } from './counselor/drawback-auditing/drawback-auditing.component';
+import { DrawbackListComponent } from './stmanager/drawback-list/drawback-list.component';
+import { DrawbackApprovalComponent } from './consultant-main/drawback-approment/drawback-approment.component';
+import { ScheduleManagementComponent } from './student-manager-boss/schedule-management/schedule-management.component';
 
 @NgModule({
   declarations: [
@@ -165,7 +172,14 @@ import { PagingPipe } from './common/paging.pipe';
     StudentManagerBossComponent,
     AssignmentComponent,
     StudentMasterDocsComponent,
-    PagingPipe
+    PagingPipe,
+    DrawbackComponent,
+    CounselorsSignedRecordsComponent,
+    DrawbackApplicationComponent,
+    DrawbackAuditingComponent,
+    DrawbackListComponent,
+    DrawbackApprovalComponent,
+    ScheduleManagementComponent
   ],
   imports: [
     Select2Module,

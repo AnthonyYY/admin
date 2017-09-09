@@ -229,12 +229,6 @@ export class StmanagerService {
           content: '退费申请已发起, 请等待审核',
           type: 'success'
         });
-      } else {
-        this.alertService.alert({
-          title: '提示',
-          content: '退费申请发起失败,' + res.data +  ' 请重试',
-          type: 'danger'
-        });
       }
     } );
   }
@@ -276,4 +270,19 @@ export class StmanagerService {
       }
     } );
   }
+
+  fetchPaymentOrReturnRecords(): Promise<any> {
+    return this.http.get('stmanager/self/money/stat').then( result => {
+      if ( result.success ) {
+        return result.data;
+      }
+      return {
+        details: [],
+        totalBack: 0,
+        totalMoney: 0
+      };
+    } );
+  }
+
+
 }

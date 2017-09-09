@@ -92,7 +92,7 @@
                   assignedTeachers = [];
                   $event.stopPropagation();
                   teacherAssigner.showModal({
-                    modalSize: 'sm',
+                    modalSize: 'md',
                     title: '分配教师',
                     confirm: assignTeachers
                   })">
@@ -186,18 +186,10 @@
 
 <app-modal #delConfirmModal></app-modal>
 
-<app-modal #teacherAssigner>
-  <table class="table table-hover text-center" *ngIf="courseTeachers.length">
-    <caption>
+<app-modal #teacherAssigner [disabledAcceptBtn]="!assignment.teacherIds.length">
+  <table class="table table-hover table-bordered text-center" *ngIf="courseTeachers.length">
+    <caption class="text-center">
       课程当前任课教师
-      <p class="input-group input-group-sm pull-right">
-        <select2 [data]="teachers"
-                 [width]="100"
-                 [value]="assignedTeachers"
-                 (valueChanged)="handleSelectEvent($event)"
-                 [options]="{ multiple: true, minimumResultsForSearch: 3 ,placeholder: '输入姓名搜索'}"
-                 [cssImport]="false"></select2>
-      </p>
     </caption>
     <thead>
     <tr>
@@ -215,5 +207,18 @@
       <td>{{ teacher.idCard }}</td>
     </tr>
     </tbody>
+
+  </table>
+
+  <table class="table text-center">
+    <caption class="text-center">添加新的任课教师</caption>
+    <p class="input-group input-group-sm center-block">
+      <select2 [data]="filteredTeachers"
+               [width]="'100%'"
+               [value]="assignedTeachers"
+               (valueChanged)="handleSelectEvent($event)"
+               [options]="{ multiple: true, minimumResultsForSearch: 3 ,placeholder: '输入姓名搜索'}"
+               [cssImport]="false"></select2>
+    </p>
   </table>
 </app-modal>
