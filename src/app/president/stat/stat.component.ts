@@ -8,9 +8,11 @@ import {PresidentService} from '../president.service';
 })
 export class StatComponent implements OnInit {
 
+  curPageSignMoney: number;
+  curPageRenewMoney: number;
+  curPageClassHour: number;
   approve: string;
   approveRemark: string;
-  curAudit: any;
   signMoneyRecord: any;
   renewMoneyRecord: any;
   classHourRecord: any;
@@ -20,6 +22,10 @@ export class StatComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.curPageSignMoney = 1;
+    this.curPageRenewMoney = 1;
+    this.curPageClassHour = 1;
     this.signMoneyRecord = {details: [], num: 0, total: 0};
     this.renewMoneyRecord = {details: [], num: 0, total: 0 };
     this.classHourRecord = { details: [], finishHour: 0, unFinishHour: 0, totalHour: 0};
@@ -51,4 +57,13 @@ export class StatComponent implements OnInit {
     } );
   }
 
+  handlePageChangeSignMoney(page): void {
+    this.curPageSignMoney = page;
+  }
+  handlePageChangeRenewMoney(page): void {
+    this.curPageRenewMoney = page;
+  }
+  handlePageChangeClassHour(page): void {
+    this.curPageClassHour = page;
+  }
 }

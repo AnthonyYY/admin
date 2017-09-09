@@ -13,6 +13,7 @@ import {auditState} from '../../common/enum';
 
 export class TransferComponent implements OnInit {
 
+  curPage: number;
   auditState: any;
   appRecords: any[];
   students: any[];
@@ -28,6 +29,7 @@ export class TransferComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.curPage = 1;
     this.auditState = auditState;
     this.appRecords = [];
     this.students = [];
@@ -92,5 +94,9 @@ export class TransferComponent implements OnInit {
     this.presidentService.fetchAppRecords().then( records => {
       this.appRecords = records;
     } );
+  }
+
+  handlePageChange(page): void  {
+    this.curPage = page;
   }
 }

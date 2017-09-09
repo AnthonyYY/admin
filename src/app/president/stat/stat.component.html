@@ -5,9 +5,9 @@
 
   <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-      <li class="active" (click)="fetchSignRecord()"><a href="#waitAudit" data-toggle="tab" aria-expanded="true">签约统计</a></li>
-      <li class="" (click)="fetchRenewRecord()"><a href="#auditSuccess" data-toggle="tab" aria-expanded="false">续约统计</a></li>
-      <li class="" (click)="fetchClassHourRecord()"><a href="#auditFail" data-toggle="tab" aria-expanded="false">课时统计</a></li>
+      <li class="active" (click)="fetchSignRecord();handlePageChangeSignMoney(1)"><a href="#waitAudit" data-toggle="tab" aria-expanded="true">签约统计</a></li>
+      <li class="" (click)="fetchRenewRecord();handlePageChangeRenewMoney(1)"><a href="#auditSuccess" data-toggle="tab" aria-expanded="false">续约统计</a></li>
+      <li class="" (click)="fetchClassHourRecord();handlePageChangeClassHour(1)"><a href="#auditFail" data-toggle="tab" aria-expanded="false">课时统计</a></li>
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="waitAudit">
@@ -40,6 +40,11 @@
           </tr>
           </tbody>
         </table>
+
+        <app-pagination *ngIf="renewMoneyRecord.details.length"
+                          [curPage]="curPageSignMoney"
+                          (changePage)="handlePageChangeSignMoney($event)"
+                          [totalCount]="renewMoneyRecord.details.length"></app-pagination>
       </div>
 
       <div class="tab-pane" id="auditSuccess">
@@ -72,6 +77,11 @@
           </tr>
           </tbody>
         </table>
+
+        <app-pagination *ngIf="renewMoneyRecord.details.length"
+                        [curPage]="curPageRenewMoney"
+                        (changePage)="handlePageChangeRenewMoney($event)"
+                        [totalCount]="renewMoneyRecord.details.length"></app-pagination>
       </div>
 
       <div class="tab-pane" id="auditFail">
@@ -107,6 +117,11 @@
           </tr>
           </tbody>
         </table>
+
+        <app-pagination *ngIf="classHourRecord.details.length"
+                        [curPage]="curPageClassHour"
+                        (changePage)="handlePageChangeClassHour($event)"
+                        [totalCount]="classHourRecord.details.length"></app-pagination>
       </div>
     </div>
   </div>
