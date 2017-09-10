@@ -51,8 +51,17 @@ export class StudentManagerBossService {
 
 
   finishSchedule(scheduleId): Promise<any> {
-    return this.http.post(`stmanager/student/finish/${scheduleId}`).then( result => {
+    return this.http.post(`stmanager/schedule/finish/${scheduleId}`).then( result => {
       return result.success;
+    } );
+  }
+
+  fetchTeacherHours(): Promise<any> {
+    return this.http.get('stmanager/teacher/schedule/stat').then( result => {
+      if (result.success) {
+        return result.data;
+      }
+      return [];
     } );
   }
 }

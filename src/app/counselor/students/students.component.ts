@@ -69,7 +69,7 @@ export class StudentsComponent implements OnInit {
   switchState(): void {
     this.counselorService.switchState(this.curStudent.id).then( success => {
       if (success) {
-        this.curStudent.status = 'CONNECTION';
+        this.curStudent.status = 'NO_PAY';
       }
     } );
   }

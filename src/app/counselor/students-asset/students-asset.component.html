@@ -65,7 +65,8 @@
                     </button>
                     <button class="btn btn-xs btn-warning"
                       *ngIf="asset.hasPay > (asset.hasUsed + asset.hasBack)"
-                      (click)="curAsset = asset;withDrawEvent.returnAmount = '';
+                      (click)="setCurStuAsset(asset);
+                        withDrawEvent.returnAmount = '';
                         withDrawEvent.remark = '';
                         drawbackModal.showModal({
                         modalSize: 'sm',
@@ -152,7 +153,7 @@
            ></select2>
         </div>
       </div>
-      <table class="table table-bordered">
+      <table class="table table-bordered text-center">
         <thead>
           <tr>
             <th>课程名称</th>
@@ -168,10 +169,10 @@
         <tbody>
           <tr *ngFor="let course of courses |
             matchItem: filterCourseName: 'name' |
-          matchItem: filterCourseType: 'type' |
-          matchItem: filterGrade : 'gradeName' | paging : curPage;">
+            matchItem: filterCourseType: 'type' |
+            matchItem: filterGrade : 'gradeName' | paging : curPage;">
             <td>{{ course.name }}</td>
-            <td>{{ course.gradeId }}</td>
+            <td>{{ course.gradeName }}</td>
             <td>{{ courseTypeMap[course.type] }}</td>
             <td>{{ course.price }}</td>
             <td>{{ course.studyHour || 0 }}</td>
@@ -203,7 +204,7 @@
 
   <div class="row">
     <div class="col-xs-12">
-      <table class="table table-bordered chosen-course-header">
+      <table class="table table-bordered chosen-course-header text-center">
         <caption>
           已选课程
         </caption>
@@ -219,11 +220,11 @@
         </thead>
       </table>
       <div class="chosen-course-table" style="width: calc( 100% + 6px );">
-        <table class="table table-bordered chosen-course-body">
+        <table class="table table-bordered chosen-course-body text-center">
           <tbody>
             <tr *ngFor="let course of chosenCourse">
               <td>{{ course.name }}</td>
-              <td>{{ course.grade }}</td>
+              <td>{{ course.gradeName }}</td>
               <td>{{ courseTypeMap[course.type] }}</td>
               <td>{{ course.buyHour }}</td>
               <td>{{ course.buyHour * course.price }}</td>
@@ -272,7 +273,7 @@
   </form>
 </app-modal>
 
-<app-modal #drawbackModal [disabledAcceptBtn]="!withDrawEvent.returnAmount || (withDrawEvent.returnAmount > (curAsset.hasPay - curAsset.hasUsed))">
+<app-modal #drawbackModal [disabledAcceptBtn]="!withDrawEvent.returnAmount || (withDrawEvent.returnAmount > (curStuAsset.hasPay - curStuAsset.hasUsed))">
 
   <div class="form-group clearfix">
     <label for="wantDrawbackMoney" class="control-label col-xs-3">退费金额:</label>
@@ -281,12 +282,12 @@
         <input type="number"
                style="width: 214px"
                id="wantDrawbackMoney"
-               class="form-control {{ withDrawEvent.returnAmount > (curAsset.canBackMoney) && 'error' }}"
+               class="form-control {{ withDrawEvent.returnAmount > (curStuAsset.canBackMoney) && 'error' }}"
                (keypress)="curPage = 1;"
                [(ngModel)]="withDrawEvent.returnAmount"
                min="0"
-               max="{{curAsset.canBackMoney}}"
-               placeholder="最多可退金额{{ curAsset.canBackMoney }}">
+               max="{{curStuAsset.canBackMoney}}"
+               placeholder="最多可退金额{{ curStuAsset.canBackMoney }}">
         <span class="input-group-addon">元</span>
       </div>
     </div>

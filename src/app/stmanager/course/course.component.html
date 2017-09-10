@@ -81,8 +81,11 @@
                 matchItem: filterScheduleState: 'finish' : 'exact' |
                 timeRange: filterTimeRange : 'startTime'|
                 timeRange: filterTimeRange : 'endTime' | paging: curPage;
-                let i = index" (click)="scheduleEvent = course;courseCreator.showModal({
-                modalSize: 'lg',
+                let i = index"
+                (click)="scheduleEvent = course;
+                  handleCourseSwitch({value:scheduleEvent.courseId}, scheduleEvent.courseScheduleId);
+                  courseCreator.showModal({
+                  modalSize: 'lg',
                   title: '编辑课表',
                   confirm: updateSchedule
                 })">
@@ -106,11 +109,11 @@
   </div>
 
   <app-pagination (changePage)="handlePageChange($event)" [curPage]="curPage" [totalCount]="(schedule |
-                matchItem: filterTeacherName: 'teacherName' |
-                matchItem: filterCourseName: 'courseName' |
-                matchItem: filterScheduleState: 'finish' : 'exact' |
-                timeRange: filterTimeRange : 'startTime'|
-                timeRange: filterTimeRange : 'endTime').length"></app-pagination>
+    matchItem: filterTeacherName: 'teacherName' |
+    matchItem: filterCourseName: 'courseName' |
+    matchItem: filterScheduleState: 'finish' : 'exact' |
+    timeRange: filterTimeRange : 'startTime'|
+    timeRange: filterTimeRange : 'endTime').length"></app-pagination>
 </div>
 
 <app-modal #courseCreator [disabledAcceptBtn]="ifZeroStuChosen() || !scheduleEvent.studyTime">
@@ -124,6 +127,7 @@
             [cssImport]="false"
             [data]="courses"
             [width]="150"
+            [value]="scheduleEvent.courseId"
             [options]="{minimumResultsForSearch: 3}"
             (valueChanged)="handleCourseSwitch($event)"></select2>
         </div>
@@ -137,6 +141,7 @@
             [cssImport]="false"
             [data]="teachers"
             [width]="150"
+            [value]="scheduleEvent.employeeId"
             (valueChanged)="handleTeacherSwitch($event)"
             [options]="{minimumResultsForSearch: 3}"
           ></select2>
@@ -165,7 +170,7 @@
           <app-date-ranger-picker
             id="scheduleTime"
             class="pull-left"
-            [format]="'YYYY-MM-DD:HH:mm'"
+            [format]="'YYYY-MM-DD HH:mm'"
             [timePicker]="true"
             (dateRangeSetEvent)="setScheduleTime($event)"
           ></app-date-ranger-picker>

@@ -29,6 +29,11 @@ export class StudentManagerBossComponent implements OnInit {
         icon: 'fa-th-list'
       },
       {
+        name: '教师课时列表',
+        routerLink: ['teacher-hours'],
+        icon: 'fa-file-text-o'
+      },
+      {
         name: '学管师管理',
         routerLink: ['student-master-docs'],
         icon: 'fa-table'

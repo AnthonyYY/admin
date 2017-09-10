@@ -61,7 +61,7 @@
 
       </div>
       <div class="tab-pane" id="tab_2">
-        <table class="table table-hover">
+        <table class="table table-hover text-center">
           <thead>
             <tr>
               <th>缴费学生</th>
@@ -73,13 +73,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let record of paymentOrReturnRecords.details">
-              <th>{{ record.studentName }}</th>
-              <th>{{ payType[record.studentName] }}</th>
-              <th>{{ record.money }}</th>
-              <th>{{ record.backMoney }}</th>
-              <th>{{ record.payTime | date: 'yyyy-MM-dd HH:mm:ss' }}</th>
-              <th>{{ record.remark }}</th>
+            <tr *ngFor="let record of paymentOrReturnRecords.detail">
+              <td>{{ record.studentName }}</td>
+              <td>{{ payType[record.opPayType] }}</td>
+              <td>{{ record.money }}</td>
+              <td>{{ record.hasBack || 0 }}</td>
+              <td>{{ record.payTime | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+              <td>{{ record.remark || '--' }}</td>
             </tr>
           </tbody>
         </table>

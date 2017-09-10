@@ -38,6 +38,11 @@ export class PresidentComponent implements OnInit {
               name: '转校申请管理',
               routerLink: ['transfer'],
               icon: 'fa-file-pdf-o'
+            },
+            {
+              name: '转校审核管理',
+              routerLink: ['transfer-audit'],
+              icon: 'fa-file-archive-o'
             }
           );
         }

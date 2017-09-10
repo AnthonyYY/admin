@@ -22,7 +22,7 @@ export class RenewsReturnsComponent implements OnInit {
     studentId: string
   };
   paymentOrReturnRecords: {
-    details: any[],
+    detail: any[],
     totalMoney: number,
     totalBack: number,
   };
@@ -39,7 +39,7 @@ export class RenewsReturnsComponent implements OnInit {
       {name: '学生退费管理页', icon: 'fa-exchange'}
     ];
     this.paymentOrReturnRecords = {
-      details: [],
+      detail: [],
       totalMoney: 0,
       totalBack: 0,
     };

@@ -45,8 +45,12 @@ export class StmanagerService {
     } );
   }
   //  根据课程ID获取学生列表
-  fetchStudents(courseId): Promise<any> {
-    return this.http.get(`stmanager/course/student/${courseId}`).then( res => {
+  fetchStudents(courseId, courseScheduleId?: string): Promise<any> {
+    let url = `stmanager/course/student/${courseId}`;
+    if (courseScheduleId) {
+      url += `?courseScheduleId=${courseScheduleId}`;
+    }
+    return this.http.get(url).then( res => {
       if (res.success) {
         return res.data;
       } else {
@@ -59,13 +63,13 @@ export class StmanagerService {
     } );
   }
   //  创建课表
-  createSchedule(body): Promise<any> {
+  createSchedule(body, action): Promise<any> {
     return this.http.post('stmanager/course/schedule', body).then( result => {
       if (result.success) {
         this.alertService.alert({
           type: 'success',
           title: '提示',
-          content: '新课表已成功创建'
+          content: `新课表已成功${action}`
         });
         return result.data;
       }
@@ -109,7 +113,7 @@ export class StmanagerService {
 
   // 结束学生课表
   finishSchedule(id: string): Promise<any> {
-    return this.http.post(`/stmanager/student/finish/${id}`).then( result => {
+    return this.http.post(`stmanager/student/finish/${id}`).then( result => {
       if ( result.success ) {
         this.alertService.alert({
           type: 'success',
@@ -237,29 +241,6 @@ export class StmanagerService {
   fetchDrawbackRecord(): Promise<any> {
     return this.http.get('stmanager/stmanager/back').then( result => {
       if ( result.success ) {
-        result.data = [
-          {
-            backMoney: 0,
-            renewMoney: 0,
-            teacherId: 'string',
-            teacherName: 'string',
-            teacherPhone: 'string'
-          },
-          {
-            backMoney: 0,
-            renewMoney: 0,
-            teacherId: 'string',
-            teacherName: 'string',
-            teacherPhone: 'string'
-          },
-          {
-            backMoney: 0,
-            renewMoney: 0,
-            teacherId: 'string',
-            teacherName: 'string',
-            teacherPhone: 'string'
-          }
-        ];
         return result.data;
       } else {
         this.alertService.alert({
@@ -277,7 +258,7 @@ export class StmanagerService {
         return result.data;
       }
       return {
-        details: [],
+        detail: [],
         totalBack: 0,
         totalMoney: 0
       };

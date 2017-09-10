@@ -2,6 +2,7 @@
   [title]="'教学课时'" [menus]="contentHeader"></app-content-header>
 
 <div class="content">
+
   <div class="box box-primary box-divide">
     <div class="box-header">
       <h3 class="box-title">课时信息</h3>
@@ -22,7 +23,7 @@
             <td>{{ stat.courseName }}</td>
             <td>{{ stat.hours || 0 }}</td>
           </tr>
-          <tr>
+          <tr *ngIf="!classHourRecords.length">
             <td colspan="2">
               <p class="text-muted text-center">
                 暂无课时信息
@@ -37,5 +38,5 @@
   <app-pagination *ngIf="classHourRecords && classHourRecords.length"
                     [totalCount]="classHourRecords.length"
                     (changePage)="handlePageChange($event)"
-                    curPage="curPage"></app-pagination>
+                    [curPage]="curPage"></app-pagination>
 </div>

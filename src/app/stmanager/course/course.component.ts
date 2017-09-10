@@ -86,10 +86,11 @@ export class CourseComponent implements OnInit {
     } );
   }
   // 获取对应课程的授课教师
-  fetchTeachersByCourseId(courseId): void {
-    this.stmanagerService.fetchTeachersByCourseId(courseId).then( teachers => {
+  fetchTeachersByCourseId(courseId): any {
+    return this.stmanagerService.fetchTeachersByCourseId(courseId).then( teachers => {
       this.teachers = teachers;
-      this.scheduleEvent.employeeId = this.teachers[0].id;
+      this.scheduleEvent.employeeId = this.scheduleEvent.employeeId || this.teachers[0].id;
+      return this.teachers;
     } );
   }
   // 初始化新课表
@@ -107,10 +108,10 @@ export class CourseComponent implements OnInit {
     };
   }
   // 创建课表时切换课表处理函数
-  handleCourseSwitch($event): void {
+  handleCourseSwitch($event, courseScheduleId?: string): void {
     this.scheduleEvent.courseId = $event.value;
     this.fetchTeachersByCourseId($event.value);
-    this.fetchScheduleStu($event.value);
+    this.fetchScheduleStu($event.value, courseScheduleId);
     const curCourse = this.findCourseById($event.value);
     this.scheduleEvent.courseName = curCourse.name;
   }
@@ -118,7 +119,7 @@ export class CourseComponent implements OnInit {
   handleTeacherSwitch($event): void {
     this.scheduleEvent.employeeId = $event.value;
     const curTeacher = this.findTeacherById($event.value);
-    this.scheduleEvent.teacherName = curTeacher.name;
+    this.scheduleEvent.teacherName = (curTeacher || {}).name;
   }
   // 通过课程ID搜索教师
   findTeacherById(teacherId): any {
@@ -134,8 +135,13 @@ export class CourseComponent implements OnInit {
     this.scheduleEvent.endTime = $event.end;
   }
   // 根据课程ID获取报名该课程的学生
-  fetchScheduleStu(courseId): void {
-    this.stmanagerService.fetchStudents(courseId).then( students => {
+  fetchScheduleStu(courseId, courseScheduleId?: string): void {
+    this.stmanagerService.fetchStudents(courseId, courseScheduleId).then( students => {
+      if (courseScheduleId) {
+        students.forEach( student => {
+          student.selected = student.inCourse;
+        } );
+      }
       this.students = students;
     } );
   }
@@ -146,21 +152,28 @@ export class CourseComponent implements OnInit {
   }
   // 创建课表
   createSchedule(): void {
+    console.log(this.scheduleEvent);
     this.students.forEach( stu => {
       if (stu.selected) {
         this.scheduleEvent.studentIds.push(stu.id);
       }
     } );
-    this.stmanagerService.createSchedule(this.scheduleEvent).then( result => {
+    this.stmanagerService.createSchedule(this.scheduleEvent, '创建').then( result => {
       this.scheduleEvent.courseScheduleId = result.id;
       this.schedule.unshift(this.scheduleEvent);
-      console.log(this.schedule);
+      this.schedule = [...this.schedule];
     } );
   }
 
   updateSchedule(): void {
-    this.stmanagerService.updateSchedule(this.scheduleEvent).then( success => {
-
+    this.scheduleEvent.studentIds =  [];
+    this.students.forEach( student => {
+      if (student.selected) {
+        this.scheduleEvent.studentIds.push(student.id);
+      }
+    } );
+    this.stmanagerService.createSchedule(this.scheduleEvent, '更新').then( () => {
+      this.fetchSchedule();
     } );
   }
 

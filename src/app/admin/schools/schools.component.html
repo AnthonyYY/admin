@@ -3,7 +3,7 @@
 <div class="content">
 
   <app-collapse-box [collapse]="false" [icon]="'filter'" [boxTitle]="'校区过滤'">
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">
         创建时间:
       </label>
@@ -13,11 +13,11 @@
         class="pull-left"></app-date-ranger-picker>
     </div>
 
-    <div class="col-xs-12 col-md-4 input-group-sm">
+    <div class="col-xs-12 col-lg-4 input-group-sm">
       <label class="pull-left">
         校区名称:
       </label>
-      <div class="input-group input-group-sm" style="width: 148px;">
+      <div class="input-group input-group-sm">
         <input type="text" class="form-control input-sm" [(ngModel)]="schoolFilterName" placeholder="输入校区名称">
         <span class="input-group-addon"><i class="fa fa-search"></i></span>
       </div>

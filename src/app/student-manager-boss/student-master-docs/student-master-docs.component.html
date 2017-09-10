@@ -63,7 +63,7 @@
         <app-pagination *ngIf="studentManagers.length" [totalCount]="studentManagers.length" (pageChange)="handleManagerPageChange($event)"></app-pagination>
       </div>
       <div class="tab-pane" id="tab_2">
-        <table class="table table-hover text-center">
+        <table class="table table-hover table-bordered text-center">
           <thead>
             <tr>
               <th>姓名</th>
@@ -76,8 +76,8 @@
             <tr *ngFor="let payment of payments | paging: curPageRecord">
               <td>{{ payment.teacherName }}</td>
               <td>{{ payment.teacherPhone }}</td>
-              <td>{{ payment.renewMoney || '--' }}</td>
-              <td>{{ payment.backMoney || '--' }}</td>
+              <td>{{ payment.renewMoney || 0 }}</td>
+              <td>{{ payment.backMoney || 0 }}</td>
             </tr>
             <tr *ngIf="!payments.length">
               <td class="text-muted" colspan="4">

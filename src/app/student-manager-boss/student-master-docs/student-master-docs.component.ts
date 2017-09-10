@@ -79,4 +79,5 @@ export class StudentMasterDocsComponent implements OnInit {
   handleRecordPageChange(page): void {
     this.curPageRecord = 1;
   }
+
 }

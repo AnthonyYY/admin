@@ -53,7 +53,7 @@
             <td>{{ record.studentName }}</td>
             <td>{{ payType[record.opPayType] }}</td>
             <td>{{ record.payTime | date: 'yyyy-MM-dd mm:ss' }}</td>
-            <td>{{ record.money }}</td>
+            <td>{{ record.money || 0 }}</td>
             <td>{{ record.hasBack || 0 }}</td>
             <td>{{ record.remark }}</td>
           </tr>

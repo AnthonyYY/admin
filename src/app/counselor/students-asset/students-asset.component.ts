@@ -31,7 +31,6 @@ export class StudentsAssetComponent implements OnInit {
     remark: string,
     studentId: string
   };
-  curAsset: any;
   constructor(
     private counselorService: CounselorService,
     private schoolService: SchoolService,
@@ -60,7 +59,6 @@ export class StudentsAssetComponent implements OnInit {
     this.filterCourseType = '';
     this.filterGrade = '';
     this.withDrawEvent = {returnAmount: '', remark: '', studentId: ''};    this.fetchStuAsset();
-    this.curAsset = {};
     this.fetchCourses();
   }
 
@@ -75,6 +73,7 @@ export class StudentsAssetComponent implements OnInit {
   }
 
   setCurStuAsset(asset): void {
+    asset.canBackMoney = asset.hasPay - asset.hasBack - asset.hasUsed;
     this.curStuAsset = asset;
   }
 
@@ -104,7 +103,11 @@ export class StudentsAssetComponent implements OnInit {
       courseId: course.id,
       buyHour: course.buyHour
     }) );
-    this.counselorService.buyCourses(body).then( success => {} );
+    this.counselorService.buyCourses(body).then( success => {
+      if (success) {
+        this.fetchStuAsset();
+      }
+    } );
   }
 
   handlePaeChange(page) {
@@ -112,7 +115,7 @@ export class StudentsAssetComponent implements OnInit {
   }
 
   drawbackApp(): void {
-    this.withDrawEvent.studentId = this.curAsset.id;
+    this.withDrawEvent.studentId = this.curStuAsset.id;
     this.stmanagerService.drawback(this.withDrawEvent);
   }
 }

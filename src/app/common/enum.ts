@@ -19,13 +19,15 @@ export const auditState = {
 export const payType = {
   'STUDENTMANAGER_PAY': '学管师续费',
   'COUNSELOR_PAY': '咨询师缴费',
-  'STUDENTMANAGER_BACK': '学管师退费'
+  'STUDENTMANAGER_BACK': '学管师退费',
+  'COUNSELOR_BACK': '咨询师退费'
 };
 
 export const payTypeList = [
   {id: 'STUDENTMANAGER_PAY', text: '学管师续费'},
   {id: 'COUNSELOR_PAY', text: '咨询师缴费'},
-  {id: 'STUDENTMANAGER_BACK', text: '学管师退费'}
+  {id: 'STUDENTMANAGER_BACK', text: '学管师退费'},
+  {id: 'COUNSELOR_BACK', text: '咨询师退费'},
 ];
 
 export const courseTypeMap = {

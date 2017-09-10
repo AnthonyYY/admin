@@ -54,6 +54,7 @@ import {DrawbackAuditingComponent} from './counselor/drawback-auditing/drawback-
 import {DrawbackListComponent} from './stmanager/drawback-list/drawback-list.component';
 import {DrawbackApprovalComponent} from './consultant-main/drawback-approment/drawback-approment.component';
 import {ScheduleManagementComponent} from './student-manager-boss/schedule-management/schedule-management.component';
+import {TeacherHoursComponent} from './student-manager-boss/teacher-hours/teacher-hours.component';
 
 export const routes: Routes = [
   {
@@ -156,7 +157,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'renews-returns',
+            redirectTo: 'schedule',
             pathMatch: 'full'
           },
           {
@@ -241,7 +242,7 @@ export const routes: Routes = [
             component: TransferComponent
           },
           {
-            path: 'transfer-boss',
+            path: 'transfer-audit',
             component: TransferBossComponent
           },
           {
@@ -358,7 +359,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'student-assignment',
+            redirectTo: 'teacher-hours',
             pathMatch: 'full'
           },
           {
@@ -376,6 +377,10 @@ export const routes: Routes = [
           {
             path: 'schedule-management',
             component: ScheduleManagementComponent
+          },
+          {
+            path: 'teacher-hours',
+            component: TeacherHoursComponent,
           }
         ]
       }

@@ -102,6 +102,7 @@ import { DrawbackAuditingComponent } from './counselor/drawback-auditing/drawbac
 import { DrawbackListComponent } from './stmanager/drawback-list/drawback-list.component';
 import { DrawbackApprovalComponent } from './consultant-main/drawback-approment/drawback-approment.component';
 import { ScheduleManagementComponent } from './student-manager-boss/schedule-management/schedule-management.component';
+import { TeacherHoursComponent } from './student-manager-boss/teacher-hours/teacher-hours.component';
 
 @NgModule({
   declarations: [
@@ -179,7 +180,8 @@ import { ScheduleManagementComponent } from './student-manager-boss/schedule-man
     DrawbackAuditingComponent,
     DrawbackListComponent,
     DrawbackApprovalComponent,
-    ScheduleManagementComponent
+    ScheduleManagementComponent,
+    TeacherHoursComponent
   ],
   imports: [
     Select2Module,

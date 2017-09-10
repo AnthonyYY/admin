@@ -28,8 +28,8 @@ export class TeacherClassHourComponent implements OnInit {
   }
 
   fetchClassHourStats(): void {
-    this.teacherService.fetchSchedules().then( data => {
-      this.classHourRecords = data.details;
+    this.teacherService.fetchClassHourStat().then( data => {
+      this.classHourRecords = data.detail;
       this.classHourTotal = data.totalHours;
     } );
   }
