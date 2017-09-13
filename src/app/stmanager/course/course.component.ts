@@ -142,7 +142,10 @@ export class CourseComponent implements OnInit {
           student.selected = student.inCourse;
         } );
       }
-      this.students = students;
+      const overrideAllowed = this.students.every( student => !student.inCourse ) || students.some( student => student.inCourse );
+      if (overrideAllowed && courseScheduleId) {
+        this.students = students;
+      }
     } );
   }
   // 分配学生的时候
