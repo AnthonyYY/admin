@@ -103,9 +103,12 @@ import { DrawbackListComponent } from './stmanager/drawback-list/drawback-list.c
 import { DrawbackApprovalComponent } from './consultant-main/drawback-approment/drawback-approment.component';
 import { ScheduleManagementComponent } from './student-manager-boss/schedule-management/schedule-management.component';
 import { TeacherHoursComponent } from './student-manager-boss/teacher-hours/teacher-hours.component';
+import { UploaderComponent } from './uploader/uploader.component';
+import {FileSelectDirective} from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
+    FileSelectDirective,
     AppComponent,
     LoginComponent,
     DashboardComponent,
@@ -181,7 +184,8 @@ import { TeacherHoursComponent } from './student-manager-boss/teacher-hours/teac
     DrawbackListComponent,
     DrawbackApprovalComponent,
     ScheduleManagementComponent,
-    TeacherHoursComponent
+    TeacherHoursComponent,
+    UploaderComponent
   ],
   imports: [
     Select2Module,
@@ -209,7 +213,7 @@ import { TeacherHoursComponent } from './student-manager-boss/teacher-hours/teac
     TeacherService,
     FinanceService,
     PresidentService,
-    StudentManagerBossService
+    StudentManagerBossService,
   ],
   bootstrap: [AppComponent]
 })

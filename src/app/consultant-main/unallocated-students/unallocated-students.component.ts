@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ConsultantMainService} from '../consultant-main.service';
 import {Sidebar} from '../../sidebar/sidebar';
 import {Student} from '../student';
 import {genders} from '../../common/gender';
+import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
+import {AppSettings} from '../../app-settings';
 
 @Component({
   selector: 'app-unallocated-students',
   templateUrl: './unallocated-students.component.html',
-  styleUrls: ['./unallocated-students.component.less']
+  styleUrls: ['./unallocated-students.component.less'],
 })
 export class UnallocatedStudentsComponent implements OnInit {
 
@@ -19,6 +21,7 @@ export class UnallocatedStudentsComponent implements OnInit {
   filterStuName: string;
   filterGender: string;
   filterPhone: string;
+  public fileUploader: FileUploader = new FileUploader({url: AppSettings.API_ENDPOINT + 'counselor/student/excel'});
   constructor(
     private consultantService: ConsultantMainService,
   ) {
