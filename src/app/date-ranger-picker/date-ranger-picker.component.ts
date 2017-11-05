@@ -32,6 +32,7 @@ export class DateRangerPickerComponent implements OnInit {
           firstDay: 1,
           format: this.format ||  'YYYY-MM-DD'
         },
+        timePickerIncrement: 30,
         timePicker: this.timePicker,
         ranges: {
           '今天': [moment(), moment()],

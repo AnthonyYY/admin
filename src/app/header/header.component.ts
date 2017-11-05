@@ -32,7 +32,6 @@ export class HeaderComponent implements OnInit {
     this.userService.getCurUserInfo()
       .then( user => {
         this.user = user;
-        console.log(this.user);
         this.roleService.navigateByRole(user.roleId);
       } );
   }

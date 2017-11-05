@@ -105,6 +105,8 @@ import { ScheduleManagementComponent } from './student-manager-boss/schedule-man
 import { TeacherHoursComponent } from './student-manager-boss/teacher-hours/teacher-hours.component';
 import { UploaderComponent } from './uploader/uploader.component';
 import {FileSelectDirective} from 'ng2-file-upload';
+import { TeacherClassHistoryComponent } from './teacher/teacher-class-history/teacher-class-history.component';
+import { TeacherStuScoreComponent } from './teacher/teacher-stu-score/teacher-stu-score.component';
 
 @NgModule({
   declarations: [
@@ -185,7 +187,9 @@ import {FileSelectDirective} from 'ng2-file-upload';
     DrawbackApprovalComponent,
     ScheduleManagementComponent,
     TeacherHoursComponent,
-    UploaderComponent
+    UploaderComponent,
+    TeacherClassHistoryComponent,
+    TeacherStuScoreComponent
   ],
   imports: [
     Select2Module,

@@ -47,7 +47,7 @@
       <tr *ngFor="let student of students | matchItem: filterStudentName: 'name' | matchItem: filterStudentPhone: 'phone' | paging: curPage;">
         <td>{{ student.name }}</td>
         <td>{{ student.sex === 'MALE' ? '男': '女' }}</td>
-        <td>{{ student.phone }}</td>
+        <td>{{ student.phone.slice(0,3) + '****' +  student.phone.slice(7) }}</td>
         <td>{{ student.subject || '-' }}</td>
         <td>
           <div class="btn-group btn-group-xs">

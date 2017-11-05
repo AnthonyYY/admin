@@ -55,6 +55,8 @@ import {DrawbackListComponent} from './stmanager/drawback-list/drawback-list.com
 import {DrawbackApprovalComponent} from './consultant-main/drawback-approment/drawback-approment.component';
 import {ScheduleManagementComponent} from './student-manager-boss/schedule-management/schedule-management.component';
 import {TeacherHoursComponent} from './student-manager-boss/teacher-hours/teacher-hours.component';
+import {TeacherClassHistoryComponent} from './teacher/teacher-class-history/teacher-class-history.component';
+import {TeacherStuScoreComponent} from './teacher/teacher-stu-score/teacher-stu-score.component';
 
 export const routes: Routes = [
   {
@@ -211,7 +213,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'teacher-schedule',
+            redirectTo: 'teacher-class-history',
             pathMatch: 'full'
           },
           {
@@ -221,6 +223,14 @@ export const routes: Routes = [
           {
             path: 'teacher-class-hour',
             component: TeacherClassHourComponent,
+          },
+          {
+            path: 'teacher-class-history',
+            component: TeacherClassHistoryComponent,
+          },
+          {
+            path: 'teacher-stu-score',
+            component: TeacherStuScoreComponent,
           }
         ]
       },

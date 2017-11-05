@@ -51,7 +51,7 @@
           </h3>
         </div>
         <div class="box-body">
-          <table class="table table-bordered table-hover">
+          <table class="table table-bordered table-hover text-center">
             <thead>
               <tr>
                 <th>学生姓名</th>
@@ -59,7 +59,7 @@
                 <th>课程名称</th>
                 <th>开始时间</th>
                 <th>结束时间</th>
-                <th>是否结课</th>
+                <th>是否完成</th>
                 <th class="text-center">操作</th>
               </tr>
             </thead>
@@ -73,8 +73,8 @@
                 <td>{{ record.studentName }}</td>
                 <td>{{ record.gradeName }}</td>
                 <td>{{ record.courseName }}</td>
-                <td>{{ record.startTime | date: 'yyyy-MM-dd' }}</td>
-                <td>{{ record.endTime | date: 'yyyy-MM-dd' }}</td>
+                <td>{{ record.startTime | date: 'yyyy-MM-dd HH:mm' }}</td>
+                <td>{{ record.endTime | date: 'yyyy-MM-dd HH:mm' }}</td>
                 <td>{{ record.finish ? '是': '否' }}</td>
                 <td class="text-center">
                   <div class="btn-group btn-group-xs" *ngIf="!record.finish">

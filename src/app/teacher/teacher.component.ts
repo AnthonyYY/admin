@@ -22,6 +22,16 @@ export class TeacherComponent implements OnInit {
         name: '教学课时',
         routerLink: ['teacher-class-hour'],
         icon: 'fa-th-list'
+      },
+      {
+        name: '教学记录',
+        routerLink: ['teacher-class-history'],
+        icon: 'fa-bars'
+      },
+      {
+        name: '学生成绩',
+        routerLink: ['teacher-stu-score'],
+        icon: 'fa-graduation-cap'
       }
     ];
   }
