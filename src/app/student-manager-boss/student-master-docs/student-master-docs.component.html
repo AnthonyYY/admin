@@ -31,7 +31,7 @@
               <td>{{ manager.sex === 'MALE' ? '男' : '女' }}</td>
               <td>{{ manager.birthday | date: 'yyyy-MM-dd' }}</td>
               <td>{{ manager.idCard }}</td>
-              <td>{{ manager.phone }}</td>
+              <td>{{ manager.phone.slice(0, 3) + '****' + manager.phone.slice(7) }}</td>
               <td>{{ manager.email || '--' }}</td>
               <td>{{ manager.graduationSchool || '--' }}</td>
               <td>{{ manager.education || '--' }}</td>
@@ -75,7 +75,7 @@
           <tbody>
             <tr *ngFor="let payment of payments | paging: curPageRecord">
               <td>{{ payment.teacherName }}</td>
-              <td>{{ payment.teacherPhone }}</td>
+              <td>{{ payment.teacherPhone.slice(0, 3) + '****' + payment.teacherPhone.slice(7) }}</td>
               <td>{{ payment.renewMoney || 0 }}</td>
               <td>{{ payment.backMoney || 0 }}</td>
             </tr>
@@ -112,7 +112,7 @@
           <td><input type="checkbox" (change)="student.chosen = !student.chosen"></td>
           <td>{{ student.name }}</td>
           <td>{{ student.sex === 'MALE' ? '男' : '女' }}</td>
-          <td>{{ student.phone }}</td>
+          <td>{{ student.phone.slice(0, 3) + '****' + student.phone.slice(7) }}</td>
           <td>{{ student.grade }}</td>
           <td>{{ student.subject || '--' }}</td>
         </tr>

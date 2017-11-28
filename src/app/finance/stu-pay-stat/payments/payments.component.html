@@ -28,7 +28,7 @@
         <tr *ngFor="let payment of payments | paging: curPage">
           <td>{{ payment.name }}</td>
           <td>{{ payment.schoolName }}</td>
-          <td>{{ payment.phone }}</td>
+          <td>{{ payment.phone.slice(0,3) + '****' +  payment.phone.slice(7,11) }}</td>
           <td>{{ payment.hasPay || 0 }}</td>
           <td>{{ payment.hasBack || 0 }}</td>
           <td>{{ payment.hasUsed || 0 }}</td>

@@ -83,7 +83,7 @@
             <div class="box-footer">
               <ul class="nav nav-stacked">
                 <li><a href="javascript:void(0)">职位 <span class="pull-right">{{ roleMap[employee.role] }}</span></a></li>
-                <li><a href="javascript:void(0)">电话<span class="pull-right">{{ employee.phone }}</span></a></li>
+                <li><a href="javascript:void(0)">电话<span class="pull-right">{{ employee.phone.slice(0, 3) + '****' + employee.phone.slice(7) }}</span></a></li>
                 <li style="white-space: nowrap;"><a href="javascript: void(0)">身份证 <span class="pull-right">{{employee.idCard}}</span></a></li>
                 <li><a href="javascript:void(0)">生日 <span class="pull-right">{{ employee.birthday | date: 'yyyy-MM-dd' }}</span></a></li>
                 <li>

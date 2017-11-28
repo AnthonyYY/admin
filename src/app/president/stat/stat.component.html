@@ -28,7 +28,7 @@
           <tbody>
           <tr *ngFor="let record of signMoneyRecord.details;">
             <td>{{ record.name }}</td>
-            <td>{{ record.phone }}</td>
+            <td>{{ record.phone.slice(0, 3) + '****' + record.phone.slice(7) }}</td>
             <td>{{ record.num }}</td>
             <td>{{ record.total }}</td>
             <td>{{ record.schoolName }}</td>
@@ -65,7 +65,7 @@
           <tbody>
           <tr *ngFor="let record of renewMoneyRecord.details;">
             <td>{{ record.name }}</td>
-            <td>{{ record.phone }}</td>
+            <td>{{ record.phone.slice(0, 3) + '****' + record.phone.slice(7) }}</td>
             <td>{{ record.num }}</td>
             <td>{{ record.total }}</td>
             <td>{{ record.schoolName }}</td>
@@ -104,7 +104,7 @@
           <tbody>
           <tr *ngFor="let record of classHourRecord.details;">
             <td>{{ record.name }}</td>
-            <td>{{ record.phone }}</td>
+            <td>{{ record.phone.slice(0, 3) + '****' + record.phone.slice(7) }}</td>
             <td>{{ record.finishHour }}</td>
             <td>{{ record.unFinishHour }}</td>
             <td>{{ record.totalHour }}</td>

@@ -203,7 +203,7 @@
     <tr *ngFor="let teacher of courseTeachers">
       <td>{{ teacher.name }}</td>
       <td>{{ teacher.sex === 'MALE' ? '男': '女' }}</td>
-      <td>{{ teacher.phone }}</td>
+      <td>{{ teacher.phone.slice(0, 3) + '****' +  teacher.phone.slice(7) }}</td>
       <td>{{ teacher.idCard }}</td>
     </tr>
     </tbody>

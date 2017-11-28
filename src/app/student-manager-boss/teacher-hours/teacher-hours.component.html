@@ -38,7 +38,7 @@
           <tbody>
             <tr *ngFor="let hour of teacherHours | matchItem: filterTeacherName : 'teacherName' | matchItem: filterTeacherPhone : 'teacherPhone' | paging: curPage">
               <td>{{ hour.teacherName }}</td>
-              <td>{{ hour.teacherPhone }}</td>
+              <td>{{ hour.teacherPhone.slice(0, 3) + '****' + hour.teacherPhone.slice(7) }}</td>
               <td>{{ hour.totalHour || 0 }}</td>
               <td>{{ hour.finishHour || 0 }}</td>
             </tr>

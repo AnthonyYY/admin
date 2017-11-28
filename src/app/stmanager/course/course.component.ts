@@ -143,7 +143,7 @@ export class CourseComponent implements OnInit {
         } );
       }
       const overrideAllowed = this.students.every( student => !student.inCourse ) || students.some( student => student.inCourse );
-      if (overrideAllowed && courseScheduleId) {
+      if (overrideAllowed || courseScheduleId) {
         this.students = students;
       }
     } );
