@@ -8,6 +8,7 @@ import {PresidentService} from '../president.service';
 })
 export class StatComponent implements OnInit {
 
+  startTime: number;
   curPageSignMoney: number;
   curPageRenewMoney: number;
   curPageClassHour: number;
@@ -23,6 +24,7 @@ export class StatComponent implements OnInit {
 
   ngOnInit() {
 
+    this.startTime = new Date(1950, 0, 1).getTime();
     this.curPageSignMoney = 1;
     this.curPageRenewMoney = 1;
     this.curPageClassHour = 1;
@@ -34,25 +36,25 @@ export class StatComponent implements OnInit {
       {name: '签约/缴费/课时统计页', icon: 'fa-th-li'}
     ];
 
-    this.fetchSignRecord();
-    this.fetchRenewRecord();
-    this.fetchClassHourRecord();
+    this.fetchSignRecord('', '');
+    this.fetchRenewRecord('', '');
+    this.fetchClassHourRecord('', '');
   }
 
-  fetchSignRecord(): void {
-    this.presidentService.fetchSignMoney().then( results => {
+  fetchSignRecord(startTime?, endTime?): void {
+    this.presidentService.fetchSignMoney(startTime, endTime).then( results => {
       this.signMoneyRecord = results;
     } );
   }
 
-  fetchRenewRecord(): void {
-    this.presidentService.fetchRenewMoney().then( results => {
+  fetchRenewRecord(startTime?, endTime?): void {
+    this.presidentService.fetchRenewMoney(startTime, endTime).then( results => {
       this.renewMoneyRecord = results;
     } );
   }
 
-  fetchClassHourRecord(): void {
-    this.presidentService.fetchClassHour().then( results => {
+  fetchClassHourRecord(startTime?, endTime?): void {
+    this.presidentService.fetchClassHour(startTime, endTime).then( results => {
       this.classHourRecord = results;
     } );
   }
@@ -65,5 +67,14 @@ export class StatComponent implements OnInit {
   }
   handlePageChangeClassHour(page): void {
     this.curPageClassHour = page;
+  }
+  handleSignTimeRangeChange(value): void {
+    this.fetchSignRecord(value.start, value.end);
+  }
+  handleRenewTimeRangeChange(value): void {
+    this.fetchRenewRecord(value.start, value.end);
+  }
+  handleClassHourTimeRangeChange(value): void {
+    this.fetchClassHourRecord(value.start, value.end);
   }
 }

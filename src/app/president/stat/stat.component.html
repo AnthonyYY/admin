@@ -11,9 +11,16 @@
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="waitAudit">
-        <div class="table-title clearfix">
+        <div class="table-title clearfix" style="line-height: 30px;">
           <p class="text-muted pull-left">签约总人数: {{signMoneyRecord.num || 0}}</p>
           <p class="text-muted pull-left">签约总金额: {{signMoneyRecord.total || 0}}</p>
+          <div class="pull-right" style="width: 280px;">
+            <label style="line-height: 30px;height: 30px;margin-right: 10px;" class="pull-left" for="">时间过滤</label>
+            <app-date-ranger-picker
+              [startTime]="startTime"
+              (dateRangeSetEvent)="handleSignTimeRangeChange($event)"
+            ></app-date-ranger-picker>
+          </div>
         </div>
         <table class="table table-bordered table-hover text-center">
           <thead>
@@ -51,6 +58,13 @@
         <div class="table-title clearfix">
           <p class="text-muted pull-left">续约总人数: {{renewMoneyRecord.num || 0}}</p>
           <p class="text-muted pull-left">续约总金额: {{renewMoneyRecord.total || 0}}</p>
+          <div class="pull-right" style="width: 280px;">
+            <label style="line-height: 30px;height: 30px;margin-right: 10px;" class="pull-left" for="">时间过滤</label>
+            <app-date-ranger-picker
+              [startTime]="startTime"
+              (dateRangeSetEvent)="handleRenewTimeRangeChange($event)"
+            ></app-date-ranger-picker>
+          </div>
         </div>
         <table class="table table-bordered table-hover text-center">
           <thead>
@@ -89,6 +103,13 @@
           <p class="text-muted pull-left">总课时: {{classHourRecord.totalHour || 0}}</p>
           <p class="text-muted pull-left">已完成课时: {{classHourRecord.finishHour || 0}}</p>
           <p class="text-muted pull-left">未完成课时: {{classHourRecord.unFinishHour || 0}}</p>
+          <div class="pull-right" style="width: 280px;">
+            <label style="line-height: 30px;height: 30px;margin-right: 10px;" class="pull-left" for="">时间过滤</label>
+            <app-date-ranger-picker
+              [startTime]="startTime"
+              (dateRangeSetEvent)="handleClassHourTimeRangeChange($event)"
+            ></app-date-ranger-picker>
+          </div>
         </div>
         <table class="table table-bordered table-hover text-center">
           <thead>

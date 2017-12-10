@@ -57,6 +57,7 @@ import {ScheduleManagementComponent} from './student-manager-boss/schedule-manag
 import {TeacherHoursComponent} from './student-manager-boss/teacher-hours/teacher-hours.component';
 import {TeacherClassHistoryComponent} from './teacher/teacher-class-history/teacher-class-history.component';
 import {TeacherStuScoreComponent} from './teacher/teacher-stu-score/teacher-stu-score.component';
+import {StudentsComponent as StuComponent} from './president/students/students.component'
 
 export const routes: Routes = [
   {
@@ -240,7 +241,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'stats',
+            redirectTo: 'students',
             pathMatch: 'full',
           },
           {
@@ -258,6 +259,10 @@ export const routes: Routes = [
           {
             path: 'stats',
             component: StatComponent
+          },
+          {
+            path: 'students',
+            component: StuComponent
           }
         ]
       },

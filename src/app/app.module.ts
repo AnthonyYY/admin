@@ -107,6 +107,7 @@ import { UploaderComponent } from './uploader/uploader.component';
 import {FileSelectDirective} from 'ng2-file-upload';
 import { TeacherClassHistoryComponent } from './teacher/teacher-class-history/teacher-class-history.component';
 import { TeacherStuScoreComponent } from './teacher/teacher-stu-score/teacher-stu-score.component';
+import {StudentsComponent as StuComponent} from './president/students/students.component';
 
 @NgModule({
   declarations: [
@@ -189,7 +190,8 @@ import { TeacherStuScoreComponent } from './teacher/teacher-stu-score/teacher-st
     TeacherHoursComponent,
     UploaderComponent,
     TeacherClassHistoryComponent,
-    TeacherStuScoreComponent
+    TeacherStuScoreComponent,
+    StuComponent
   ],
   imports: [
     Select2Module,

@@ -1,0 +1,49 @@
+<app-content-header
+  [title]="'签约/缴费/课时统计'" [menus]="contentHeader"></app-content-header>
+
+<div class="content">
+  <div class="box box-primary box-divider">
+    <div class="box-header">
+      <h3 class="box-title">学生查询</h3>
+      <div class="box-tools form-group form-group-sm form-inline">
+        <input class="form-control" name="student-name" [(ngModel)]="name" placeholder="请输入学生姓名" [value]="name" style="margin-right: 5px;">
+        <button class="btn btn-primary btn-sm pull-right" (click)="fetchStudents(name)">
+          查询学生
+        </button>
+      </div>
+    </div>
+    <div class="box-content">
+      <table class="table table-striped text-center">
+        <thead>
+          <tr>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>电话</th>
+            <th>年级</th>
+            <th>生日</th>
+            <th>已付款</th>
+            <th>父母姓名</th>
+            <th>父母性别</th>
+            <th>父母电话</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of students">
+            <td>{{ student.name }}</td>
+            <td>{{ student.sex === 'M' ? '男': '女' }}</td>
+            <td>{{ student.phone.slice(0,4) + '****' + student.phone.slice(8,11) }}</td>
+            <td>{{ student.grade }}</td>
+            <td>{{ student.birthday | date: 'YYYY-MM-dd' }}</td>
+            <td>{{ student.alreadyPaid === 'YES' ? '是' : '否' }}</td>
+            <td>{{ student.parentName }}</td>
+            <td>{{ student.parentSex === 'M' ? '男' : '女' }}</td>
+            <td>{{ student.parentPhone.slice(0,4) + '*****' + student.parentPhone.slice(8) }}</td>
+          </tr>
+          <tr *ngIf="students.length === 0">
+            <td colspan="9" class="text-center text-muted">暂无学生信息</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

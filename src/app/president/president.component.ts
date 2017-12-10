@@ -28,6 +28,11 @@ export class PresidentComponent implements OnInit {
         name: '退费审核管理',
         routerLink: ['refund'],
         icon: 'fa-file-excel-o'
+      },
+      {
+        name: '学生信息列表',
+        routerLink: ['students'],
+        icon: 'fa-graduation-cap'
       }
   ];
     this.userService.userInfoChange.subscribe( value => {

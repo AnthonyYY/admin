@@ -27,8 +27,12 @@ export class PresidentService {
     } );
   }
 
-  fetchSignMoney(): Promise<any> {
-    return this.http.get('president/stat/pay').then( result => {
+  fetchSignMoney(startTime?, endTime?): Promise<any> {
+    let query = '';
+    if (startTime) {
+      query = `?startTime=${startTime}&endTime=${endTime}`;
+    }
+    return this.http.get(`president/stat/pay${query}`).then( result => {
       if (result.success) {
         return result.data;
       } else {
@@ -37,8 +41,12 @@ export class PresidentService {
     } );
   }
 
-  fetchRenewMoney(): Promise<any> {
-    return this.http.get('president/stat/renew').then( result => {
+  fetchRenewMoney(startTime?, endTime?): Promise<any> {
+    let query = '';
+    if (startTime) {
+      query = `?startTime=${startTime}&endTime=${endTime}`;
+    }
+    return this.http.get(`president/stat/renew${query}`).then( result => {
       if (result.success) {
         return result.data;
       } else {
@@ -47,8 +55,12 @@ export class PresidentService {
     } );
   }
 
-  fetchClassHour(): Promise<any> {
-    return this.http.get('president/stat/teacher/hour').then( result => {
+  fetchClassHour(startTime?, endTime?): Promise<any> {
+    let query = '';
+    if (startTime) {
+      query = `?startTime=${startTime}&endTime=${endTime}`;
+    }
+    return this.http.get(`president/stat/teacher/hour${query}`).then( result => {
       if (result.success) {
         return result.data;
       } else {
@@ -105,4 +117,15 @@ export class PresidentService {
     }  );
   }
 
+  fetchStudentsByName(name): Promise<any> {
+    let query = '';
+    if (name) {
+      query = `?name=${name}`;
+    }
+    return this.http.get(`common/student${query}`).then( result => {
+      if (result && result.success) {
+        return result.details;
+      }
+    }  );
+  }
 }
