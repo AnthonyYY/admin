@@ -369,7 +369,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'teacher-hours',
+            redirectTo: 'student-assignment',
             pathMatch: 'full'
           },
           {

@@ -10,7 +10,7 @@ export class StudentManagerBossService {
     private alertService: AlertService,
   ) { }
   fetchUndistributedStudents(): Promise<any[]> {
-    return this.http.get('stmanager/student/distribution/no').then( result => {
+    return this.http.get('stmanager/student/dis/stat').then( result => {
       if (result.success) {
         return result.data;
       }
