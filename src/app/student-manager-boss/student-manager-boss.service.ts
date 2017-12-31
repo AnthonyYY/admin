@@ -64,4 +64,22 @@ export class StudentManagerBossService {
       return [];
     } );
   }
+
+  reAssignTeacher(oriEmployeeId, newEmployeeId): Promise<any> {
+    return this.http.post('stmanager/change/' + oriEmployeeId + '/' + newEmployeeId ).then( result => {
+        if ( result.success ) {
+          this.alertService.alert({
+            type: 'success',
+            content: '学生已改编',
+            title: '提示'
+          });
+        } else {
+          this.alertService.alert({
+            type: 'danger',
+            content: '学生改编出错',
+            title: '提示'
+          });
+        }
+    } );
+  }
 }

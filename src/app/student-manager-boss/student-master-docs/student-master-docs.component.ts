@@ -11,8 +11,10 @@ export class StudentMasterDocsComponent implements OnInit {
 
   curPageManager: number;
   curPageRecord: number;
+  newAssignEmployeeId: any;
   contentHeader: Sidebar[];
   studentManagers: any[];
+  toChangeToManagers: any[];
   payments: any[];
   undistributedStudents: any[];
   curStudentManager: any;
@@ -20,6 +22,7 @@ export class StudentMasterDocsComponent implements OnInit {
     private studentManagerBossService: StudentManagerBossService
   ) {
     this.assignStudentToManager = this.assignStudentToManager.bind(this);
+    this.reAssignStuMaster = this.reAssignStuMaster.bind(this);
   }
 
   ngOnInit() {
@@ -31,6 +34,7 @@ export class StudentMasterDocsComponent implements OnInit {
     ];
     this.payments = [];
     this.studentManagers = [];
+    this.toChangeToManagers = [];
     this.undistributedStudents = [];
     this.curStudentManager = {};
     this.fetchUndistributedStudents();
@@ -44,8 +48,7 @@ export class StudentMasterDocsComponent implements OnInit {
 
   fetchUndistributedStudents(): void {
     this.studentManagerBossService.fetchUndistributedStudents().then( students => {
-      console.log(students);
-      this.undistributedStudents = students;
+      this.undistributedStudents = students.filter(stu => !stu.isDis);
     } );
   }
 
@@ -78,6 +81,26 @@ export class StudentMasterDocsComponent implements OnInit {
 
   handleRecordPageChange(page): void {
     this.curPageRecord = 1;
+  }
+
+  changeStuMaster(curManager): void {
+    this.curStudentManager = curManager;
+    this.toChangeToManagers = this.studentManagers
+      .filter( manager => manager.id !== curManager.id )
+      .map( manager => ({id: manager.id, text: manager.name}) );
+    this.newAssignEmployeeId = this.toChangeToManagers.length ? this.toChangeToManagers[0].id : '';
+  }
+
+  setNewStuManager($event): void {
+    this.newAssignEmployeeId = $event.value;
+  }
+
+  reAssignStuMaster(): void {
+    this.studentManagerBossService.reAssignTeacher(this.curStudentManager.id, this.newAssignEmployeeId)
+      .then( () => {
+        this.newAssignEmployeeId = '';
+        this.curStudentManager = {};
+      } );
   }
 
 }

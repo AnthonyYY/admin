@@ -9,6 +9,8 @@ import * as moment from 'moment';
 export class DateRangerPickerComponent implements OnInit {
 
   @Input()
+  tag: string;
+  @Input()
   format: string;
   @Input()
   timePicker: boolean;
@@ -19,8 +21,14 @@ export class DateRangerPickerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    const tag = this.tag;
     setTimeout( () => {
-      (<any>$)('.date-range-picker').daterangepicker({
+      let selector = '';
+      if (tag) {
+        selector = '.' + tag + ' ';
+      }
+      selector += ' .date-range-picker';
+      (<any>$)( selector).daterangepicker({
         locale: {
           applyLabel: '确定',
           cancelLabel: '取消',

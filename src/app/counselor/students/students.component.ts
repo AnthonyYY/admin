@@ -114,6 +114,7 @@ export class StudentsComponent implements OnInit {
       this.curStudent.status = Object.keys(state)[0];
       this.students.unshift(this.curStudent);
       this.students = [...this.students];
+      this.fetchStudents();
     } );
   }
 

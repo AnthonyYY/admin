@@ -69,6 +69,7 @@ export class StatComponent implements OnInit {
     this.curPageClassHour = page;
   }
   handleSignTimeRangeChange(value): void {
+    console.log('triggered');
     this.fetchSignRecord(value.start, value.end);
   }
   handleRenewTimeRangeChange(value): void {

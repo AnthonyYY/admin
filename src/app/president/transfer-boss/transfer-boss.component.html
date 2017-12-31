@@ -116,20 +116,39 @@
 </div>
 
 
-<app-modal #auditModal>
+<app-modal #auditModal [disabledAcceptBtn]="approve == 'AUDIT_SUCCESS' && !(newConsult && newStuManager)">
   <form class="form text-center clearfix">
     <div class="radio">
       <label>
         <input type="radio" name="optionsRadios" id="approve" (change)="approve = 'AUDIT_SUCCESS'" [checked]="approve === 'AUDIT_SUCCESS'">
-        通过该退费申请
+        通过该转校申请
       </label>
     </div>
 
     <div class="radio">
       <label>
         <input type="radio" name="optionsRadios" id="reject" value="option1" (change)="approve = 'AUDIT_FAIL'" [checked]="approve === 'AUDIT_FAIL'">
-        拒绝该退费申请
+        拒绝该转校申请
       </label>
+    </div>
+
+    <div [hidden]="approve === 'AUDIT_FAIL'">
+      <div style="margin-bottom: 10px;">
+        <p><label for="">新学管师</label></p>
+        <select2 [cssImport]="false"
+                 [options]="{minimumResultsForSearch: -1}"
+                 [data]="managers"
+                 (valueChanged)="setNewManager($event)"
+                 [width]="'148px'"></select2>
+      </div>
+      <div style="margin-bottom: 10px;">
+        <p><label for="">新咨询师</label></p>
+        <select2 [cssImport]="false"
+                 [options]="{minimumResultsForSearch: -1}"
+                 [data]="consults"
+                 (valueChanged)="setNewConsult($event)"
+                 [width]="'148px'"></select2>
+      </div>
     </div>
 
     <div class="form-group form-group-sm col-xs-6 col-xs-offset-3">

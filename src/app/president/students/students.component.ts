@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PresidentService } from '../president.service'
+import { PresidentService } from '../president.service';
 
 @Component({
   selector: 'app-students',
@@ -27,8 +27,8 @@ export class StudentsComponent implements OnInit {
 
   fetchStudents(name): void {
     this.presidentService.fetchStudentsByName(name).then( students => {
-      return this.students = students;
+      console.log(students);
+      return this.students = students || [];
     } );
   }
-
 }

@@ -18,6 +18,8 @@
             <label style="line-height: 30px;height: 30px;margin-right: 10px;" class="pull-left" for="">时间过滤</label>
             <app-date-ranger-picker
               [startTime]="startTime"
+              class="picker-1"
+              [tag]="'picker-1'"
               (dateRangeSetEvent)="handleSignTimeRangeChange($event)"
             ></app-date-ranger-picker>
           </div>
@@ -40,7 +42,7 @@
             <td>{{ record.total }}</td>
             <td>{{ record.schoolName }}</td>
           </tr>
-          <tr *ngIf="!signMoneyRecord.details.length">
+          <tr *ngIf="!signMoneyRecord.details || ( signMoneyRecord.details && !signMoneyRecord.details.length)">
             <td colspan="6">
               <p class="text-center text-muted">暂时无统计信息</p>
             </td>
@@ -48,7 +50,7 @@
           </tbody>
         </table>
 
-        <app-pagination *ngIf="renewMoneyRecord.details.length"
+        <app-pagination *ngIf="renewMoneyRecord.details && renewMoneyRecord.details.length"
                           [curPage]="curPageSignMoney"
                           (changePage)="handlePageChangeSignMoney($event)"
                           [totalCount]="renewMoneyRecord.details.length"></app-pagination>
@@ -61,6 +63,8 @@
           <div class="pull-right" style="width: 280px;">
             <label style="line-height: 30px;height: 30px;margin-right: 10px;" class="pull-left" for="">时间过滤</label>
             <app-date-ranger-picker
+              class="picker-2"
+              [tag]="'picker-2'"
               [startTime]="startTime"
               (dateRangeSetEvent)="handleRenewTimeRangeChange($event)"
             ></app-date-ranger-picker>
@@ -84,7 +88,7 @@
             <td>{{ record.total }}</td>
             <td>{{ record.schoolName }}</td>
           </tr>
-          <tr *ngIf="!renewMoneyRecord.details.length">
+          <tr *ngIf="!renewMoneyRecord.details || (!renewMoneyRecord.details.length)">
             <td colspan="6">
               <p class="text-center text-muted">暂时无统计信息</p>
             </td>
@@ -92,7 +96,7 @@
           </tbody>
         </table>
 
-        <app-pagination *ngIf="renewMoneyRecord.details.length"
+        <app-pagination *ngIf="renewMoneyRecord.details && renewMoneyRecord.details.length"
                         [curPage]="curPageRenewMoney"
                         (changePage)="handlePageChangeRenewMoney($event)"
                         [totalCount]="renewMoneyRecord.details.length"></app-pagination>
@@ -106,6 +110,8 @@
           <div class="pull-right" style="width: 280px;">
             <label style="line-height: 30px;height: 30px;margin-right: 10px;" class="pull-left" for="">时间过滤</label>
             <app-date-ranger-picker
+              class="picker-3"
+              [tag]="'picker-3'"
               [startTime]="startTime"
               (dateRangeSetEvent)="handleClassHourTimeRangeChange($event)"
             ></app-date-ranger-picker>
@@ -123,7 +129,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let record of classHourRecord.details;">
+          <tr *ngFor="let record of (classHourRecord.details || []);">
             <td>{{ record.name }}</td>
             <td>{{ record.phone.slice(0, 3) + '****' + record.phone.slice(7) }}</td>
             <td>{{ record.finishHour }}</td>
@@ -131,7 +137,7 @@
             <td>{{ record.totalHour }}</td>
             <td>{{record.schoolName}}</td>
           </tr>
-          <tr *ngIf="!classHourRecord.details.length">
+          <tr *ngIf="!classHourRecord.details || !classHourRecord.details.length">
             <td colspan="6">
               <p class="text-center text-muted">暂时无统计信息</p>
             </td>
@@ -139,7 +145,7 @@
           </tbody>
         </table>
 
-        <app-pagination *ngIf="classHourRecord.details.length"
+        <app-pagination *ngIf="classHourRecord.details && classHourRecord.details.length"
                         [curPage]="curPageClassHour"
                         (changePage)="handlePageChangeClassHour($event)"
                         [totalCount]="classHourRecord.details.length"></app-pagination>

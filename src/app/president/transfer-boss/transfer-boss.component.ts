@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {PresidentService} from '../president.service';
+import {roles} from '../../common/enum';
 
 @Component({
   selector: 'app-transfer-boss',
@@ -12,9 +13,14 @@ export class TransferBossComponent implements OnInit {
   auditSuccessRecords: any[];
   auditFailedRecords: any[];
 
+  consults: any[];
+  managers: any[];
+
   curAudit: any;
   approve: string;
   approveRemark: string;
+  newConsult: string;
+  newStuManager: string;
   contentHeader: any[];
   constructor(
     private presidentService: PresidentService
@@ -39,6 +45,19 @@ export class TransferBossComponent implements OnInit {
     this.fetchAuditPendingRecord();
     this.fetchAuditSuccessRecords();
     this.fetchAuditFailedRecords();
+
+    this.presidentService.fetchRoles(roles.consultant)
+      .then( roles => {
+        roles.forEach( role => role.text = role.name );
+        this.consults = roles;
+        this.newConsult = roles.length ? roles[0].id : '';
+      } );
+    this.presidentService.fetchRoles(roles.studentmanager)
+      .then( roles => {
+        roles.forEach( role => role.text = role.name );
+        this.managers = roles;
+        this.newStuManager = roles.length ? roles[0].id : '';
+      } );
   }
 
   fetchAuditPendingRecord() {
@@ -60,11 +79,24 @@ export class TransferBossComponent implements OnInit {
   }
 
   checkBackApplication(): void {
-    this.presidentService.checkBackApplication(this.approve, this.curAudit.id).then( success => {
+    this.presidentService.checkBackApplication(
+      this.approve,
+      this.curAudit.id,
+      this.approveRemark,
+      this.newStuManager,
+      this.newConsult).then( success => {
       if (success) {
         const toRemoveRecordIndex = this.auditPendingRecords.indexOf(this.curAudit);
         this.auditPendingRecords.splice(toRemoveRecordIndex, 1);
       }
     } );
+  }
+
+  setNewConsult($event): void {
+    this.newConsult = $event.value;
+  }
+
+  setNewManager($event): void {
+    this.newStuManager = $event.value;
   }
 }

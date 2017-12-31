@@ -21,7 +21,6 @@
               <th>邮箱</th>
               <th>毕业学校</th>
               <th>学历</th>
-              <th>专业</th>
               <th>操作</th>
             </tr>
           </thead>
@@ -35,11 +34,22 @@
               <td>{{ manager.email || '--' }}</td>
               <td>{{ manager.graduationSchool || '--' }}</td>
               <td>{{ manager.education || '--' }}</td>
-              <td>{{ manager.specialty || '--' }}</td>
               <td>
                 <div class="btn-group btn-group-xs">
+                  <button
+                  class="btn btn-xs btn-danger"
+                  (click)="changeStuMaster(manager);
+                  reAssignModal.showModal({
+                    title: '改编' + curStudentManager.name + '的学员至:',
+                    modalConfirmText: '确认改编',
+                    modalSize: 'sm',
+                    type: 'default',
+                    confirm: reAssignStuMaster
+                  })">
+                    改编学员
+                  </button>
                   <button class="btn btn-xs btn-primary"
-                          (click)="curStudentManager = manager;
+                  (click)="curStudentManager = manager;
                   assignModal.showModal({
                     title: '分配以下学员给' + curStudentManager.name,
                     modalConfirmText: '确认分配',
@@ -93,6 +103,16 @@
   </div>
 </div>
 
+<app-modal #reAssignModal>
+  <div class="text-center
+">
+    <select2 [cssImport]="false"
+             [options]="{minimumResultsForSearch: -1}"
+             [data]="toChangeToManagers"
+             (valueChanged)="setNewStuManager($event)"
+             [width]="'148px'"></select2>
+  </div>
+</app-modal>
 
 <app-modal #assignModal [disabledAcceptBtn]="ifZeroStudentChosen()">
   <div class="students-container">
@@ -109,7 +129,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let student of undistributedStudents">
-          <td><input type="checkbox" (change)="student.chosen = !student.chosen"></td>
+          <td><input type="checkbox" (value)="student.chosen" (change)="student.chosen = !student.chosen"></td>
           <td>{{ student.name }}</td>
           <td>{{ student.sex === 'MALE' ? '男' : '女' }}</td>
           <td>{{ student.phone.slice(0, 3) + '****' + student.phone.slice(7) }}</td>

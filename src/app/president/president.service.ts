@@ -104,8 +104,10 @@ export class PresidentService {
   /*
    *
    */
-  checkBackApplication(handlerStatus, processId): Promise<any> {
-    return this.http.put(`president/school/${handlerStatus}/${processId}`, {}).then( result => {
+  checkBackApplication(handlerStatus, processId, remark, managerId, consultId): Promise<any> {
+    return this.http.put(
+    `president/school/${handlerStatus}/${processId}?remark=${remark}&managerId=${managerId}&counselorId=${consultId}`, {})
+    .then( result => {
       if (result.success) {
         this.alertService.alert({
           type: 'success',
@@ -122,10 +124,23 @@ export class PresidentService {
     if (name) {
       query = `?name=${name}`;
     }
-    return this.http.get(`common/student${query}`).then( result => {
+    return this.http.get(`common/student/search${query}`).then( result => {
       if (result && result.success) {
-        return result.details;
+        return result.data;
       }
     }  );
+  }
+
+
+  fetchRoles(role): Promise<any> {
+    return this.http.get('common/employee/' + role).then( result => {
+      console.log(result);
+      if (result.success) {
+        result.data = result.data || [];
+        return result.data;
+      } else {
+        return [];
+      }
+    } );
   }
 }
